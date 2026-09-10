@@ -30,28 +30,28 @@ Modern Portfolio Theory (Markowitz, 1952) establishes that optimal capital alloc
 ```mermaid
 flowchart TD
     subgraph DataPipeline ["Data Ingestion & Engineering"]
-        A[Yahoo Finance / S&P 500 Universe<br/>174 Equities & Macro ETFs] --> B[(Database Layer<br/>PostgreSQL / SQLite)]
-        B --> C[In-Memory Feature Engine<br/>20 Indicators × 174 Assets = 3,480 Signals]
+        A["Yahoo Finance / S&P 500 Universe (174 Assets)"] --> B[("Database Layer (PostgreSQL / SQLite)")]
+        B --> C["In-Memory Feature Engine (20 Indicators × 174 Assets)"]
     end
 
     subgraph DeepLearning ["Alpha Generation (Deep Learning)"]
-        C --> D[Sliding Window Tensor<br/>63 Trading Days]
-        D --> E[Temporal CNN<br/>Conv1D + Residual Blocks + Global Pool]
-        E --> F[Cross-Sectional Interaction Head]
-        F --> G[Predicted 21-Day Excess Returns<br/>Alpha Vector μ]
+        C --> D["Sliding Window Tensor (63 Trading Days)"]
+        D --> E["Temporal CNN (Conv1D + Residual Blocks + Pooling)"]
+        E --> F["Cross-Sectional Interaction Head"]
+        F --> G["Predicted 21-Day Excess Returns (Alpha Vector)"]
     end
 
     subgraph RiskOptimization ["Quantitative Risk & Portfolio Optimization"]
-        B --> H[Daily Returns Matrix]
-        H --> I[Ledoit-Wolf Shrinkage<br/>Covariance Matrix Σ]
-        G & I --> J[SLSQP Optimizer<br/>Objective: Maximize Sharpe Ratio]
-        K[Constraints:<br/>w_i in [0, 0.35], sum(w_i) = 1] --> J
-        J --> L[Optimal Portfolio Weights w*]
+        B --> H["Daily Returns Matrix"]
+        H --> I["Ledoit-Wolf Shrinkage (Annualized Covariance)"]
+        G & I --> J["SLSQP Optimizer (Maximize Sharpe Ratio)"]
+        K["Constraints: Weights 0 to 35%, Sum = 100%"] --> J
+        J --> L["Optimal Portfolio Weights"]
     end
 
     subgraph Presentation ["Application & Visualization"]
-        L --> M[Flask REST API<br/>6h TTL In-Memory Cache]
-        M --> N[React 19 Quantitative Terminal<br/>Vite + Chart.js]
+        L --> M["Flask REST API (6h In-Memory Cache)"]
+        M --> N["React 19 Quantitative Terminal (Vite + Chart.js)"]
     end
 ```
 
