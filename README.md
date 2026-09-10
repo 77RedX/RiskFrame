@@ -71,10 +71,11 @@ RiskFrame/
 │   └── daily_update.yml          # CI/CD: Automated daily data fetch
 │
 ├── data/                         # Directory for CSV data
-└── website/                      # Frontend UI assets
-    ├── index.html
-    ├── style.css
-    └── script.js
+└── website/                      # React + Vite Quantitative Terminal
+    ├── src/                      # React UI components & design system
+    ├── index.html                # App shell & typography
+    ├── package.json              # Node dependencies
+    └── vite.config.js            # Vite bundler config
 ```
 
 ---
@@ -93,7 +94,7 @@ cd RiskFrame
 You can set the following environment variables to configure advanced features:
 
 - `DATABASE_URL`: Connection string for the cache database (defaults to `sqlite:///local_fallback.db`).
-- `HF_MODEL_REPO`: Hugging Face repository to pull/push model weights.
+- `HF_MODEL_REPO`: Hugging Face repository to pull/push model weights (defaults to `77RedX/RiskFrame`).
 - `HF_TOKEN`: Hugging Face token for downloading private weights or uploading models.
 - `PORT`: Port for the Flask/Gunicorn server (default `7860`).
 
@@ -102,14 +103,23 @@ You can set the following environment variables to configure advanced features:
 Create a virtual environment and install dependencies:
 
 ```bash
-python -m venv venv
+python -m venv .venv
 
 # Windows
-venv\Scripts\activate
+.venv\Scripts\activate
 # macOS / Linux
-source venv/bin/activate
+source .venv/bin/activate
 
 pip install -r requirements.txt
+```
+
+Build the React frontend:
+
+```bash
+cd website
+npm install
+npm run build
+cd ..
 ```
 
 ### 4. Setup (Docker)
@@ -117,8 +127,8 @@ pip install -r requirements.txt
 If you prefer using Docker:
 
 ```bash
-docker build -t portfolio-optimizer .
-docker run -p 7860:7860 portfolio-optimizer
+docker build -t riskframe .
+docker run -p 7860:7860 riskframe
 ```
 
 ---
@@ -139,7 +149,7 @@ This will:
 - Engineer features & load the AI model.
 - Start a Flask server on `http://127.0.0.1:5000` (or the configured `PORT`).
 
-Open `website/index.html` in your browser to interact with the dashboard!
+Open `http://localhost:5000` in your browser to interact with the quantitative terminal!
 
 ### CLI Inference
 

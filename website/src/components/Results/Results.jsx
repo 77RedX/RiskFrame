@@ -7,14 +7,13 @@ import BreakdownTable from './BreakdownTable';
 export default function Results({ results, isLoading, loadingProgress, loadingStatus, tickers, errorMessage }) {
   const hasResults = results && results.metrics;
 
-  // Build meta string
-  const dateStr = new Date().toLocaleDateString('en-IN', {
+  const dateStr = new Date().toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
   });
   const meta = hasResults
-    ? `${Object.keys(results.allocation).length} stocks · AI Optimal Allocation · Calculated ${dateStr}`
+    ? `${Object.keys(results.allocation).length} Assets // SLSQP Optimal Solution // Solved ${dateStr}`
     : '';
 
   return (
@@ -22,20 +21,24 @@ export default function Results({ results, isLoading, loadingProgress, loadingSt
       <div className="container">
         <div className="fade-up">
           <span className="section-tag" id="results-tag">
-            Step 2
+            Step 02 // Quantitative Analytics
           </span>
           <h2 className="section-title" id="results-heading">
-            Portfolio <span className="gradient-text">Analysis</span>
+            Portfolio <span className="gradient-text">Frontier &amp; Metrics</span>
           </h2>
           <p className="section-subtitle" id="results-subtitle">
             {errorMessage ? (
-              <span style={{ color: 'var(--accent-orange)' }}>
-                ⚠️ {errorMessage}
+              <span style={{ color: 'var(--risk-coral)', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                  <path d="M8 1.5L14.5 13H1.5L8 1.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M8 6V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                  <circle cx="8" cy="11" r="0.75" fill="currentColor"/>
+                </svg>
+                {errorMessage}
               </span>
             ) : (
               <>
-                Select your stocks above and click <strong>Calculate</strong> to fetch live market
-                data and compute real portfolio metrics.
+                Mathematical optimization results combining forward convolutional predictions with constrained Sharpe maximization.
               </>
             )}
           </p>
@@ -62,11 +65,16 @@ export default function Results({ results, isLoading, loadingProgress, loadingSt
 
             <BreakdownTable data={results} />
 
-            {/* Disclaimer */}
+            {/* Regulatory Disclaimer */}
             <p className="metric-disclaimer fade-up" id="results-disclaimer">
-              <span aria-hidden="true">⚠️</span>
-              Historical data only. Equal-weight portfolio. Not financial advice. Past performance
-              does not guarantee future results.
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.4"/>
+                <path d="M8 5V8.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+                <circle cx="8" cy="11" r="0.7" fill="currentColor"/>
+              </svg>
+              <span>
+                Quantitative model output for academic research and portfolio architecture. Not investment advice. Past performance does not guarantee future capital appreciation.
+              </span>
             </p>
           </div>
         )}

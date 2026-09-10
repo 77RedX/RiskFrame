@@ -12,9 +12,9 @@ export default function BreakdownTable({ data }) {
   return (
     <div className="breakdown-card fade-up">
       <div className="breakdown-header">
-        <h3 className="breakdown-title">📋 Per-Stock Breakdown</h3>
+        <h3 className="breakdown-title">Optimal Asset Weights &amp; Risk Contribution</h3>
         <span className="breakdown-note" id="breakdown-note">
-          AI Optimal Allocation · Forward Predictions
+          Ledoit-Wolf Convex Solution // Neural Projections
         </span>
       </div>
       <div className="table-wrap">
@@ -22,11 +22,11 @@ export default function BreakdownTable({ data }) {
           <thead>
             <tr>
               <th>Ticker</th>
-              <th>Company</th>
-              <th>Weight</th>
-              <th>AI Pred. Return</th>
-              <th>Ann. Return (Hist)</th>
-              <th>Ann. Vol (Hist)</th>
+              <th>Asset Name</th>
+              <th>Optimal Weight</th>
+              <th>Neural Alpha (21D)</th>
+              <th>Historical Return</th>
+              <th>Historical Vol</th>
               <th>Sharpe (Hist)</th>
               <th>Status</th>
             </tr>
@@ -64,16 +64,13 @@ export default function BreakdownTable({ data }) {
                     : 'poor';
               }
 
-              // Highlight class for allocation
-              let highlight = '';
-              if (weight >= 0.1) highlight = 'excellent';
-              else if (weight >= 0.05) highlight = 'good';
-
               return (
-                <tr key={ticker} style={{ animationDelay: `${idx * 30}ms` }}>
+                <tr key={ticker} style={{ animationDelay: `${idx * 25}ms` }}>
                   <td className="td-ticker">{ticker}</td>
                   <td className="td-company">{COMPANY_MAP[ticker] || '—'}</td>
-                  <td className={`td-weight ${highlight}`}>{wPct}%</td>
+                  <td className="td-weight" style={{ color: weight >= 0.1 ? '#D4AF37' : '#FFFFFF' }}>
+                    {wPct}%
+                  </td>
                   <td className={`td-return ${aiPredCls}`}>
                     {aiPred >= 0 ? '+' : ''}
                     {aiPredPct}%
@@ -82,7 +79,23 @@ export default function BreakdownTable({ data }) {
                   <td className="td-vol">{histVolStr}</td>
                   <td className={`td-sharpe ${histSharpeCls}`}>{histSharpeStr}</td>
                   <td>
-                    <span className="status-pill ok">✓ Active</span>
+                    <span
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '3px 8px',
+                        borderRadius: '6px',
+                        fontSize: '0.72rem',
+                        fontWeight: 600,
+                        background: 'rgba(46, 229, 157, 0.08)',
+                        color: '#2EE59D',
+                        border: '1px solid rgba(46, 229, 157, 0.2)',
+                      }}
+                    >
+                      <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#2EE59D' }}></span>
+                      Optimal
+                    </span>
                   </td>
                 </tr>
               );

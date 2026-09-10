@@ -68,7 +68,7 @@ def initialize_backend():
     hf_repo = CONFIG.get("HF_MODEL_REPO")
     
     # Try downloading from Hugging Face Hub first
-    if hf_repo and hf_repo != "username/Algorithmic-Portfolio-Optimizer":
+    if hf_repo and hf_repo not in ("username/Algorithmic-Portfolio-Optimizer", "username/RiskFrame", ""):
         print(f"Attempting to download latest model weights from Hugging Face Hub ({hf_repo})...")
         try:
             from huggingface_hub import hf_hub_download

@@ -37,7 +37,17 @@ export default function StockCard({ stock, isSelected, isDisabled, onToggle }) {
       onKeyDown={handleKeyDown}
     >
       <div className="stock-check" aria-hidden="true">
-        {isSelected ? '✓' : ''}
+        {isSelected && (
+          <svg width="10" height="8" viewBox="0 0 11 9" fill="none">
+            <path
+              d="M1 4.5L4 7.5L10 1.5"
+              stroke="#08080A"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )}
       </div>
       <div className="stock-ticker">{stock.ticker}</div>
       <div className="stock-name">{stock.name}</div>
