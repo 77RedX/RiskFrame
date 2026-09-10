@@ -1,0 +1,30 @@
+# Numerical Computing
+numpy>=2.0
+pandas>=2.2
+scipy>=1.14
+
+# Machine Learning
+torch>=2.7
+torchvision>=0.22
+torchaudio>=2.7
+scikit-learn>=1.7
+joblib>=1.5
+
+# Data Collection
+yfinance>=0.2
+beautifulsoup4>=4.12
+lxml>=5.0
+
+# Visualization
+matplotlib>=3.10
+
+# Training Utilities
+tqdm>=4.67
+flask
+flask-cors
+gunicorn
+
+# Database and Cloud
+SQLAlchemy
+psycopg2-binary
+huggingface-hub

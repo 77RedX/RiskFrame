@@ -1,0 +1,25 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+env/
+.env
+
+# VS Code settings
+.vscode/
+walkthrough.md
+local_fallback.db
+
+# Node / Frontend
+node_modules/
+dist/
+.vite/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+graphify-out/
+.agents/
