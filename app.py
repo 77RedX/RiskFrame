@@ -160,6 +160,11 @@ def optimize():
 
     # 1. Get latest window of data
     window_size = CONFIG["WINDOW_SIZE"]
+    if len(ENGINEERED_FEATURES) < window_size:
+        return jsonify({
+            "error": f"Insufficient market data: need {window_size} trading days but only {len(ENGINEERED_FEATURES)} available. "
+                     f"Run 'python scripts/update_data.py' or set DATABASE_URL to a database with full 3-year history."
+        }), 503
     latest_window = ENGINEERED_FEATURES.iloc[-window_size:].to_numpy(dtype=np.float32)
     latest_tensor = (
         torch.tensor(latest_window)
@@ -217,8 +222,11 @@ def optimize():
     
     return jsonify(response)
 
-# Initialize backend in background thread so Gunicorn opens port immediately on Render
-threading.Thread(target=initialize_backend, daemon=True).start()
+# Initialize backend in background thread so Gunicorn opens port immediately on Render.
+# In local development with Flask debug=True, Werkzeug spawns two processes (a monitor and a worker).
+# We check WERKZEUG_RUN_MAIN so initialization only runs once in the actual worker.
+if os.environ.get("WERKZEUG_RUN_MAIN") == "true" or not app.debug:
+    threading.Thread(target=initialize_backend, daemon=True).start()
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
