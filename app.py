@@ -2,7 +2,7 @@ import os
 import torch
 import numpy as np
 import pandas as pd
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 from dataset import CONFIG, download_and_prepare_data
@@ -14,8 +14,9 @@ from optimizer import (
 )
 from model import TemporalCNN
 
-app = Flask(__name__, static_folder='website/dist')
-CORS(app)  # Allow frontend to make requests
+app = Flask(__name__)
+allowed_origins = os.environ.get("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+CORS(app, origins=allowed_origins)
 
 # Global variables for caching
 MODEL = None
@@ -25,6 +26,7 @@ ANNUAL_MEANS = None
 TICKERS_LIST = None
 HISTORICAL_PRICES = None
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+BACKEND_READY = False
 
 import time
 LAST_CACHE_UPDATE = 0
@@ -38,7 +40,7 @@ def refresh_cache_if_needed():
         initialize_backend()
 
 def initialize_backend():
-    global MODEL, ENGINEERED_FEATURES, COV_MATRIX, TICKERS_LIST, ANNUAL_MEANS, HISTORICAL_PRICES
+    global MODEL, ENGINEERED_FEATURES, COV_MATRIX, TICKERS_LIST, ANNUAL_MEANS, HISTORICAL_PRICES, BACKEND_READY
     
     print("=== Initializing AI Backend ===")
     
@@ -87,15 +89,16 @@ def initialize_backend():
         MODEL.load_state_dict(torch.load(model_path, map_location=DEVICE, weights_only=True))
         MODEL.eval()
         print("Backend Initialized Successfully!")
+        BACKEND_READY = True
     else:
         print(f"Warning: Model weights not found at {model_path}. Please train the model first.")
+        BACKEND_READY = True  # Still mark ready so health check passes; model just won't predict
 
-@app.route('/', defaults={'path': 'index.html'})
-@app.route('/<path:path>')
-def serve_frontend(path):
-    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
-        return send_from_directory(app.static_folder, path)
-    return send_from_directory(app.static_folder, 'index.html')
+@app.route('/api/health', methods=['GET'])
+def health():
+    if BACKEND_READY:
+        return jsonify({"status": "ok"})
+    return jsonify({"status": "loading"}), 503
 
 @app.route('/api/prices', methods=['GET'])
 def get_prices():

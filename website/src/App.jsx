@@ -1,4 +1,6 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { optimizePortfolio } from './api';
+import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import StockSelector from './components/StockSelector/StockSelector';
@@ -7,6 +9,7 @@ import PriceHistory from './components/PriceHistory/PriceHistory';
 import Footer from './components/Footer';
 
 export default function App() {
+  const [backendReady, setBackendReady] = useState(false);
   const [selected, setSelected] = useState(new Set());
   const [isCalculating, setIsCalculating] = useState(false);
   const [results, setResults] = useState(null);
@@ -121,27 +124,16 @@ export default function App() {
     const tickers = Array.from(selected);
 
     try {
-      const response = await fetch('/api/optimize', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tickers }),
-      });
-
-      setLoadingProgress(60);
+      setLoadingProgress(40);
       setLoadingStatus('Optimizing Portfolio...');
 
-      if (!response.ok) {
-        throw new Error(`Backend Error: ${response.statusText}`);
-      }
-
-      const data = await response.json();
+      const data = await optimizePortfolio(tickers);
       setLoadingProgress(100);
-
       setResults(data);
     } catch (error) {
       console.error(error);
       setErrorMessage(
-        `Could not connect to the backend API. Please ensure app.py is running. Error: ${error.message}`
+        `Could not connect to the backend API. Error: ${error.message}`
       );
     }
 
@@ -149,6 +141,10 @@ export default function App() {
   }, [selected, isCalculating]);
 
   const tickers = Array.from(selected);
+
+  if (!backendReady) {
+    return <LoadingScreen onReady={() => setBackendReady(true)} />;
+  }
 
   return (
     <>

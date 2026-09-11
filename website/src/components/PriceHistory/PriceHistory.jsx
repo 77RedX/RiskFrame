@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { fetchPrices } from '../../api';
 import { SP500_STOCKS } from '../../data/stocks';
 import PriceChart from './PriceChart';
 
@@ -38,11 +39,7 @@ export default function PriceHistory() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`/api/prices?ticker=${ticker}`);
-      if (!response.ok) {
-        throw new Error(`Server returned ${response.status}: ${response.statusText}`);
-      }
-      const data = await response.json();
+      const data = await fetchPrices(ticker);
 
       if (data.error) throw new Error(data.error);
 

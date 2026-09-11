@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: riskframe-api
+    runtime: docker
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: HF_MODEL_REPO
+        value: 77RedX/RiskFrame
+      - key: HF_TOKEN
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: PORT
+        value: "10000"
