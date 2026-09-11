@@ -67,7 +67,7 @@ def engineer_features(price_df):
         Engineered feature dataframe.
     """
 
-    features = pd.DataFrame(index=price_df.index)
+    all_stocks = []
 
     # Precompute cross-sectional return momentum ranks across the entire market universe
     rank_return_5 = price_df.pct_change(5).rank(axis=1, pct=True)
@@ -166,10 +166,9 @@ def engineer_features(price_df):
             for col in stock.columns
         ]
 
-        features = pd.concat(
-            [features, stock],
-            axis=1
-        )
+        all_stocks.append(stock)
+
+    features = pd.concat(all_stocks, axis=1)
 
     # Remove rows containing NaNs from rolling windows
     features = features.dropna()

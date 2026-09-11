@@ -1,4 +1,5 @@
 import os
+import threading
 import torch
 import numpy as np
 import pandas as pd
@@ -71,28 +72,43 @@ def initialize_backend():
     
     # Try downloading from Hugging Face Hub first
     if hf_repo and hf_repo not in ("username/Algorithmic-Portfolio-Optimizer", "username/RiskFrame", ""):
-        print(f"Attempting to download latest model weights from Hugging Face Hub ({hf_repo})...")
+        print(f"Attempting to download latest model weights from Hugging Face ({hf_repo})...", flush=True)
         try:
             from huggingface_hub import hf_hub_download
-            hf_token = os.environ.get("HF_TOKEN")
-            downloaded_path = hf_hub_download(
-                repo_id=hf_repo,
-                filename=CONFIG["MODEL_PATH"],
-                token=hf_token
-            )
-            model_path = downloaded_path
-            print(f"Successfully downloaded weights from HF Hub.")
+            hf_token = os.environ.get("HF_TOKEN") or None
+            try:
+                downloaded_path = hf_hub_download(
+                    repo_id=hf_repo,
+                    filename=CONFIG["MODEL_PATH"],
+                    token=hf_token
+                )
+                model_path = downloaded_path
+                print(f"Successfully downloaded weights from HF Hub.", flush=True)
+            except Exception:
+                # If user created an HF Space instead of Model repo, try repo_type="space"
+                downloaded_path = hf_hub_download(
+                    repo_id=hf_repo,
+                    filename=CONFIG["MODEL_PATH"],
+                    token=hf_token,
+                    repo_type="space"
+                )
+                model_path = downloaded_path
+                print(f"Successfully downloaded weights from HF Space.", flush=True)
         except Exception as e:
-            print(f"Failed to download from HF Hub: {e}. Falling back to local file.")
+            print(f"Failed to download from HF Hub: {e}. Falling back to local file.", flush=True)
             
     if os.path.exists(model_path):
-        MODEL.load_state_dict(torch.load(model_path, map_location=DEVICE, weights_only=True))
-        MODEL.eval()
-        print("Backend Initialized Successfully!")
-        BACKEND_READY = True
+        try:
+            MODEL.load_state_dict(torch.load(model_path, map_location=DEVICE, weights_only=True))
+            MODEL.eval()
+            print("Backend Initialized Successfully! Model and Database are loaded.", flush=True)
+            BACKEND_READY = True
+        except Exception as e:
+            print(f"Error loading model weights into PyTorch: {e}", flush=True)
+            BACKEND_READY = False
     else:
-        print(f"Warning: Model weights not found at {model_path}. Please train the model first.")
-        BACKEND_READY = True  # Still mark ready so health check passes; model just won't predict
+        print(f"Error: Model weights not found at {model_path}. Backend not ready.", flush=True)
+        BACKEND_READY = False
 
 @app.route('/api/health', methods=['GET'])
 def health():
@@ -102,6 +118,8 @@ def health():
 
 @app.route('/api/prices', methods=['GET'])
 def get_prices():
+    if not BACKEND_READY:
+        return jsonify({"error": "Backend is still initializing. Please wait a moment."}), 503
     refresh_cache_if_needed()
     ticker = request.args.get('ticker')
     if not ticker or ticker not in TICKERS_LIST:
@@ -118,6 +136,8 @@ def get_prices():
 
 @app.route('/api/optimize', methods=['POST'])
 def optimize():
+    if not BACKEND_READY:
+        return jsonify({"error": "Backend is still initializing. Please wait a moment."}), 503
     refresh_cache_if_needed()
     data = request.json
     if not data or 'tickers' not in data:
@@ -189,8 +209,8 @@ def optimize():
     
     return jsonify(response)
 
-# Initialize backend globally so it runs on import (e.g. when run by Gunicorn on Render)
-initialize_backend()
+# Initialize backend in background thread so Gunicorn opens port immediately on Render
+threading.Thread(target=initialize_backend, daemon=True).start()
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

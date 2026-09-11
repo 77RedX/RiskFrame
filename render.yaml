@@ -7,7 +7,7 @@ services:
       - key: DATABASE_URL
         sync: false
       - key: HF_MODEL_REPO
-        value: 77RedX/RiskFrame
+        value: redx-was-taken/RiskFrame
       - key: HF_TOKEN
         sync: false
       - key: ALLOWED_ORIGINS

@@ -27,7 +27,7 @@ CONFIG = {
     "DROPOUT": 0.2,                  # CNN dropout rate
     "DATA_DIR": "data",
     "DATABASE_URL": os.environ.get("DATABASE_URL", "sqlite:///local_fallback.db"),
-    "HF_MODEL_REPO": os.environ.get("HF_MODEL_REPO", "77RedX/RiskFrame"),
+    "HF_MODEL_REPO": os.environ.get("HF_MODEL_REPO", "redx-was-taken/RiskFrame"),
     "HF_TOKEN": os.environ.get("HF_TOKEN", ""),
     "MODEL_PATH": "temporal_cnn_weights.pth",
 }
