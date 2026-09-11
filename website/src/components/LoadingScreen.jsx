@@ -11,6 +11,7 @@ const MESSAGES = [
 
 const POLL_INTERVAL = 3000;
 const TIMEOUT = 5 * 60 * 1000; // 5 minutes
+const MIN_DISPLAY = 4000; // minimum time to show loading screen
 
 export default function LoadingScreen({ onReady }) {
   const [msgIndex, setMsgIndex] = useState(0);
@@ -20,16 +21,24 @@ export default function LoadingScreen({ onReady }) {
     setTimedOut(false);
     setMsgIndex(0);
     let cancelled = false;
-    const start = Date.now();
+    const mountedAt = Date.now();
 
     const poll = async () => {
       while (!cancelled) {
-        if (Date.now() - start > TIMEOUT) {
+        if (Date.now() - mountedAt > TIMEOUT) {
           setTimedOut(true);
           return;
         }
         try {
-          if (await checkHealth()) { onReady(); return; }
+          if (await checkHealth()) {
+            // Wait until minimum display time has passed
+            const elapsed = Date.now() - mountedAt;
+            if (elapsed < MIN_DISPLAY) {
+              await new Promise(r => setTimeout(r, MIN_DISPLAY - elapsed));
+            }
+            if (!cancelled) onReady();
+            return;
+          }
         } catch { /* server still waking */ }
         await new Promise(r => setTimeout(r, POLL_INTERVAL));
       }
@@ -41,10 +50,12 @@ export default function LoadingScreen({ onReady }) {
   // Start polling on mount
   useEffect(() => startPolling(), [startPolling]);
 
-  // Cycle status messages
+  // Advance messages once, then stop at the last one ("Almost ready...")
   useEffect(() => {
     if (timedOut) return;
-    const id = setInterval(() => setMsgIndex(i => (i + 1) % MESSAGES.length), 3500);
+    const id = setInterval(() => {
+      setMsgIndex(i => (i < MESSAGES.length - 1 ? i + 1 : i));
+    }, 3500);
     return () => clearInterval(id);
   }, [timedOut]);
 
