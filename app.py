@@ -222,11 +222,9 @@ def optimize():
     
     return jsonify(response)
 
-# Initialize backend in background thread so Gunicorn opens port immediately on Render.
-# In local development with Flask debug=True, Werkzeug spawns two processes (a monitor and a worker).
-# We check WERKZEUG_RUN_MAIN so initialization only runs once in the actual worker.
-if os.environ.get("WERKZEUG_RUN_MAIN") == "true" or not app.debug:
-    threading.Thread(target=initialize_backend, daemon=True).start()
+# On Render (gunicorn): init runs at import time, no reloader.
+# Locally: use_reloader=False avoids the double-process problem entirely.
+initialize_backend()
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, use_reloader=False, port=5000)

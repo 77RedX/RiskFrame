@@ -170,8 +170,9 @@ def engineer_features(price_df):
 
     features = pd.concat(all_stocks, axis=1)
 
-    # Remove rows containing NaNs from rolling windows
-    features = features.dropna()
+    # Drop warmup rows required by the longest rolling window (MA50)
+    # then fill remaining NaN (e.g. RSI 0/0 on flat-price tickers) with 0
+    features = features.iloc[max(MA_WINDOWS):].fillna(0)
 
     # Apply Z-score normalization across all features (mean=0, std=1)
     features = (features - features.mean()) / (features.std() + 1e-8)
