@@ -1,5 +1,9 @@
 import os
 import threading
+from dotenv import load_dotenv
+
+load_dotenv()
+
 import torch
 import numpy as np
 import pandas as pd
@@ -43,71 +47,75 @@ def refresh_cache_if_needed():
 def initialize_backend():
     global MODEL, ENGINEERED_FEATURES, COV_MATRIX, TICKERS_LIST, ANNUAL_MEANS, HISTORICAL_PRICES, BACKEND_READY
     
-    print("=== Initializing AI Backend ===")
-    
-    # 1. Load Data
-    historical_data, engineered_features, tickers = download_and_prepare_data(CONFIG)
-    TICKERS_LIST = tickers
-    ENGINEERED_FEATURES = engineered_features
-    HISTORICAL_PRICES = historical_data
-    
-    # 2. Pre-calculate the full Covariance Matrix and Means once
-    daily_returns = calculate_daily_returns(historical_data)
-    COV_MATRIX = calculate_annualized_covariance(daily_returns)
-    ANNUAL_MEANS = daily_returns.mean() * 252
-    
-    global LAST_CACHE_UPDATE
-    LAST_CACHE_UPDATE = time.time()
-    
-    # 3. Load Model
-    MODEL = TemporalCNN(
-        num_assets=len(tickers),
-        features_per_asset=CONFIG["FEATURES_PER_ASSET"],
-        hidden_channels=CONFIG["HIDDEN_CHANNELS"],
-        dropout=CONFIG["DROPOUT"],
-    ).to(DEVICE)
-    
-    model_path = CONFIG["MODEL_PATH"]
-    hf_repo = CONFIG.get("HF_MODEL_REPO")
-    
-    # Try downloading from Hugging Face Hub first
-    if hf_repo and hf_repo not in ("username/Algorithmic-Portfolio-Optimizer", "username/RiskFrame", ""):
-        print(f"Attempting to download latest model weights from Hugging Face ({hf_repo})...", flush=True)
-        try:
-            from huggingface_hub import hf_hub_download
-            hf_token = os.environ.get("HF_TOKEN") or None
+    try:
+        print("=== Initializing AI Backend ===", flush=True)
+        
+        # 1. Load Data
+        print("Step 1/3: Loading market data & engineering features...", flush=True)
+        historical_data, engineered_features, tickers = download_and_prepare_data(CONFIG)
+        TICKERS_LIST = tickers
+        ENGINEERED_FEATURES = engineered_features
+        HISTORICAL_PRICES = historical_data
+        print(f"Step 1/3 Complete: Loaded {len(tickers)} assets and {len(engineered_features)} feature rows.", flush=True)
+        
+        # 2. Pre-calculate the full Covariance Matrix and Means once
+        print("Step 2/3: Calculating covariance matrix & annual returns...", flush=True)
+        daily_returns = calculate_daily_returns(historical_data)
+        COV_MATRIX = calculate_annualized_covariance(daily_returns)
+        ANNUAL_MEANS = daily_returns.mean() * 252
+        print("Step 2/3 Complete: Covariance matrix computed.", flush=True)
+        
+        global LAST_CACHE_UPDATE
+        LAST_CACHE_UPDATE = time.time()
+        
+        # 3. Load Model
+        print("Step 3/3: Initializing TemporalCNN and loading model weights...", flush=True)
+        MODEL = TemporalCNN(
+            num_assets=len(tickers),
+            features_per_asset=CONFIG["FEATURES_PER_ASSET"],
+            hidden_channels=CONFIG["HIDDEN_CHANNELS"],
+            dropout=CONFIG["DROPOUT"],
+        ).to(DEVICE)
+        
+        model_path = CONFIG["MODEL_PATH"]
+        hf_repo = CONFIG.get("HF_MODEL_REPO")
+        
+        # Try downloading from Hugging Face Model Hub if configured
+        if hf_repo and hf_repo not in ("username/Algorithmic-Portfolio-Optimizer", "username/RiskFrame", ""):
+            print(f"Checking Hugging Face Model Hub ({hf_repo}) for latest weights...", flush=True)
             try:
-                downloaded_path = hf_hub_download(
-                    repo_id=hf_repo,
-                    filename=CONFIG["MODEL_PATH"],
-                    token=hf_token
-                )
-                model_path = downloaded_path
-                print(f"Successfully downloaded weights from HF Hub.", flush=True)
-            except Exception:
-                # If user created an HF Space instead of Model repo, try repo_type="space"
+                from huggingface_hub import hf_hub_download
+                hf_token = os.environ.get("HF_TOKEN") or None
+                if not hf_token:
+                    print("Notice: HF_TOKEN is not set. If the Hugging Face repo is private, download will fail.", flush=True)
                 downloaded_path = hf_hub_download(
                     repo_id=hf_repo,
                     filename=CONFIG["MODEL_PATH"],
                     token=hf_token,
-                    repo_type="space"
+                    repo_type="model"
                 )
                 model_path = downloaded_path
-                print(f"Successfully downloaded weights from HF Space.", flush=True)
-        except Exception as e:
-            print(f"Failed to download from HF Hub: {e}. Falling back to local file.", flush=True)
-            
-    if os.path.exists(model_path):
-        try:
-            MODEL.load_state_dict(torch.load(model_path, map_location=DEVICE, weights_only=True))
-            MODEL.eval()
-            print("Backend Initialized Successfully! Model and Database are loaded.", flush=True)
-            BACKEND_READY = True
-        except Exception as e:
-            print(f"Error loading model weights into PyTorch: {e}", flush=True)
+                print("Successfully downloaded weights from Hugging Face Model Hub!", flush=True)
+            except Exception as e:
+                print(f"HF Hub download skipped or failed: {e}. Falling back to local weights file.", flush=True)
+                
+        if os.path.exists(model_path):
+            try:
+                MODEL.load_state_dict(torch.load(model_path, map_location=DEVICE, weights_only=True))
+                MODEL.eval()
+                print(f"Loaded weights from '{model_path}'.", flush=True)
+                print("Backend Initialized Successfully! Model and Database are ready.", flush=True)
+                BACKEND_READY = True
+            except Exception as e:
+                print(f"Error loading weights into PyTorch: {e}", flush=True)
+                BACKEND_READY = False
+        else:
+            print(f"Error: Model weights not found at '{model_path}'. Backend not ready.", flush=True)
             BACKEND_READY = False
-    else:
-        print(f"Error: Model weights not found at {model_path}. Backend not ready.", flush=True)
+    except Exception as err:
+        import traceback
+        print(f"CRITICAL ERROR during backend initialization: {err}", flush=True)
+        traceback.print_exc()
         BACKEND_READY = False
 
 @app.route('/api/health', methods=['GET'])

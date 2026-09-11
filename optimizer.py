@@ -6,7 +6,7 @@ def calculate_daily_returns(prices_df):
     """
     Converts a DataFrame of daily closing prices into daily percentage returns.
     """
-    print("Calculating daily percentage returns...")
+    print("Calculating daily percentage returns...", flush=True)
     
     # pct_change() applies the return formula to every cell comparing it to the row above
     returns = prices_df.pct_change()
@@ -22,7 +22,7 @@ def calculate_annualized_returns(daily_returns, trading_days=252):
     Calculates the annualized expected return for each asset.
     Assuming 252 trading days in a year.
     """
-    print("Calculating annualized expected returns...")
+    print("Calculating annualized expected returns...", flush=True)
     
     # Calculate the average (mean) daily return for each column, then annualize it
     annualized_returns = daily_returns.mean() * trading_days
@@ -34,14 +34,14 @@ def calculate_annualized_covariance(daily_returns, trading_days=252):
     Calculates the annualized covariance matrix using Ledoit-Wolf shrinkage
     to reduce estimation noise and improve out-of-sample Sharpe Ratio stability.
     """
-    print("Calculating annualized covariance matrix (with Ledoit-Wolf shrinkage)...")
+    print("Calculating annualized covariance matrix (with Ledoit-Wolf shrinkage)...", flush=True)
     try:
         from sklearn.covariance import LedoitWolf
         lw = LedoitWolf()
         cov_matrix_array = lw.fit(daily_returns).covariance_ * trading_days
         cov_matrix = pd.DataFrame(cov_matrix_array, index=daily_returns.columns, columns=daily_returns.columns)
     except Exception as e:
-        print(f"Fallback to sample covariance due to: {e}")
+        print(f"Fallback to sample covariance due to: {e}", flush=True)
         cov_matrix = daily_returns.cov() * trading_days
         
     return cov_matrix

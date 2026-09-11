@@ -1,5 +1,8 @@
 import os
 import sys
+from dotenv import load_dotenv
+
+load_dotenv()
 import torch
 import torch.nn as nn
 import torch.optim as optim

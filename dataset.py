@@ -4,6 +4,9 @@ import requests
 import numpy as np
 import pandas as pd
 from sqlalchemy import create_engine, inspect
+from dotenv import load_dotenv
+
+load_dotenv()
 
 import torch
 from torch.utils.data import Dataset
