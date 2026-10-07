@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
-export default function Navbar() {
+export default function Navbar({ currentUser, onOpenAuth, onLogout }) {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -108,6 +108,35 @@ export default function Navbar() {
               >
                 Market Data
               </a>
+            </li>
+            <li>
+              {currentUser ? (
+                <button
+                  onClick={onOpenAuth}
+                  className="nav-cta-pill"
+                  style={{
+                    background: 'rgba(46, 229, 157, 0.1)',
+                    borderColor: 'rgba(46, 229, 157, 0.4)',
+                    color: '#2ee59d',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <span>👤 {currentUser.name.split(' ')[0]}</span>
+                </button>
+              ) : (
+                <button
+                  onClick={onOpenAuth}
+                  className="nav-cta-pill"
+                  style={{
+                    background: 'rgba(212, 175, 55, 0.15)',
+                    borderColor: '#D4AF37',
+                    color: '#EAE0CE',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <span>Sign In</span>
+                </button>
+              )}
             </li>
             <li>
               <a

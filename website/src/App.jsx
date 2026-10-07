@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { optimizePortfolio } from './api';
+import { optimizePortfolio, getProfile, clearAuthToken } from './api';
 import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -7,6 +7,8 @@ import StockSelector from './components/StockSelector/StockSelector';
 import Results from './components/Results/Results';
 import PriceHistory from './components/PriceHistory/PriceHistory';
 import Footer from './components/Footer';
+import AgentCopilot from './components/AgentCopilot/AgentCopilot';
+import AuthModal from './components/UserAuth/AuthModal';
 
 export default function App() {
   const [backendReady, setBackendReady] = useState(false);
@@ -16,6 +18,15 @@ export default function App() {
   const [errorMessage, setErrorMessage] = useState('');
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [loadingStatus, setLoadingStatus] = useState('');
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+
+  // Restore authenticated user profile on load
+  useEffect(() => {
+    getProfile()
+      .then((data) => setCurrentUser(data.user))
+      .catch(() => setCurrentUser(null));
+  }, []);
 
   // Fix scroll position on mount
   useEffect(() => {
@@ -148,7 +159,14 @@ export default function App() {
 
   return (
     <>
-      <Navbar />
+      <Navbar
+        currentUser={currentUser}
+        onOpenAuth={() => setIsAuthModalOpen(true)}
+        onLogout={() => {
+          clearAuthToken();
+          setCurrentUser(null);
+        }}
+      />
       <Hero />
       <StockSelector
         selected={selected}
@@ -168,6 +186,15 @@ export default function App() {
       />
       <PriceHistory />
       <Footer />
+
+      {/* RiskFrame v2 Agentic Co-Pilot & Account Modal */}
+      <AgentCopilot currentUser={currentUser} />
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        user={currentUser}
+        onAuthSuccess={(user) => setCurrentUser(user)}
+      />
     </>
   );
 }
