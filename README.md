@@ -353,19 +353,28 @@ The training procedure executes 150 epochs with early stopping (patience 20), sa
 
 ---
 
-## Deployment with Docker
+## Deployment & Zero-Config Execution with Docker Compose
 
-RiskFrame includes a multi-stage `Dockerfile` that compiles the React application and serves the Python backend via Gunicorn:
+RiskFrame provides complete container orchestration via **Docker Compose** so you never have to manually install Node.js, run `npm run build`, or configure Redis/MongoDB manually:
 
+### Option A: One-Command Production Stack (Auto-built React + NGINX + API + Quant + Redis + Mongo)
 ```bash
-# Build the Docker image
-docker build -t riskframe .
-
-# Run the container
-docker run -p 7860:7860 -e PORT=7860 riskframe
+docker compose up --build
 ```
+This automatically compiles the frontend, starts NGINX on port `3000`, Express API on port `5000`, PyTorch Quant sidecar on port `5001`, Redis cache on port `6379`, and MongoDB on port `27017`.
+* Access the web terminal at: **`http://localhost:3000`**
+* Access the backend API at: **`http://localhost:5000/api/health`**
 
-Access the application at `http://localhost:7860`.
+### Option B: Zero-Build Live Hot-Reloading Development (No `npm run build` Ever Needed)
+```bash
+docker compose -f docker-compose.dev.yml up
+```
+Mounts your local source code into the containers with **Vite Hot Module Replacement (HMR)** and **Node.js watch mode**. Any code changes to `.jsx` or `.css` are reflected live in your browser instantly without restarting containers or running builds.
+
+To stop the containers at any time:
+```bash
+docker compose down
+```
 
 ---
 
