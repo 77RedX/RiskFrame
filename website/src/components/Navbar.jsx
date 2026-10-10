@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
-export default function Navbar({ currentUser, onOpenAuth, onLogout }) {
+export default function Navbar({ currentUser, onOpenAuth, onLogout, holdingsCount = 0 }) {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -97,6 +97,42 @@ export default function Navbar({ currentUser, onOpenAuth, onLogout }) {
                 onClick={(e) => smoothScroll(e, '#results')}
               >
                 Analytics
+              </a>
+            </li>
+            <li>
+              <a
+                href="#optimal-signals"
+                id="nav-signals"
+                style={linkStyle('optimal-signals')}
+                onClick={(e) => smoothScroll(e, '#optimal-signals')}
+              >
+                Buy &amp; Sell
+              </a>
+            </li>
+            <li>
+              <a
+                href="#my-portfolio"
+                id="nav-portfolio"
+                style={linkStyle('my-portfolio')}
+                onClick={(e) => smoothScroll(e, '#my-portfolio')}
+              >
+                My Portfolio
+                {holdingsCount > 0 && (
+                  <span
+                    style={{
+                      marginLeft: 6,
+                      fontSize: '0.68rem',
+                      fontFamily: 'var(--font-mono)',
+                      background: 'rgba(46, 229, 157, 0.18)',
+                      color: '#2EE59D',
+                      padding: '1px 6px',
+                      borderRadius: 10,
+                      border: '1px solid rgba(46, 229, 157, 0.35)',
+                    }}
+                  >
+                    {holdingsCount}
+                  </span>
+                )}
               </a>
             </li>
             <li>
@@ -201,6 +237,20 @@ export default function Navbar({ currentUser, onOpenAuth, onLogout }) {
               style={{ color: '#EAE0CE', fontSize: '0.92rem', padding: '6px 0' }}
             >
               Analytics
+            </a>
+            <a
+              href="#optimal-signals"
+              onClick={(e) => smoothScroll(e, '#optimal-signals')}
+              style={{ color: '#2EE59D', fontSize: '0.92rem', fontWeight: 600, padding: '6px 0' }}
+            >
+              ⚡ Optimal Buy &amp; Sell
+            </a>
+            <a
+              href="#my-portfolio"
+              onClick={(e) => smoothScroll(e, '#my-portfolio')}
+              style={{ color: '#D4AF37', fontSize: '0.92rem', fontWeight: 600, padding: '6px 0' }}
+            >
+              💼 My Portfolio ({holdingsCount})
             </a>
             <a
               href="#price-history"
