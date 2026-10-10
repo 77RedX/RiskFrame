@@ -96,6 +96,39 @@ router.get('/prices', async (req, res) => {
   }
 });
 
+// GET /api/signals
+router.get('/signals', async (req, res) => {
+  try {
+    const buyCandidates = ['NVDA', 'AAPL', 'AVGO', 'MSFT', 'AMZN', 'LLY', 'GOOGL', 'META'];
+    const sellCandidates = ['INTC', 'BA', 'PFE', 'WFC', 'CVX'];
+
+    const quantResult = await runQuantOptimization(buyCandidates);
+
+    const buySignals = buyCandidates.map((ticker) => ({
+      ticker,
+      weight: quantResult.allocation[ticker] || 0.12,
+      alpha: quantResult.ai_predictions[ticker] || 0.25,
+      signal: 'BUY',
+    }));
+
+    const sellSignals = sellCandidates.map((ticker) => ({
+      ticker,
+      signal: 'SELL',
+      urgency: 'High',
+    }));
+
+    return res.json({
+      buySignals,
+      sellSignals,
+      engine: quantResult.engine,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (err) {
+    console.error('[Signals Route Error]:', err);
+    return res.status(500).json({ error: 'Failed to generate algorithmic signals' });
+  }
+});
+
 // GET /api/cache/stats
 router.get('/cache/stats', (req, res) => {
   const total = cacheStats.hits + cacheStats.misses;
