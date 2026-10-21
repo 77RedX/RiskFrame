@@ -96,6 +96,18 @@ export const updatePreferences = async (preferences) => {
   return res.json();
 };
 
+export const updateUserPortfolio = async (portfolioData) => {
+  const token = getAuthToken();
+  if (!token) return null;
+  const res = await fetch(`${API}/api/auth/portfolio`, {
+    method: 'PUT',
+    headers: getHeaders(),
+    body: JSON.stringify(portfolioData),
+  });
+  if (!res.ok) return null;
+  return res.json();
+};
+
 // User Portfolio Management (MongoDB)
 export const fetchSavedPortfolios = async () => {
   const res = await fetch(`${API}/api/portfolios`, { headers: getHeaders() });
