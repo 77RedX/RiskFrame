@@ -33,7 +33,9 @@ services:
       - "5000:5000"
     environment:
       - PORT=5000
-      - MONGODB_URI=mongodb://mongo:27017/riskframe
+      - MONGODB_URI=${MONGODB_URI}
+      - DATABASE_URL=sqlite:///local_fallback.db
+
       - REDIS_URL=redis://redis:6379
       - PYTHON_QUANT_URL=http://quant-engine:5001
       - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173,http://localhost:80
@@ -54,7 +56,7 @@ services:
       - "5001:5001"
     environment:
       - PORT=5001
-      - DATABASE_URL=sqlite:///local_fallback.db
+      - DATABASE_URL=MONGO_URI
       - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5000
     restart: unless-stopped
 
