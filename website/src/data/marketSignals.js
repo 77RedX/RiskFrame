@@ -136,14 +136,14 @@ export const DEFAULT_DEMO_HOLDINGS = [
 
 export const DEFAULT_CASH_BALANCE = 24500.00;
 
-// LocalStorage Keys
-const HOLDINGS_KEY = 'rf_portfolio_holdings_v2';
-const CASH_KEY = 'rf_portfolio_cash_v2';
-const TRADES_KEY = 'rf_trade_history_v2';
+// LocalStorage Key Helpers (scoped per user so accounts don't leak or collide)
+const getHoldingsKey = (userId) => `rf_portfolio_holdings_${userId || 'guest'}`;
+const getCashKey = (userId) => `rf_portfolio_cash_${userId || 'guest'}`;
+const getTradesKey = (userId) => `rf_trade_history_${userId || 'guest'}`;
 
-export function loadUserHoldings() {
+export function loadUserHoldings(userId = 'guest') {
   try {
-    const raw = localStorage.getItem(HOLDINGS_KEY);
+    const raw = localStorage.getItem(getHoldingsKey(userId));
     if (raw) {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) return parsed;
@@ -154,17 +154,17 @@ export function loadUserHoldings() {
   return DEFAULT_DEMO_HOLDINGS;
 }
 
-export function saveUserHoldings(holdings) {
+export function saveUserHoldings(holdings, userId = 'guest') {
   try {
-    localStorage.setItem(HOLDINGS_KEY, JSON.stringify(holdings));
+    localStorage.setItem(getHoldingsKey(userId), JSON.stringify(holdings));
   } catch (e) {
     console.warn('Error saving holdings to localStorage', e);
   }
 }
 
-export function loadCashBalance() {
+export function loadCashBalance(userId = 'guest') {
   try {
-    const raw = localStorage.getItem(CASH_KEY);
+    const raw = localStorage.getItem(getCashKey(userId));
     if (raw !== null) {
       const num = parseFloat(raw);
       if (!isNaN(num)) return num;
@@ -173,23 +173,23 @@ export function loadCashBalance() {
   return DEFAULT_CASH_BALANCE;
 }
 
-export function saveCashBalance(cash) {
+export function saveCashBalance(cash, userId = 'guest') {
   try {
-    localStorage.setItem(CASH_KEY, cash.toString());
+    localStorage.setItem(getCashKey(userId), cash.toString());
   } catch (e) {}
 }
 
-export function loadTradeHistory() {
+export function loadTradeHistory(userId = 'guest') {
   try {
-    const raw = localStorage.getItem(TRADES_KEY);
+    const raw = localStorage.getItem(getTradesKey(userId));
     if (raw) return JSON.parse(raw);
   } catch (e) {}
   return [];
 }
 
-export function recordTrade(trade) {
+export function recordTrade(trade, userId = 'guest') {
   try {
-    const history = loadTradeHistory();
+    const history = loadTradeHistory(userId);
     const updated = [
       {
         id: `tr_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
@@ -198,7 +198,7 @@ export function recordTrade(trade) {
       },
       ...history.slice(0, 49),
     ];
-    localStorage.setItem(TRADES_KEY, JSON.stringify(updated));
+    localStorage.setItem(getTradesKey(userId), JSON.stringify(updated));
   } catch (e) {}
 }
 
