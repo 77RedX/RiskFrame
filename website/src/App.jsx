@@ -190,17 +190,17 @@ export default function App() {
 
   // Execute Buy / Sell Trade (Zerodha & Groww settlement model)
   const handleExecuteTrade = useCallback((order) => {
+    const userId = currentUser?._id;
     const { type, ticker, name, shares, price, total } = order;
 
     if (type === 'BUY') {
-      // 1. Deduct Cash
+      let nextCashValue;
       setCashBalance((prevCash) => {
-        const nextCash = Math.max(0, Number((prevCash - total).toFixed(2)));
-        saveCashBalance(nextCash);
-        return nextCash;
+        nextCashValue = Math.max(0, Number((prevCash - total).toFixed(2)));
+        saveCashBalance(nextCashValue, userId);
+        return nextCashValue;
       });
 
-      // 2. Update Holdings
       setHoldings((prevHoldings) => {
         const existingIdx = prevHoldings.findIndex((h) => h.ticker === ticker);
         let nextHoldings;
@@ -230,20 +230,22 @@ export default function App() {
           nextHoldings = [newHolding, ...prevHoldings];
         }
 
-        saveUserHoldings(nextHoldings);
+        saveUserHoldings(nextHoldings, userId);
+        if (userId) {
+          updateUserPortfolio({ holdings: nextHoldings, cashBalance: nextCashValue, trade: order });
+        }
         return nextHoldings;
       });
 
-      recordTrade(order);
+      recordTrade(order, userId);
     } else if (type === 'SELL') {
-      // 1. Credit Cash
+      let nextCashValue;
       setCashBalance((prevCash) => {
-        const nextCash = Number((prevCash + total).toFixed(2));
-        saveCashBalance(nextCash);
-        return nextCash;
+        nextCashValue = Number((prevCash + total).toFixed(2));
+        saveCashBalance(nextCashValue, userId);
+        return nextCashValue;
       });
 
-      // 2. Reduce or Remove Holdings
       setHoldings((prevHoldings) => {
         const nextHoldings = prevHoldings
           .map((h) => {
@@ -256,28 +258,39 @@ export default function App() {
           })
           .filter(Boolean);
 
-        saveUserHoldings(nextHoldings);
+        saveUserHoldings(nextHoldings, userId);
+        if (userId) {
+          updateUserPortfolio({ holdings: nextHoldings, cashBalance: nextCashValue, trade: order });
+        }
         return nextHoldings;
       });
 
-      recordTrade(order);
+      recordTrade(order, userId);
     }
-  }, []);
+  }, [currentUser]);
 
   const handleResetHoldings = useCallback(() => {
+    const userId = currentUser?._id;
     setHoldings(DEFAULT_DEMO_HOLDINGS);
-    saveUserHoldings(DEFAULT_DEMO_HOLDINGS);
+    saveUserHoldings(DEFAULT_DEMO_HOLDINGS, userId);
     setCashBalance(DEFAULT_CASH_BALANCE);
-    saveCashBalance(DEFAULT_CASH_BALANCE);
-  }, []);
+    saveCashBalance(DEFAULT_CASH_BALANCE, userId);
+    if (userId) {
+      updateUserPortfolio({ holdings: DEFAULT_DEMO_HOLDINGS, cashBalance: DEFAULT_CASH_BALANCE });
+    }
+  }, [currentUser]);
 
   const handleAddCash = useCallback((amount) => {
+    const userId = currentUser?._id;
     setCashBalance((prev) => {
       const next = Number((prev + amount).toFixed(2));
-      saveCashBalance(next);
+      saveCashBalance(next, userId);
+      if (userId) {
+        updateUserPortfolio({ cashBalance: next });
+      }
       return next;
     });
-  }, []);
+  }, [currentUser]);
 
   const handleTriggerOptimizationFromSignals = useCallback(() => {
     if (selected.size >= 2) {
@@ -305,6 +318,10 @@ export default function App() {
         onLogout={() => {
           clearAuthToken();
           setCurrentUser(null);
+          setSelected(new Set());
+          setResults(null);
+          setHoldings(loadUserHoldings('guest'));
+          setCashBalance(loadCashBalance('guest'));
         }}
       />
       <Hero />
