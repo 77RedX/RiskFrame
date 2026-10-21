@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { optimizePortfolio, getProfile, clearAuthToken } from './api';
+import { optimizePortfolio, getProfile, clearAuthToken, updateUserPortfolio } from './api';
 import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
