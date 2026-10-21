@@ -34,8 +34,8 @@ export default function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   // User Portfolio & Trading State
-  const [holdings, setHoldings] = useState(() => loadUserHoldings());
-  const [cashBalance, setCashBalance] = useState(() => loadCashBalance());
+  const [holdings, setHoldings] = useState(() => loadUserHoldings('guest'));
+  const [cashBalance, setCashBalance] = useState(() => loadCashBalance('guest'));
 
   // Restore authenticated user profile on load
   useEffect(() => {
@@ -43,6 +43,28 @@ export default function App() {
       .then((data) => setCurrentUser(data.user))
       .catch(() => setCurrentUser(null));
   }, []);
+
+  // Synchronize user holdings & cash whenever authenticated user changes (login, logout, account switch)
+  useEffect(() => {
+    if (currentUser) {
+      const userHoldings =
+        currentUser.holdings && currentUser.holdings.length > 0
+          ? currentUser.holdings
+          : loadUserHoldings(currentUser._id);
+      const userCash =
+        currentUser.cashBalance !== undefined && currentUser.cashBalance !== null
+          ? currentUser.cashBalance
+          : loadCashBalance(currentUser._id);
+
+      setHoldings(userHoldings);
+      setCashBalance(userCash);
+      saveUserHoldings(userHoldings, currentUser._id);
+      saveCashBalance(userCash, currentUser._id);
+    } else {
+      setHoldings(loadUserHoldings('guest'));
+      setCashBalance(loadCashBalance('guest'));
+    }
+  }, [currentUser?._id]);
 
   // Fix scroll position on mount
   useEffect(() => {
