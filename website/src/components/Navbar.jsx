@@ -147,18 +147,36 @@ export default function Navbar({ currentUser, onOpenAuth, onLogout, holdingsCoun
             </li>
             <li>
               {currentUser ? (
-                <button
-                  onClick={onOpenAuth}
-                  className="nav-cta-pill"
-                  style={{
-                    background: 'rgba(46, 229, 157, 0.1)',
-                    borderColor: 'rgba(46, 229, 157, 0.4)',
-                    color: '#2ee59d',
-                    cursor: 'pointer',
-                  }}
-                >
-                  <span>👤 {currentUser.name.split(' ')[0]}</span>
-                </button>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <button
+                    onClick={onOpenAuth}
+                    className="nav-cta-pill"
+                    title="Account Details"
+                    style={{
+                      background: 'rgba(46, 229, 157, 0.1)',
+                      borderColor: 'rgba(46, 229, 157, 0.4)',
+                      color: '#2ee59d',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <span>👤 {currentUser.name.split(' ')[0]}</span>
+                  </button>
+                  <button
+                    onClick={onLogout}
+                    className="nav-cta-pill"
+                    id="nav-signout-btn"
+                    title="Sign Out of RiskFrame"
+                    style={{
+                      background: 'rgba(255, 92, 92, 0.12)',
+                      borderColor: 'rgba(255, 92, 92, 0.35)',
+                      color: '#ff6b6b',
+                      cursor: 'pointer',
+                      padding: '7px 12px',
+                    }}
+                  >
+                    <span>Sign Out</span>
+                  </button>
+                </div>
               ) : (
                 <button
                   onClick={onOpenAuth}
@@ -267,6 +285,74 @@ export default function Navbar({ currentUser, onOpenAuth, onLogout, holdingsCoun
             >
               GitHub Repository ↗
             </a>
+
+            {currentUser ? (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '10px 0',
+                  borderTop: '1px solid rgba(255,255,255,0.08)',
+                  marginTop: '4px',
+                }}
+              >
+                <button
+                  onClick={() => {
+                    onOpenAuth();
+                    setMobileMenuOpen(false);
+                  }}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#2ee59d',
+                    fontSize: '0.92rem',
+                    cursor: 'pointer',
+                    padding: 0,
+                    fontWeight: 600,
+                  }}
+                >
+                  👤 {currentUser.name}
+                </button>
+                <button
+                  onClick={() => {
+                    onLogout();
+                    setMobileMenuOpen(false);
+                  }}
+                  style={{
+                    background: 'rgba(255, 92, 92, 0.15)',
+                    border: '1px solid rgba(255, 92, 92, 0.4)',
+                    color: '#ff6b6b',
+                    padding: '5px 12px',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    fontSize: '0.85rem',
+                    fontWeight: 600,
+                  }}
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => {
+                  onOpenAuth();
+                  setMobileMenuOpen(false);
+                }}
+                className="nav-cta-pill"
+                style={{
+                  background: 'rgba(212, 175, 55, 0.15)',
+                  borderColor: '#D4AF37',
+                  color: '#EAE0CE',
+                  cursor: 'pointer',
+                  width: '100%',
+                  marginTop: '8px',
+                  justifyContent: 'center',
+                }}
+              >
+                <span>Sign In / Register</span>
+              </button>
+            )}
           </div>
         )}
       </nav>

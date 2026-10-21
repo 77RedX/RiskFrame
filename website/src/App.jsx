@@ -292,6 +292,15 @@ export default function App() {
     });
   }, [currentUser]);
 
+  const handleLogout = useCallback(() => {
+    clearAuthToken();
+    setCurrentUser(null);
+    setSelected(new Set());
+    setResults(null);
+    setHoldings(loadUserHoldings('guest'));
+    setCashBalance(loadCashBalance('guest'));
+  }, []);
+
   const handleTriggerOptimizationFromSignals = useCallback(() => {
     if (selected.size >= 2) {
       handleCalculate();
@@ -315,14 +324,7 @@ export default function App() {
         currentUser={currentUser}
         holdingsCount={holdings.length}
         onOpenAuth={() => setIsAuthModalOpen(true)}
-        onLogout={() => {
-          clearAuthToken();
-          setCurrentUser(null);
-          setSelected(new Set());
-          setResults(null);
-          setHoldings(loadUserHoldings('guest'));
-          setCashBalance(loadCashBalance('guest'));
-        }}
+        onLogout={handleLogout}
       />
       <Hero />
       <StockSelector
@@ -369,6 +371,7 @@ export default function App() {
         onClose={() => setIsAuthModalOpen(false)}
         user={currentUser}
         onAuthSuccess={(user) => setCurrentUser(user)}
+        onLogout={handleLogout}
       />
     </>
   );
