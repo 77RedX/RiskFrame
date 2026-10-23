@@ -8,7 +8,7 @@ const router = express.Router();
 
 const AgentChatSchema = z.object({
   message: z.string().min(1, 'Message cannot be empty'),
-  sessionId: z.string().optional(),
+  sessionId: z.string().nullish(),
 });
 
 // POST /api/agent/chat
