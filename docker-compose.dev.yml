@@ -1,0 +1,86 @@
+# ============================================================
+# RiskFrame Live Hot-Reloading Development Orchestration
+# ============================================================
+# Usage:
+#   docker compose -f docker-compose.dev.yml up
+#
+# Features:
+#   - Vite React live HMR (Hot Module Replacement)
+#   - Express Node.js auto-restart on file change
+#   - Zero manual builds required!
+# ============================================================
+
+services:
+  # 1. Frontend with Vite Hot Module Replacement (No build needed!)
+  frontend:
+    build:
+      context: ./website
+      dockerfile: Dockerfile
+      target: development
+    container_name: riskframe-frontend-dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./website/src:/app/src:ro
+      - ./website/index.html:/app/index.html:ro
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+
+  # 2. Backend with live watch mode
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: riskframe-backend-dev
+    command: ["npm", "run", "dev"]
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server/src:/app/src
+      - /app/node_modules
+    environment:
+      - PORT=5000
+      - MONGODB_URI=mongodb://mongo:27017/riskframe
+      - REDIS_URL=redis://redis:6379
+      - PYTHON_QUANT_URL=http://quant-engine:5001
+      - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
+      - JWT_SECRET=riskframe_dev_secret_key_2026
+    depends_on:
+      - mongo
+      - redis
+      - quant-engine
+
+  # 3. PyTorch Quant Microservice
+  quant-engine:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    container_name: riskframe-quant-dev
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - DATABASE_URL=sqlite:///local_fallback.db
+      - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5000
+
+  # 4. Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: riskframe-redis-dev
+    ports:
+      - "6379:6379"
+
+  # 5. MongoDB
+  mongo:
+    image: mongo:7-jammy
+    container_name: riskframe-mongo-dev
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_dev_data:/data/db
+
+volumes:
+  mongo_dev_data:

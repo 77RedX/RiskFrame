@@ -222,6 +222,64 @@ def optimize():
     
     return jsonify(response)
 
+@app.route('/api/signals', methods=['GET'])
+def get_signals():
+    if not BACKEND_READY:
+        return jsonify({"error": "Backend is still initializing. Please wait a moment."}), 503
+    refresh_cache_if_needed()
+
+    window_size = CONFIG["WINDOW_SIZE"]
+    if len(ENGINEERED_FEATURES) < window_size:
+        return jsonify({"error": "Insufficient market data"}), 503
+
+    latest_window = ENGINEERED_FEATURES.iloc[-window_size:].to_numpy(dtype=np.float32)
+    latest_tensor = (
+        torch.tensor(latest_window)
+        .reshape(1, window_size, len(TICKERS_LIST), CONFIG["FEATURES_PER_ASSET"])
+        .to(DEVICE)
+    )
+
+    with torch.no_grad():
+        predicted_array = MODEL(latest_tensor).cpu().numpy()[0]
+
+    annualized_returns = pd.Series(
+        predicted_array * (252 / CONFIG["PREDICTION_HORIZON"]), index=TICKERS_LIST
+    )
+
+    top_buys = annualized_returns.sort_values(ascending=False).head(10)
+    top_sells = annualized_returns.sort_values(ascending=True).head(5)
+
+    buy_signals = []
+    for ticker, alpha in top_buys.items():
+        price = float(HISTORICAL_PRICES[ticker].dropna().iloc[-1])
+        prev = float(HISTORICAL_PRICES[ticker].dropna().iloc[-2])
+        chg_pct = round(((price - prev) / prev) * 100, 2)
+        buy_signals.append({
+            "ticker": ticker,
+            "alpha": round(float(alpha), 4),
+            "price": round(price, 2),
+            "change_pct": chg_pct,
+            "signal": "STRONG_BUY" if alpha > 0.30 else "BUY"
+        })
+
+    sell_signals = []
+    for ticker, alpha in top_sells.items():
+        price = float(HISTORICAL_PRICES[ticker].dropna().iloc[-1])
+        prev = float(HISTORICAL_PRICES[ticker].dropna().iloc[-2])
+        chg_pct = round(((price - prev) / prev) * 100, 2)
+        sell_signals.append({
+            "ticker": ticker,
+            "alpha": round(float(alpha), 4),
+            "price": round(price, 2),
+            "change_pct": chg_pct,
+            "signal": "SELL"
+        })
+
+    return jsonify({
+        "buy_signals": buy_signals,
+        "sell_signals": sell_signals
+    })
+
 # On Render (gunicorn): init runs at import time, no reloader.
 # Locally: use_reloader=False avoids the double-process problem entirely.
 initialize_backend()

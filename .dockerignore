@@ -1,0 +1,13 @@
+.git
+.github
+.venv
+venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.log
+website/node_modules
+website/dist
+server/node_modules
+.DS_Store

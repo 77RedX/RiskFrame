@@ -1,12 +1,26 @@
 import { useState, useCallback, useEffect } from 'react';
-import { optimizePortfolio } from './api';
+import { optimizePortfolio, getProfile, clearAuthToken, updateUserPortfolio } from './api';
 import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import StockSelector from './components/StockSelector/StockSelector';
 import Results from './components/Results/Results';
+import OptimalSignals from './components/OptimalSignals/OptimalSignals';
+import MyPortfolio from './components/MyPortfolio/MyPortfolio';
 import PriceHistory from './components/PriceHistory/PriceHistory';
 import Footer from './components/Footer';
+import AgentCopilot from './components/AgentCopilot/AgentCopilot';
+import AuthModal from './components/UserAuth/AuthModal';
+import {
+  loadUserHoldings,
+  saveUserHoldings,
+  loadCashBalance,
+  saveCashBalance,
+  DEFAULT_DEMO_HOLDINGS,
+  DEFAULT_CASH_BALANCE,
+  recordTrade,
+} from './data/marketSignals';
+import { SP500_STOCKS } from './data/stocks';
 
 export default function App() {
   const [backendReady, setBackendReady] = useState(false);
@@ -16,6 +30,41 @@ export default function App() {
   const [errorMessage, setErrorMessage] = useState('');
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [loadingStatus, setLoadingStatus] = useState('');
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+
+  // User Portfolio & Trading State
+  const [holdings, setHoldings] = useState(() => loadUserHoldings('guest'));
+  const [cashBalance, setCashBalance] = useState(() => loadCashBalance('guest'));
+
+  // Restore authenticated user profile on load
+  useEffect(() => {
+    getProfile()
+      .then((data) => setCurrentUser(data.user))
+      .catch(() => setCurrentUser(null));
+  }, []);
+
+  // Synchronize user holdings & cash whenever authenticated user changes (login, logout, account switch)
+  useEffect(() => {
+    if (currentUser) {
+      const userHoldings =
+        currentUser.holdings && currentUser.holdings.length > 0
+          ? currentUser.holdings
+          : loadUserHoldings(currentUser._id);
+      const userCash =
+        currentUser.cashBalance !== undefined && currentUser.cashBalance !== null
+          ? currentUser.cashBalance
+          : loadCashBalance(currentUser._id);
+
+      setHoldings(userHoldings);
+      setCashBalance(userCash);
+      saveUserHoldings(userHoldings, currentUser._id);
+      saveCashBalance(userCash, currentUser._id);
+    } else {
+      setHoldings(loadUserHoldings('guest'));
+      setCashBalance(loadCashBalance('guest'));
+    }
+  }, [currentUser?._id]);
 
   // Fix scroll position on mount
   useEffect(() => {
@@ -106,8 +155,9 @@ export default function App() {
     setErrorMessage('');
   }, []);
 
-  const handleCalculate = useCallback(async () => {
-    if (selected.size < 2 || isCalculating) return;
+  const handleCalculate = useCallback(async (customTickers = null) => {
+    const listToOptimize = customTickers || Array.from(selected);
+    if (listToOptimize.length < 2 || isCalculating) return;
 
     setIsCalculating(true);
     setResults(null);
@@ -121,13 +171,11 @@ export default function App() {
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
 
-    const tickers = Array.from(selected);
-
     try {
       setLoadingProgress(40);
       setLoadingStatus('Optimizing Portfolio...');
 
-      const data = await optimizePortfolio(tickers);
+      const data = await optimizePortfolio(listToOptimize);
       setLoadingProgress(100);
       setResults(data);
     } catch (error) {
@@ -140,6 +188,130 @@ export default function App() {
     setIsCalculating(false);
   }, [selected, isCalculating]);
 
+  // Execute Buy / Sell Trade (Zerodha & Groww settlement model)
+  const handleExecuteTrade = useCallback((order) => {
+    const userId = currentUser?._id;
+    const { type, ticker, name, shares, price, total } = order;
+
+    if (type === 'BUY') {
+      let nextCashValue;
+      setCashBalance((prevCash) => {
+        nextCashValue = Math.max(0, Number((prevCash - total).toFixed(2)));
+        saveCashBalance(nextCashValue, userId);
+        return nextCashValue;
+      });
+
+      setHoldings((prevHoldings) => {
+        const existingIdx = prevHoldings.findIndex((h) => h.ticker === ticker);
+        let nextHoldings;
+
+        if (existingIdx >= 0) {
+          const existing = prevHoldings[existingIdx];
+          const newShares = existing.shares + shares;
+          const newAvgPrice = Number(
+            ((existing.shares * existing.avgBuyPrice + shares * price) / newShares).toFixed(2)
+          );
+          nextHoldings = [...prevHoldings];
+          nextHoldings[existingIdx] = {
+            ...existing,
+            shares: newShares,
+            avgBuyPrice: newAvgPrice,
+          };
+        } else {
+          const stockMeta = SP500_STOCKS.find((s) => s.ticker === ticker);
+          const newHolding = {
+            ticker,
+            name: name || stockMeta?.name || ticker,
+            sector: stockMeta?.sector || 'Equities',
+            shares,
+            avgBuyPrice: price,
+            buyDate: new Date().toISOString().split('T')[0],
+          };
+          nextHoldings = [newHolding, ...prevHoldings];
+        }
+
+        saveUserHoldings(nextHoldings, userId);
+        if (userId) {
+          updateUserPortfolio({ holdings: nextHoldings, cashBalance: nextCashValue, trade: order });
+        }
+        return nextHoldings;
+      });
+
+      recordTrade(order, userId);
+    } else if (type === 'SELL') {
+      let nextCashValue;
+      setCashBalance((prevCash) => {
+        nextCashValue = Number((prevCash + total).toFixed(2));
+        saveCashBalance(nextCashValue, userId);
+        return nextCashValue;
+      });
+
+      setHoldings((prevHoldings) => {
+        const nextHoldings = prevHoldings
+          .map((h) => {
+            if (h.ticker === ticker) {
+              const remaining = h.shares - shares;
+              if (remaining <= 0) return null;
+              return { ...h, shares: remaining };
+            }
+            return h;
+          })
+          .filter(Boolean);
+
+        saveUserHoldings(nextHoldings, userId);
+        if (userId) {
+          updateUserPortfolio({ holdings: nextHoldings, cashBalance: nextCashValue, trade: order });
+        }
+        return nextHoldings;
+      });
+
+      recordTrade(order, userId);
+    }
+  }, [currentUser]);
+
+  const handleResetHoldings = useCallback(() => {
+    const userId = currentUser?._id;
+    setHoldings(DEFAULT_DEMO_HOLDINGS);
+    saveUserHoldings(DEFAULT_DEMO_HOLDINGS, userId);
+    setCashBalance(DEFAULT_CASH_BALANCE);
+    saveCashBalance(DEFAULT_CASH_BALANCE, userId);
+    if (userId) {
+      updateUserPortfolio({ holdings: DEFAULT_DEMO_HOLDINGS, cashBalance: DEFAULT_CASH_BALANCE });
+    }
+  }, [currentUser]);
+
+  const handleAddCash = useCallback((amount) => {
+    const userId = currentUser?._id;
+    setCashBalance((prev) => {
+      const next = Number((prev + amount).toFixed(2));
+      saveCashBalance(next, userId);
+      if (userId) {
+        updateUserPortfolio({ cashBalance: next });
+      }
+      return next;
+    });
+  }, [currentUser]);
+
+  const handleLogout = useCallback(() => {
+    clearAuthToken();
+    setCurrentUser(null);
+    setSelected(new Set());
+    setResults(null);
+    setHoldings(loadUserHoldings('guest'));
+    setCashBalance(loadCashBalance('guest'));
+  }, []);
+
+  const handleTriggerOptimizationFromSignals = useCallback(() => {
+    if (selected.size >= 2) {
+      handleCalculate();
+    } else {
+      // Select high-conviction core basket
+      const defaultBasket = ['NVDA', 'AAPL', 'MSFT', 'AVGO', 'AMZN', 'LLY', 'GOOGL', 'META'];
+      setSelected(new Set(defaultBasket));
+      handleCalculate(defaultBasket);
+    }
+  }, [selected, handleCalculate]);
+
   const tickers = Array.from(selected);
 
   if (!backendReady) {
@@ -148,7 +320,12 @@ export default function App() {
 
   return (
     <>
-      <Navbar />
+      <Navbar
+        currentUser={currentUser}
+        holdingsCount={holdings.length}
+        onOpenAuth={() => setIsAuthModalOpen(true)}
+        onLogout={handleLogout}
+      />
       <Hero />
       <StockSelector
         selected={selected}
@@ -166,8 +343,36 @@ export default function App() {
         tickers={tickers}
         errorMessage={errorMessage}
       />
+      {/* Groww & Zerodha Style Optimal Trade Signals Section */}
+      <OptimalSignals
+        holdings={holdings}
+        cashBalance={cashBalance}
+        optimizationResults={results}
+        onExecuteTrade={handleExecuteTrade}
+        onTriggerOptimization={handleTriggerOptimizationFromSignals}
+        isOptimizing={isCalculating}
+      />
+      {/* My Portfolio Ledger Section */}
+      <MyPortfolio
+        holdings={holdings}
+        cashBalance={cashBalance}
+        optimizationResults={results}
+        onExecuteTrade={handleExecuteTrade}
+        onResetHoldings={handleResetHoldings}
+        onAddCash={handleAddCash}
+      />
       <PriceHistory />
       <Footer />
+
+      {/* RiskFrame v2 Agentic Co-Pilot & Account Modal */}
+      <AgentCopilot currentUser={currentUser} />
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        user={currentUser}
+        onAuthSuccess={(user) => setCurrentUser(user)}
+        onLogout={handleLogout}
+      />
     </>
   );
 }
