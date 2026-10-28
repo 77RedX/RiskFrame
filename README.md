@@ -1,11 +1,14 @@
 # RiskFrame
 
-**Deep Learning Alpha Generation & Constrained Portfolio Optimization Terminal**
+**Deep Learning Alpha Generation, Constrained Portfolio Optimization Terminal & High-Speed Redis Caching Engine**
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-2b5b84?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-ee4c2c?style=flat-square&logo=pytorch&logoColor=white)](https://pytorch.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-4.x-000000?style=flat-square&logo=express&logoColor=white)](https://expressjs.com/)
+[![Redis](https://img.shields.io/badge/Redis-7.x-dc382d?style=flat-square&logo=redis&logoColor=white)](https://redis.io/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-7.x-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![React](https://img.shields.io/badge/React-19-61dafb?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
-[![Flask](https://img.shields.io/badge/Flask-3.x-000000?style=flat-square&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ed?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
@@ -16,12 +19,15 @@
 Modern Portfolio Theory (Markowitz, 1952) establishes that optimal capital allocation depends on expected asset returns and their mutual covariance. However, in practical quantitative finance, naive sample-based mean-variance optimization suffers from the **error maximization phenomenon**:
 1. **Sample Means Are Extremely Noisy**: Historical trailing returns exhibit weak predictive power for future price trajectories. Feeding raw historical averages into an optimizer results in extreme, fragile portfolio weights.
 2. **Sample Covariance Matrices Overfit**: When the number of assets $N$ is large relative to historical observations $T$, sample covariance matrices $\mathbf{S}$ suffer from eigenvalue dispersion, underestimating actual out-of-sample portfolio variance.
+3. **High Latency Optimization Overhead**: Repeatedly running high-dimensional quadratic programming solvers across thousands of user queries introduces severe latency bottlenecks without an intelligent memoization cache.
 
-**RiskFrame** resolves these structural limitations through a coupled machine learning and quantitative optimization pipeline:
+**RiskFrame** resolves these structural limitations through an enterprise microservice architecture coupling deep learning, quantitative optimization, high-throughput caching, and an institutional trading terminal:
 - **Predictive Alpha Engine**: A specialized **Temporal Convolutional Network (Temporal CNN)** ingests 63-day lookback windows across 20 engineered technical indicators to predict **21-day forward excess returns** (market-relative alpha) for 174 S&P 500 assets and macro ETFs.
 - **Robust Risk Estimation**: Implements **Ledoit-Wolf covariance shrinkage**, pulling the empirical covariance matrix toward an optimal structured target to eliminate estimation noise.
-- **Constrained Quadratic Optimization**: Uses **Sequential Least Squares Programming (SLSQP)** to maximize the Sharpe Ratio under strict single-position concentration limits ($w_i \le 35\%$) and full-investment constraints ($\sum w_i = 1$).
-- **Interactive Quantitative Terminal**: A modern React 19 dashboard serving dynamic allocation analytics, portfolio metrics, asset-level breakdowns, and historical price charts powered by a lightweight Flask backend.
+- **Dual Optimization Engines**: Employs **Sequential Least Squares Programming (SLSQP)** in Python for non-linear Sharpe maximization under single-position concentration limits ($w_i \le 35\%$) and full investment ($\sum w_i = 1$), backed by an autonomous **JavaScript Projected Gradient Descent solver** for zero-downtime microservice resilience.
+- **High-Throughput Dual-Tier Redis Caching Engine**: Deploys a production Redis 7 caching tier featuring deterministic SHA-256 parameter hashing, sub-millisecond response times for cached optimizations, telemetry metrics tracking (hits, misses, hit ratio), and transparent fallbacks to an in-memory LRU layer.
+- **Autonomous Agentic Quantitative Co-Pilot**: An integrated ReAct reasoning agent capable of parsing natural language financial queries, invoking quant tools, evaluating portfolio risk metrics, and persisting customized allocations to MongoDB.
+- **Interactive Terminal & Trading Hub**: A modern React 19 web terminal featuring Groww and Zerodha-style optimal buy/sell order signals, live portfolio P&L ledgers, trade execution dialogs, user authentication, and interactive Chart.js visualizations.
 
 ---
 
@@ -29,12 +35,12 @@ Modern Portfolio Theory (Markowitz, 1952) establishes that optimal capital alloc
 
 ```mermaid
 flowchart TD
-    subgraph DataPipeline ["Data Ingestion & Engineering"]
+    subgraph DataPipeline ["Data Ingestion & Feature Engineering"]
         A["Yahoo Finance / S&P 500 Universe (174 Assets)"] --> B[("Database Layer (PostgreSQL / SQLite)")]
-        B --> C["In-Memory Feature Engine (20 Indicators × 174 Assets)"]
+        B --> C["Dynamic In-Memory Feature Engine (20 Indicators × 174 Assets)"]
     end
 
-    subgraph DeepLearning ["Alpha Generation (Deep Learning)"]
+    subgraph DeepLearning ["Alpha Generation (PyTorch Sidecar :5001)"]
         C --> D["Sliding Window Tensor (63 Trading Days)"]
         D --> E["Temporal CNN (Conv1D + Residual Blocks + Pooling)"]
         E --> F["Cross-Sectional Interaction Head"]
@@ -43,15 +49,29 @@ flowchart TD
 
     subgraph RiskOptimization ["Quantitative Risk & Portfolio Optimization"]
         B --> H["Daily Returns Matrix"]
-        H --> I["Ledoit-Wolf Shrinkage (Annualized Covariance)"]
-        G & I --> J["SLSQP Optimizer (Maximize Sharpe Ratio)"]
+        H --> I["Ledoit-Wolf Covariance Shrinkage"]
+        G & I --> J["SLSQP Optimizer / Projected Gradient Descent"]
         K["Constraints: Weights 0 to 35%, Sum = 100%"] --> J
-        J --> L["Optimal Portfolio Weights"]
+        J --> L["Optimal Portfolio Weights & Sharpe Metrics"]
     end
 
-    subgraph Presentation ["Application & Visualization"]
-        L --> M["Flask REST API (6h In-Memory Cache)"]
-        M --> N["React 19 Quantitative Terminal (Vite + Chart.js)"]
+    subgraph CachingLayer ["High-Speed Redis Caching & Telemetry Layer"]
+        M["Incoming Requests: /api/optimize, /api/prices"] --> N{"Cache Hit?"}
+        N -- "Tier 1: Redis Hit" --> O[("Redis Cache (ioredis :6379)\nSHA-256 Hash Memoization")]
+        N -- "Tier 2: In-Memory Hit" --> P["In-Memory LRU Secondary Cache"]
+        N -- "Cache Miss" --> J
+        L --> Q["Setex in Redis (24h TTL) & In-Memory"]
+        O & P --> R["Instant Response (X-Cache: HIT, <5ms)"]
+        Q --> S["Computed Response (X-Cache: MISS) + Telemetry Update"]
+    end
+
+    subgraph ApplicationStack ["Application Ecosystem & Client Services"]
+        T["Node.js Express API Gateway (Port 5000)"] --> M
+        T --> U[("MongoDB Persistence (Port 27017)\nUsers, Portfolios, Agent Sessions")]
+        T --> V["Agentic Quantitative Co-Pilot (ReAct Engine)"]
+        W["React 19 Terminal (NGINX / Vite - Port 3000)"] --> T
+        W --> X["Groww/Zerodha Optimal Buy & Sell Signals"]
+        W --> Y["My Portfolio Live P&L Ledger & Trading Modal"]
     end
 ```
 
@@ -127,21 +147,89 @@ $$\min_{\mathbf{w}} \quad -\frac{\mathbf{w}^T \hat{\mathbf{\mu}} - R_f}{\sqrt{\m
 
 $$\text{subject to} \quad \sum_{i=1}^{K} w_i = 1, \qquad 0 \le w_i \le w_{\max} \quad (\forall i)$$
 
-- **Risk-Free Rate ($R_f$)**: Set to 4.0% ($0.04$), reflecting current treasury yield conditions.
+- **Risk-Free Rate ($R_f$)**: Set to 4.0% ($0.04$), reflecting current treasury yield conditions (user-customizable in account preferences).
 - **Single Asset Position Limit ($w_{\max}$)**: Capped at 35% ($0.35$), preventing single-stock concentration while allowing the optimizer to tilt aggressively toward high-conviction alpha signals.
-- **Solver**: Sequential Least Squares Programming (`scipy.optimize.minimize(method='SLSQP')`) initialized from equal weights $\mathbf{w}_0 = \frac{1}{K}\mathbf{1}$.
+- **Solvers**:
+  - **Primary**: Sequential Least Squares Programming (`scipy.optimize.minimize(method='SLSQP')`) in the Python microservice initialized from equal weights $\mathbf{w}_0 = \frac{1}{K}\mathbf{1}$.
+  - **High-Speed JS Fallback**: Projected Gradient Descent maximizing Sharpe with analytical gradient steps $\frac{\partial S}{\partial w_i} = \frac{\mu_i \sigma_p - (\mu_p - R_f)(\mathbf{\Sigma w})_i / \sigma_p}{\sigma_p^2}$, box bounds $[0, w_{\max}]$, and simplex projection $\sum w_i = 1$.
 
 ---
 
 ## Core Subsystems
 
-### 1. Data Ingestion & Storage Architecture
+### 1. High-Performance Multi-Tier Redis Caching Engine
+
+Optimization calculations involving multi-dimensional covariance matrices and quadratic programming solvers are computationally intensive ($O(N^3)$ operations). To provide instantaneous terminal interactions, RiskFrame implements a **dual-tier caching architecture** backed by **Redis 7**:
+
+```text
+┌────────────────────────────────────────────────────────────────────────┐
+│                        HTTP /api/optimize Request                      │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+                                    ▼
+       ┌─────────────────────────────────────────────────────────┐
+       │   SHA-256 Memoization Key Generator                     │
+       │   rawKey = SORTED_TICKERS : wMAX_WEIGHT : rfRISK_FREE   │
+       │   key    = "rf:opt:" + sha256(rawKey)                   │
+       └────────────────────────────┬────────────────────────────┘
+                                    │
+                                    ▼
+                      ┌───────────────────────────┐
+                      │    Redis Connected?       │
+                      └──────┬─────────────┬──────┘
+                       Yes   │             │ No
+                             ▼             ▼
+               ┌───────────────────┐ ┌───────────────────┐
+               │ Tier 1: Redis GET │ │ Tier 2: In-Memory │
+               └─────────┬─────────┘ └─────────┬─────────┘
+                   Hit   │     Miss        Hit │     Miss
+                         ▼       │             ▼       │
+                    Return Data  │        Return Data  │
+                                 ▼                     ▼
+               ┌───────────────────────────────────────────────────┐
+               │    Execute Quant Optimization (Sidecar / Fallback)│
+               └─────────────────────────┬─────────────────────────┘
+                                         │
+                                         ▼
+               ┌───────────────────────────────────────────────────┐
+               │ Save in Redis (TTL: 24h) & In-Memory Map          │
+               │ Set Headers: X-Cache: MISS, X-Response-Time-Ms    │
+               └───────────────────────────────────────────────────┘
+```
+
+#### Deterministic Cache Key Derivation
+To guarantee consistent cache hits regardless of ticker selection order or case sensitivity, optimization keys are normalized and hashed:
+```javascript
+function generateOptimizationHash(tickers, maxWeight = 0.35, riskFreeRate = 0.04) {
+  const sortedTickers = [...tickers].map(t => t.toUpperCase()).sort().join(',');
+  const rawKey = `${sortedTickers}:w${Number(maxWeight).toFixed(3)}:rf${Number(riskFreeRate).toFixed(3)}`;
+  return crypto.createHash('sha256').update(rawKey).digest('hex');
+}
+// Redis key format: rf:opt:6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+```
+
+#### Multi-Tier Strategy & TTL Policies
+- **Tier 1 (Redis 7 via `ioredis`)**: Distributed cache shared across instances. Optimization results are persisted with a **24-hour TTL (86,400s)**, aligning with daily market close regimes. Stock price series are cached under `rf:prices:<TICKER>` with a **1-hour TTL (3,600s)**.
+- **Tier 2 (Resilient In-Memory Fallback)**: Built-in JavaScript `Map` cache with expiration timestamps and bounded LRU-style eviction (maximum 1,000 entries). If Redis undergoes maintenance, disconnects, or encounters network partitions, requests automatically route to Tier 2 without throwing errors or increasing latency.
+- **Cache Telemetry Tracking**: Real-time counters record total cache hits, misses, and set operations. Exposed via the `GET /api/cache/stats` endpoint and through custom response headers:
+  - `X-Cache: HIT (redis)`: Served directly from Redis memory in $< 5\text{ms}$.
+  - `X-Cache: HIT (memory)`: Served from in-memory fallback.
+  - `X-Cache: MISS`: Computed fresh by the quant engine and stored in cache.
+  - `X-Response-Time-Ms`: High-precision end-to-end request latency.
+
+---
+
+### 2. Data Ingestion & Storage Architecture
+
 - **Multi-Asset Universe**: Covers 174 liquid instruments across all 11 S&P 500 sectors (Information Technology, Healthcare, Financials, Consumer Discretionary, Consumer Staples, Energy, Industrials, Utilities, Real Estate, Materials, Communication Services) plus diversified macro ETFs (`GLD` gold, `TLT` 20+ year treasuries, `IEF` 7-10 year treasuries, `SHY` 1-3 year treasuries, `TIP` inflation-protected bonds).
 - **Dual Database Strategy**: Configured through SQLAlchemy to support PostgreSQL (e.g. Neon serverless Postgres) or local SQLite (`local_fallback.db`).
 - **Dynamic In-Memory Feature Engine**: Standard relational databases enforce column limits (e.g., PostgreSQL has a 1,600-column table cap). With 174 assets and 20 features per asset, the complete feature space requires 3,480 columns. RiskFrame stores raw daily prices in the database and computes the full feature matrix dynamically in-memory upon startup and training, bypassing database schema limits and ensuring zero synchronization lag.
 - **Split-Adjusted Data Synchronization**: Rather than appending unadjusted rows, daily updates perform full-window synchronization. Because corporate actions and stock splits adjust price histories retroactively, this guarantees longitudinal consistency.
 
-### 2. Feature Engineering Pipeline
+---
+
+### 3. Feature Engineering Pipeline
+
 Each asset generates 20 statistical and technical features, standard-normalized across the lookback window ($Z = \frac{x - \mu}{\sigma + \epsilon}$):
 
 | Feature Category | Indicators | Description |
@@ -153,18 +241,38 @@ Each asset generates 20 statistical and technical features, standard-normalized 
 | **Mean Reversion** | `BB_Position` | Relative location within Bollinger Bands: $\frac{P_t - \text{Lower}}{\text{Upper} - \text{Lower}}$ where bands represent 20-day $\mu \pm 2\sigma$. |
 | **Cross-Sectional Momentum** | `Rank_Return_5`, `Rank_Return_20` | Percentile return rank ($[0, 1]$) of the asset relative to all 174 assets in the universe on date $t$. |
 
-### 3. Model Training & MLOps Pipeline
+---
+
+### 4. Model Training & MLOps Pipeline
+
 - **Strict Chronological Splitting**: Chronological 80% train / 20% validation split without time-shuffling to completely prevent lookahead bias.
 - **Optimization**: AdamW optimizer ($lr = 10^{-3}, \text{weight decay} = 10^{-4}$) coupled with `ReduceLROnPlateau` (halving learning rate after 5 epochs without validation improvement) and gradient clipping ($\|\mathbf{g}\| \le 1.0$).
 - **Early Stopping & Model Versioning**: Early stopping terminates training after 20 epochs of plateaued validation loss. Checkpoints are automatically synced to Hugging Face Hub if credentials are provided.
 
-### 4. Interactive Quantitative Terminal (React 19 + Vite)
+---
+
+### 5. Autonomous Agentic Quantitative Co-Pilot
+
+RiskFrame incorporates an integrated **Quantitative Co-Pilot** operating on a **ReAct (Reasoning + Acting)** execution pattern:
+- **Autonomous Tool Invocation**: Detects user investment intent, ticker symbols, and risk parameters to execute internal tools:
+  - `optimizePortfolio`: Triggers Ledoit-Wolf shrinkage and quadratic optimization.
+  - `analyzeRisk`: Computes maximum asset concentration, diversification health, and Sharpe score diagnostics.
+  - `getUserPortfolios`: Queries active portfolios from MongoDB.
+  - `savePortfolio`: Persists customized allocations to the user's account.
+- **Persistent Conversation Memory**: Persists conversation history in MongoDB (`AgentSession`), providing contextual continuity across sessions.
+
+---
+
+### 6. Interactive Quantitative Terminal (React 19 + Vite)
+
 - **Asset Selection**: Filter across sectors, search tickers, or deploy preset thematic baskets (e.g. *Magnificent 7*, *Dividend Kings*, *Balanced Core*, *Tech Titans*).
-- **Dynamic Portfolio Optimization**: Sends user-selected subsets ($2 \le K \le 35$) to the backend optimizer, displaying real-time allocation distributions via Chart.js doughuts and metrics tables.
+- **Dynamic Portfolio Optimization**: Sends user-selected subsets ($2 \le K \le 35$) to the backend optimizer, displaying real-time allocation distributions via Chart.js doughnuts and metrics tables.
 - **Comparative Metrics**: Displays expected portfolio annualized return, volatility, Sharpe Ratio, alongside asset-level historical returns, volatility, and AI predicted 21-day returns.
 - **Optimal Buy & Sell Signals (Groww & Zerodha Style)**: Algorithmic order hub directly advising which assets are mathematically optimal to buy and which assets are optimal to sell/exit, complete with instant order dialogs and cash margin checks.
 - **My Portfolio Ledger**: Real-time holding ledger reflecting all bought assets, current market values, purchase cost basis, live unrealized P&L ($ and %), and rebalancing alignment with model targets.
-- **Price Trajectory Inspector**: Dedicated chart module fetching 15-day closing price trends for any universe asset.
+- **Direct Trading Modal**: Buy and sell execution dialog validating user cash balances, simulating market fills, and updating MongoDB portfolio holdings in real time.
+- **User Authentication & Preferences**: JWT-based authentication enabling users to store custom risk tolerances (maximum asset weight caps, custom risk-free rates).
+- **Price Trajectory Inspector**: Dedicated chart module fetching 15-day closing price trends for any universe asset with Redis caching.
 
 ---
 
@@ -172,54 +280,104 @@ Each asset generates 20 statistical and technical features, standard-normalized 
 
 ```text
 RiskFrame/
-├── app.py                     # Flask production API server with static frontend hosting
-├── main.py                    # CLI end-to-end inference and portfolio optimization script
-├── train.py                   # PyTorch training loop with early stopping and HF Hub sync
-├── model.py                   # TemporalCNN and ResidualBlock PyTorch architectures
-├── dataset.py                 # PyTorch PortfolioDataset loader and global CONFIG schema
-├── feature_eng.py             # Quantitative feature engineering (20 indicators per asset)
-├── data_loader.py             # Yahoo Finance ingestion and database caching layer
-├── optimizer.py               # Ledoit-Wolf covariance shrinkage and SciPy SLSQP optimizer
+├── server/                     # Node.js & Express 2.0 API Gateway
+│   ├── src/
+│   │   ├── config/
+│   │   │   ├── db.js          # MongoDB connection & graceful disconnect handler
+│   │   │   └── redis.js       # Redis client (ioredis) initialization & fallback logic
+│   │   ├── middleware/
+│   │   │   └── auth.middleware.js # JWT verification and optional authentication
+│   │   ├── models/
+│   │   │   ├── User.js        # User account schema with bcrypt password hashing
+│   │   │   ├── Portfolio.js   # Portfolio holding schema, rebalance logs, and metrics
+│   │   │   └── AgentSession.js# Conversational agent session and message history
+│   │   ├── routes/
+│   │   │   ├── auth.routes.js     # User registration, login, profile, preferences
+│   │   │   ├── optimize.routes.js # /optimize, /prices, /signals, /cache/stats
+│   │   │   ├── portfolio.routes.js# Portfolio CRUD, rebalance, and trade execution
+│   │   │   └── agent.routes.js    # Agentic Co-Pilot chat and session management
+│   │   ├── services/
+│   │   │   ├── cache.service.js   # Dual-tier Redis + in-memory cache & telemetry
+│   │   │   ├── quant.service.js   # Python sidecar proxy + JS Projected Gradient solver
+│   │   │   └── agent.service.js   # ReAct reasoning loop with tool definitions
+│   │   └── index.js           # Server bootstrap, route registration, and telemetry
+│   ├── Dockerfile             # Production Node.js Alpine container
+│   └── package.json           # Express, Mongoose, ioredis, Zod, jsonwebtoken dependencies
 │
-├── temporal_cnn_weights.pth   # Pretrained model checkpoint
-├── requirements.txt           # Python dependency specifications
-├── Dockerfile                 # Multi-stage Docker build (Node.js Vite + Python Gunicorn)
+├── website/                    # React 19 Quantitative Web Terminal
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── AgentCopilot/  # Conversational AI Co-Pilot drawer interface
+│   │   │   ├── MyPortfolio/   # Holding ledger, asset valuations, and live P&L
+│   │   │   ├── OptimalSignals/# Groww & Zerodha style algorithmic Buy/Sell signals
+│   │   │   ├── Trading/       # Buy/Sell order execution dialog with margin check
+│   │   │   ├── UserAuth/      # Sign in / Register modal with risk preference setup
+│   │   │   ├── StockSelector/ # Sector filter, ticker search, and thematic presets
+│   │   │   ├── Results/       # Allocation doughnut chart, metrics table, AI forecasts
+│   │   │   ├── PriceHistory/  # 15-day price trajectory inspection chart
+│   │   │   ├── Hero.jsx       # Terminal header and feature summary
+│   │   │   ├── LoadingScreen.jsx # Initializing loading screen
+│   │   │   └── Navbar.jsx     # Navigation bar with auth state and section tabs
+│   │   ├── data/
+│   │   │   ├── stocks.js      # S&P 500 universe metadata (174 assets across 11 sectors)
+│   │   │   └── marketSignals.js # Real-time market signals and sample asset holding data
+│   │   ├── api.js             # Frontend API client with JWT and cache-aware requests
+│   │   └── App.jsx            # Top-level state coordinator and section view routing
+│   ├── Dockerfile             # Multi-stage frontend Dockerfile (NGINX prod / Vite dev)
+│   ├── nginx.conf             # Production NGINX reverse proxy routing /api/ to backend
+│   └── package.json           # Vite, React 19, Lucide React, Chart.js dependencies
 │
-├── .github/workflows/
-│   ├── daily_update.yml       # Scheduled GitHub Action: Daily post-market price ingestion
-│   └── weekly_training.yml    # Scheduled GitHub Action: Weekly Saturday model retraining
+├── app.py                     # PyTorch Quant microservice exposing /api/optimize & /api/signals
+├── model.py                   # TemporalCNN and ResidualBlock PyTorch neural network
+├── dataset.py                 # PyTorch PortfolioDataset and global CONFIG schema
+├── feature_eng.py             # Feature engineering pipeline (20 technical indicators per asset)
+├── optimizer.py               # Ledoit-Wolf covariance shrinkage and SciPy SLSQP solver
+├── data_loader.py             # Yahoo Finance historical ingestion and SQL database sync
+├── train.py                   # PyTorch training loop with early stopping & HF Hub sync
+├── main.py                    # CLI inference and portfolio optimization script
+├── temporal_cnn_weights.pth   # Pretrained PyTorch model checkpoint
+├── requirements.txt           # Python scientific stack (torch, scipy, pandas, scikit-learn)
+├── Dockerfile.python          # Python Quant microservice container (Gunicorn)
+├── Dockerfile                 # Standalone legacy all-in-one container
 │
+├── docker-compose.yml         # Production multi-container orchestration stack
+├── docker-compose.dev.yml     # Zero-build hot-reloading development stack
 ├── scripts/
-│   └── update_data.py         # Dedicated sync script for automated price database updates
-│
-└── website/                   # React 19 Quantitative Web Terminal
-    ├── src/
-    │   ├── App.jsx            # Top-level state coordinator and API communication
-    │   ├── components/        # Modular UI (Navbar, Hero, StockSelector, Results, PriceHistory)
-    │   └── data/stocks.js     # S&P 500 universe metadata and sector classifications
-    ├── package.json           # Frontend dependencies (React 19, Chart.js, Vite)
-    └── vite.config.js         # Vite bundler configuration
+│   └── update_data.py         # Automated daily market price ingestion script
+└── .github/workflows/
+    ├── daily_update.yml       # GitHub Actions: Daily post-market price ingestion
+    └── weekly_training.yml    # GitHub Actions: Weekly model retraining
 ```
 
 ---
 
 ## API Reference
 
-The backend exposes a lightweight REST API running under Flask:
+The RiskFrame ecosystem exposes REST endpoints via the Node.js Express API gateway (Port 5000) and the Python Quant microservice (Port 5001):
 
 ### `POST /api/optimize`
-Runs model inference and portfolio optimization for a selected subset of assets.
+Runs model inference and portfolio optimization for a selected subset of assets with **Redis memoization**.
+
+**Headers Returned:**
+- `X-Cache`: `HIT (redis)`, `HIT (memory)`, or `MISS`
+- `X-Response-Time-Ms`: End-to-end processing latency in milliseconds
 
 **Request Payload:**
 ```json
 {
-  "tickers": ["AAPL", "NVDA", "MSFT", "AMZN", "GOOGL"]
+  "tickers": ["AAPL", "NVDA", "MSFT", "AMZN", "GOOGL"],
+  "max_weight": 0.35,
+  "risk_free_rate": 0.04
 }
 ```
 
 **Response Payload:**
 ```json
 {
+  "cached": true,
+  "cacheSource": "redis",
+  "runtimeMs": 3,
+  "engine": "python-pytorch-slsqp",
   "allocation": {
     "AAPL": 0.2312,
     "NVDA": 0.3500,
@@ -249,16 +407,22 @@ Runs model inference and portfolio optimization for a selected subset of assets.
 }
 ```
 
+---
+
 ### `GET /api/prices?ticker={SYMBOL}`
-Returns historical closing prices over the last 15 trading days.
+Returns historical closing prices over the last 15 trading days with Redis caching (1-hour TTL).
 
 **Response Payload:**
 ```json
 {
-  "dates": ["2026-02-18", "2026-02-19", "..."],
+  "cached": true,
+  "runtimeMs": 2,
+  "dates": ["2026-10-10", "2026-10-13", "..."],
   "prices": [228.45, 230.12, "..."]
 }
 ```
+
+---
 
 ### `GET /api/signals`
 Returns real-time algorithmic Buy and Sell order recommendations generated by Temporal CNN alpha inference and Ledoit-Wolf risk weighting.
@@ -266,90 +430,89 @@ Returns real-time algorithmic Buy and Sell order recommendations generated by Te
 **Response Payload:**
 ```json
 {
-  "buy_signals": [
+  "buySignals": [
     { "ticker": "NVDA", "alpha": 0.3840, "price": 138.25, "change_pct": 2.40, "signal": "STRONG_BUY" },
     { "ticker": "AAPL", "alpha": 0.2860, "price": 234.80, "change_pct": 1.15, "signal": "BUY" }
   ],
-  "sell_signals": [
+  "sellSignals": [
     { "ticker": "INTC", "alpha": -0.0420, "price": 22.80, "change_pct": -1.80, "signal": "SELL" }
+  ],
+  "engine": "python-pytorch-slsqp",
+  "timestamp": "2026-10-28T14:00:00.000Z"
+}
+```
+
+---
+
+### `GET /api/cache/stats`
+Returns live telemetry metrics for the Redis and in-memory dual-tier caching layer.
+
+**Response Payload:**
+```json
+{
+  "hits": 142,
+  "misses": 18,
+  "sets": 18,
+  "hitRatio": "88.8%",
+  "totalRequests": 160
+}
+```
+
+---
+
+### `POST /api/agent/chat`
+Conversational endpoint for the **Agentic Quantitative Co-Pilot**. Executes quantitative tool workflows and returns structured commentary.
+
+**Request Payload:**
+```json
+{
+  "message": "Optimize a portfolio with NVDA, AAPL, MSFT, and GLD with low risk",
+  "sessionId": "671fb2c4e1a49c250b892a01"
+}
+```
+
+**Response Payload:**
+```json
+{
+  "reply": "I ran a quantitative portfolio optimization for NVDA, AAPL, MSFT, GLD using Ledoit-Wolf shrinkage and the Temporal CNN alpha forecast...",
+  "toolCalls": [
+    { "tool": "optimizePortfolio", "params": { "tickers": ["NVDA", "AAPL", "MSFT", "GLD"] } },
+    { "tool": "analyzeRisk", "result": { "riskRating": "Moderate", "sharpeAssessment": "Strong risk-adjusted alpha" } }
   ]
 }
 ```
 
 ---
 
-## Installation & Quick Start
+### `GET /api/health`
+System telemetry and readiness probe verifying backend components, database status, and Redis connection state.
 
-### 1. Prerequisites
-- Python 3.10 or higher
-- Node.js 18+ and npm
-- (Optional) CUDA-compatible GPU for accelerated model training
-
-### 2. Local Setup
-
-Clone the repository:
-```bash
-git clone https://github.com/77RedX/RiskFrame.git
-cd RiskFrame
+**Response Payload:**
+```json
+{
+  "status": "ok",
+  "version": "2.0.0",
+  "backend": "Node.js Express",
+  "database": "MongoDB",
+  "redis": "connected",
+  "timestamp": "2026-10-28T14:00:00.000Z"
+}
 ```
 
-Create and activate a virtual environment:
-```bash
-# macOS / Linux
-python3 -m venv .venv
-source .venv/bin/activate
+---
 
-# Windows
-python -m venv .venv
-.venv\Scripts\activate
-```
+### Additional Authentication & Portfolio Endpoints
 
-Install Python dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-Build the React frontend:
-```bash
-cd website
-npm install
-npm run build
-cd ..
-```
-
-### 3. Launching the Web Application
-
-Start the unified Flask server:
-```bash
-python app.py
-```
-The server will initialize the backend, load pre-calculated covariance matrices and neural weights, and serve the terminal at:
-```text
-http://localhost:5000
-```
-
-> [!NOTE]
-> During development, you can run the Vite frontend independently (`cd website && npm run dev`) with hot module replacement, proxying API calls to `http://localhost:5000`.
-
-### 4. Running CLI Inference
-
-To run the complete pipeline directly in your console without the UI:
-```bash
-python main.py
-```
-This prints:
-- Annualized Ledoit-Wolf covariance matrix.
-- 21-day model return predictions scaled to annualized rates.
-- Optimal asset allocations ($w_i > 1\%$).
-- Portfolio expected return, volatility, and Sharpe Ratio.
-
-### 5. Training the Model from Scratch
-
-To retrain the Temporal CNN on fresh market data:
-```bash
-python train.py
-```
-The training procedure executes 150 epochs with early stopping (patience 20), saves the optimal checkpoint to `temporal_cnn_weights.pth`, and optionally pushes the checkpoint to Hugging Face Hub if credentials are configured.
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/api/auth/register` | Create a new user account with initial virtual trading capital ($100,000). |
+| `POST` | `/api/auth/login` | Authenticate with email/password and obtain a signed JWT token. |
+| `GET` | `/api/auth/me` | Fetch active user profile, custom risk limits, and account balance. |
+| `PUT` | `/api/auth/preferences` | Update `maxAssetWeight` and `riskFreeRate` preferences. |
+| `GET` | `/api/portfolios` | List all saved portfolios and historical rebalance snapshots for the user. |
+| `POST` | `/api/portfolios` | Save a customized portfolio allocation into MongoDB. |
+| `POST` | `/api/portfolios/:id/rebalance` | Trigger automated portfolio rebalancing to align with optimal model weights. |
+| `POST` | `/api/portfolios/trade` | Execute simulated market Buy/Sell order, updating cash and stock holdings. |
 
 ---
 
@@ -364,6 +527,7 @@ docker compose up --build
 This automatically compiles the frontend, starts NGINX on port `3000`, Express API on port `5000`, PyTorch Quant sidecar on port `5001`, Redis cache on port `6379`, and MongoDB on port `27017`.
 * Access the web terminal at: **`http://localhost:3000`**
 * Access the backend API at: **`http://localhost:5000/api/health`**
+* Access Redis cache telemetry at: **`http://localhost:5000/api/cache/stats`**
 
 ### Option B: Zero-Build Live Hot-Reloading Development (No `npm run build` Ever Needed)
 ```bash
@@ -378,20 +542,82 @@ docker compose down
 
 ---
 
+## Manual Local Setup (Alternative)
+
+If running directly on your host machine without Docker Compose:
+
+### 1. Prerequisites
+- Python 3.10+
+- Node.js 20+ and npm
+- Redis Server (local or containerized: `docker run -d -p 6379:6379 redis:7-alpine`)
+- MongoDB (local or containerized: `docker run -d -p 27017:27017 mongo:7-jammy`)
+
+### 2. Python PyTorch Microservice Setup
+```bash
+# Create virtual environment
+python3 -m venv .venv
+source .venv/bin/activate    # On Windows: .venv\Scripts\activate
+
+# Install scientific dependencies
+pip install -r requirements.txt
+
+# Start Python quant sidecar on port 5001
+PORT=5001 python app.py
+```
+
+### 3. Node.js Express Backend Setup
+```bash
+cd server
+npm install
+
+# Start Express server with auto-reload
+npm run dev
+```
+The server connects to Redis (`redis://127.0.0.1:6379`) and MongoDB (`mongodb://127.0.0.1:27017/riskframe`) on port `5000`.
+
+### 4. React 19 Frontend Terminal Setup
+```bash
+cd website
+npm install
+
+# Start Vite live development server
+npm run dev
+```
+Access the development terminal at `http://localhost:5173` or `http://localhost:3000`.
+
+### 5. Running CLI Inference & Retraining
+To run the quantitative pipeline directly in your terminal:
+```bash
+python main.py
+```
+
+To retrain the Temporal CNN on fresh market data:
+```bash
+python train.py
+```
+Executes 150 epochs with early stopping (patience 20), saves optimal checkpoints to `temporal_cnn_weights.pth`, and pushes to Hugging Face Hub if credentials are configured.
+
+---
+
 ## Configuration & Environment Variables
 
-Key parameters are centralized in `dataset.py` (`CONFIG`) and can be overridden via environment variables:
+Key parameters can be configured via `.env` in the root and in `server/.env`:
 
-| Variable | Default | Description |
-| :--- | :--- | :--- |
-| `DATABASE_URL` | `sqlite:///local_fallback.db` | SQLAlchemy connection string (e.g. `postgresql://user:pass@host/db`). |
-| `HF_MODEL_REPO` | `77RedX/RiskFrame` | Hugging Face Hub model repository for weight downloads and checkpoint sync. |
-| `HF_TOKEN` | *Empty* | Hugging Face API token with write permissions (for automated checkpoint uploads). |
-| `PORT` | `7860` | Network port for Gunicorn / Flask production serving. |
-| `WINDOW_SIZE` | `63` | Lookback trading days for Temporal CNN feature input. |
-| `PREDICTION_HORIZON` | `21` | Forward return horizon in trading days (used for alpha generation). |
-| `MAX_WEIGHT` | `0.35` | Maximum individual asset weight constraint in portfolio optimization. |
-| `RISK_FREE_RATE` | `0.04` | Annualized risk-free benchmark rate ($4\%$) used in the Sharpe Ratio. |
+| Variable | Scope | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `REDIS_URL` | Express / Cache | `redis://127.0.0.1:6379` | Redis connection URL for caching and telemetry. |
+| `MONGODB_URI` | Express / Mongo | `mongodb://127.0.0.1:27017/riskframe` | MongoDB connection string for users, portfolios, and agent sessions. |
+| `PYTHON_QUANT_URL`| Express / Quant | `http://127.0.0.1:5001` | URL of the Python PyTorch quant optimization microservice. |
+| `JWT_SECRET` | Express / Auth | `riskframe_secret_key` | Secret key used to sign and verify JWT authentication tokens. |
+| `JWT_EXPIRES_IN` | Express / Auth | `7d` | Lifetime of user authentication tokens. |
+| `DATABASE_URL` | Python / SQLAlchemy | `sqlite:///local_fallback.db` | SQL database connection string for historical market data. |
+| `HF_MODEL_REPO` | Python / MLOps | `77RedX/RiskFrame` | Hugging Face Hub repository for weight checkpoints. |
+| `HF_TOKEN` | Python / MLOps | *Empty* | Hugging Face API token for automated checkpoint uploads. |
+| `PORT` | Python / Express | `5000` (Node), `5001` (Python) | Network ports for backend microservices. |
+| `WINDOW_SIZE` | Python / ML | `63` | Lookback trading days for Temporal CNN feature input. |
+| `PREDICTION_HORIZON`| Python / ML | `21` | Forward return horizon in trading days (alpha generation target). |
+| `MAX_WEIGHT` | Global / Quant | `0.35` | Maximum individual asset weight constraint in portfolio optimization. |
+| `RISK_FREE_RATE` | Global / Quant | `0.04` | Annualized risk-free benchmark rate ($4\%$) used in the Sharpe Ratio. |
 
 ---
 
@@ -408,4 +634,4 @@ The repository includes GitHub Actions for automated maintenance:
 ## Quantitative Disclaimer
 
 > [!WARNING]
-> This software is developed for research and educational purposes only. Nothing contained in this repository constitutes financial, investment, legal, or tax advice. Financial markets are subject to substantial risk of loss. Historical performance and deep learning return predictions do not guarantee future results.
+> This software is developed for research and educational purposes only. Nothing contained in this repository constitutes financial, investment, legal, or tax advice. Financial markets are subject to substantial risk of loss. Historical performance, algorithmic signals, and deep learning return predictions do not guarantee future results.
