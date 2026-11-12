@@ -4,7 +4,7 @@ test.use({ channel: 'msedge' });
 const url = process.env.UI_TEST_URL || 'http://localhost:3000';
 const user = { _id: '000000000000000000000001', name: 'Test User', email: 'test@example.invalid', holdings: [], cashBalance: 0, preferences: {} };
 test.beforeEach(async ({ page }) => {
-  await page.route('**/api/health', r => r.fulfill({ json: { status: 'ok' } }));
+  await page.route('**/api/live', r => r.fulfill({ json: { status: 'ok' } }));
 });
 
 test('signed-out visitor sees no seeded personal portfolio or actions', async ({ page }) => {

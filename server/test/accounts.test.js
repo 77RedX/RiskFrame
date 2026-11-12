@@ -1,9 +1,11 @@
+import mongoose from 'mongoose';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import { User } from '../src/models/User.js';
 import authRoutes from '../src/routes/auth.routes.js';
+mongoose.connection.readyState = 1;
 
 test('new accounts have no invented positions or cash', () => {
   const user = new User({ name: 'Test User', email: 'test@example.invalid', password: 'test-password' });

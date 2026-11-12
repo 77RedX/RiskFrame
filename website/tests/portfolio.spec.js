@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 test.use({ channel: 'msedge' });
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('rf_auth_token', 'test-token'));
-  await page.route('**/api/health', r => r.fulfill({ json: { status: 'ok' } }));
+  await page.route('**/api/live', r => r.fulfill({ json: { status: 'ok' } }));
   await page.route('**/api/auth/me', r => r.fulfill({ json: { user: { _id: '000000000000000000000001', name: 'Test User', email: 'test@example.invalid', holdings: [], cashBalance: 0, preferences: {} } } }));
   await page.goto('http://localhost:3000');
   await page.getByRole('button', { name: '+ Deposit Cash', exact: true }).click();

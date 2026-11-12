@@ -4,7 +4,7 @@ test.use({ channel: 'msedge' });
 const basket = ['AAPL', 'MSFT', 'NVDA', 'AMZN'];
 
 test.beforeEach(async ({ page }) => {
-  await page.route('**/api/health', route => route.fulfill({ json: { status: 'ok' } }));
+  await page.route('**/api/live', route => route.fulfill({ json: { status: 'ok' } }));
   await page.route('**/api/auth/me', route => route.fulfill({ status: 401, json: {} }));
   await page.goto('http://localhost:3000');
   await expect(page.locator('#calculate-btn')).toBeVisible();

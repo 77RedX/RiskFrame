@@ -1,3 +1,4 @@
+import healthRoutes from './routes/health.routes.js';
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -33,17 +34,7 @@ app.use(
 app.use(express.json());
 app.use(morgan('dev'));
 
-// Global Health Check with System Telemetry
-app.get('/api/health', (req, res) => {
-  return res.json({
-    status: 'ok',
-    version: '2.0.0',
-    backend: 'Node.js Express',
-    database: 'MongoDB',
-    redis: isRedisReady() ? 'connected' : 'memory_fallback',
-    timestamp: new Date().toISOString(),
-  });
-});
+app.use('/api', healthRoutes);
 
 // Route Handlers
 app.use('/api/auth', authRoutes);
@@ -68,7 +59,13 @@ async function startServer() {
     console.log('[RiskFrame] Starting v2 Node.js & MongoDB Engine...');
     
     // 1. Connect MongoDB
-    await connectDB();
+    let retry;
+    let shuttingDown = false;
+    const connect = async () => {
+      try { await connectDB(); }
+      catch { console.warn('[MongoDB] Configured database unavailable; account features disabled. Retrying.'); if (!shuttingDown) retry = setTimeout(connect, 10000); }
+    };
+    connect();
 
     // 2. Connect Redis
     initRedis();
@@ -84,6 +81,7 @@ async function startServer() {
 
     // Graceful Shutdown
     const shutdown = async () => {
+      shuttingDown = true; clearTimeout(retry);
       console.log('\nGracefully shutting down RiskFrame server...');
       server.close(async () => {
         await disconnectDB();

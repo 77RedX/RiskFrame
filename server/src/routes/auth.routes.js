@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { PortfolioOperationSchema, applyPortfolioOperation } from '../services/ledger.service.js';
 import { fetchPriceHistory } from '../services/quant.service.js';
 import express from 'express';
@@ -7,6 +8,7 @@ import { User } from '../models/User.js';
 import { authenticate } from '../middleware/auth.middleware.js';
 
 const router = express.Router();
+router.use((req, res, next) => mongoose.connection.readyState === 1 ? next() : res.status(503).json({ error: 'Account database is unavailable. Please retry.' }));
 
 function generateToken(user) {
   const secret = process.env.JWT_SECRET || 'riskframe_jwt_secret_default';
