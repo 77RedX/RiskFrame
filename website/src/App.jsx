@@ -309,7 +309,7 @@ export default function App() {
       <Footer />
 
       {/* RiskFrame v2 Agentic Co-Pilot & Account Modal */}
-      <AgentCopilot currentUser={currentUser} />
+      <AgentCopilot key={currentUser?._id || 'guest'} currentUser={currentUser} />
       <AuthModal
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}

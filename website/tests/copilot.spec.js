@@ -14,3 +14,33 @@ test('copilot treats raw HTML as text while preserving supported formatting', as
   expect(await page.evaluate(() => window.auditInjected)).toBeUndefined();
   await expect(page.locator('.agent-text').last()).toContainText('<img');
 });
+
+test('logout clears private conversation and discards a pending account reply', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('rf_auth_token', 'account-token'));
+  await page.route('**/api/live', r => r.fulfill({ json: { status: 'ok' } }));
+  await page.route('**/api/auth/me', r => r.fulfill({ json: { user: { _id: '000000000000000000000001', name: 'First account', holdings: [], cashBalance: 0 } } }));
+  let release;
+  const pending = new Promise(resolve => { release = resolve; });
+  let calls = 0;
+  await page.route('**/api/agent/chat', async r => {
+    if (++calls === 1) return r.fulfill({ json: { reply: 'PRIVATE_ACCOUNT_HISTORY', sessionId: '000000000000000000000002' } });
+    await pending;
+    await r.fulfill({ json: { reply: 'LATE_PRIVATE_REPLY', sessionId: '000000000000000000000002' } });
+  });
+  await page.goto('http://localhost:3000');
+  await expect(page.locator('#nav-signout-btn')).toBeVisible();
+  await page.locator('.agent-toggle-btn').click();
+  await page.getByRole('textbox', { name: 'Message the copilot' }).fill('Show my saved portfolios');
+  await page.locator('.agent-input-form button').click();
+  await expect(page.locator('.agent-messages-container')).toContainText('PRIVATE_ACCOUNT_HISTORY');
+  await page.getByRole('textbox', { name: 'Message the copilot' }).fill('Another private request');
+  await page.locator('.agent-input-form button').click();
+  await expect(page.locator('.agent-message.loading')).toBeVisible();
+  await page.locator('#nav-signout-btn').click();
+  const response = page.waitForResponse(r => r.url().includes('/api/agent/chat'));
+  release(); await response;
+  if (!(await page.locator('.agent-drawer').isVisible())) await page.locator('.agent-toggle-btn').click();
+  await expect(page.locator('.agent-messages-container')).not.toContainText('PRIVATE_ACCOUNT_HISTORY');
+  await expect(page.locator('.agent-messages-container')).not.toContainText('LATE_PRIVATE_REPLY');
+  await expect(page.getByRole('textbox', { name: 'Message the copilot' })).toBeEnabled();
+});
