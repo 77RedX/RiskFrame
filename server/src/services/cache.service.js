@@ -14,13 +14,13 @@ export const cacheStats = {
 
 function generateOptimizationHash(tickers, maxWeight = 0.35, riskFreeRate = 0.04) {
   const sortedTickers = [...tickers].map((t) => t.toUpperCase()).sort().join(',');
-  const rawKey = `${sortedTickers}:w${Number(maxWeight).toFixed(3)}:rf${Number(riskFreeRate).toFixed(3)}`;
+  const rawKey = JSON.stringify([sortedTickers, maxWeight, riskFreeRate]);
   return crypto.createHash('sha256').update(rawKey).digest('hex');
 }
 
 export async function getCachedOptimization(tickers, maxWeight = 0.35, riskFreeRate = 0.04) {
   const hash = generateOptimizationHash(tickers, maxWeight, riskFreeRate);
-  const key = `rf:opt:${hash}`;
+  const key = `rf:opt:v2:${hash}`;
 
   // 1. Try Redis first
   if (isRedisReady()) {
@@ -53,7 +53,7 @@ export async function getCachedOptimization(tickers, maxWeight = 0.35, riskFreeR
 
 export async function setCachedOptimization(tickers, maxWeight, riskFreeRate, data, ttlSeconds = 86400) {
   const hash = generateOptimizationHash(tickers, maxWeight, riskFreeRate);
-  const key = `rf:opt:${hash}`;
+  const key = `rf:opt:v2:${hash}`;
   cacheStats.sets++;
 
   // 1. Save in Redis
@@ -79,7 +79,7 @@ export async function setCachedOptimization(tickers, maxWeight, riskFreeRate, da
 }
 
 export async function getCachedPrices(ticker) {
-  const key = `rf:prices:${ticker.toUpperCase()}`;
+  const key = `rf:prices:v2:${ticker.toUpperCase()}`;
 
   if (isRedisReady()) {
     try {
@@ -100,7 +100,7 @@ export async function getCachedPrices(ticker) {
 }
 
 export async function setCachedPrices(ticker, data, ttlSeconds = 3600) {
-  const key = `rf:prices:${ticker.toUpperCase()}`;
+  const key = `rf:prices:v2:${ticker.toUpperCase()}`;
 
   if (isRedisReady()) {
     try {

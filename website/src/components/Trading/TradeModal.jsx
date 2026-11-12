@@ -1,3 +1,5 @@
+import useDialog from '../../hooks/useDialog';
+import { createPortal } from 'react-dom';
 import { useState, useEffect } from 'react';
 import './TradeModal.css';
 
@@ -6,116 +8,91 @@ export default function TradeModal({
   onClose,
   initialMode = 'buy', // 'buy' or 'sell'
   stock, // { ticker, name, price, ... }
-  cashBalance = 25000,
+  cashBalance = 0,
   heldShares = 0,
   avgBuyPrice = 0,
   onExecuteTrade, // (order: { type: 'BUY'|'SELL', ticker, shares, price, total }) => void
 }) {
   const [mode, setMode] = useState(initialMode);
-  const [shares, setShares] = useState(10);
-  const [orderType, setOrderType] = useState('DELIVERY'); // 'DELIVERY' or 'INTRADAY'
+  const [quantity, setQuantity] = useState('1');
   const [error, setError] = useState('');
+  const [saving, setSaving] = useState(false);
+  const close = () => { if (!saving) onClose(); };
 
   useEffect(() => {
     if (isOpen) {
       setMode(initialMode);
-      setShares(initialMode === 'sell' && heldShares > 0 ? heldShares : 10);
+      const affordable = stock?.price > 0 ? Math.floor(Math.round(cashBalance * 100) / Math.round(stock.price * 100)) : 0;
+      setQuantity(String(initialMode === 'sell' ? heldShares : Math.min(10, affordable)));
       setError('');
     }
-  }, [isOpen, initialMode, heldShares]);
+  }, [isOpen, initialMode, stock?.ticker]);
 
+  const dialogRef = useDialog(isOpen && Boolean(stock), close);
   if (!isOpen || !stock) return null;
 
-  const price = stock.price || 100;
-  const totalAmount = Number((shares * price).toFixed(2));
+  const price = Number.isFinite(stock.price) ? Math.round(stock.price * 100) / 100 : 0;
   const isBuy = mode === 'buy';
-
-  const maxBuyShares = Math.floor(cashBalance / price);
-  const maxSellShares = heldShares;
-
-  const handleSharesChange = (val) => {
-    setError('');
-    const num = parseInt(val, 10);
-    if (isNaN(num) || num < 1) {
-      setShares(1);
-    } else {
-      setShares(num);
-    }
+  const maxBuyShares = price > 0 ? Math.max(0, Math.min(1000000, Math.floor(Math.round(cashBalance * 100) / Math.round(price * 100)))) : 0;
+  const maxSellShares = Math.max(0, Math.min(1000000, heldShares));
+  const limit = isBuy ? maxBuyShares : maxSellShares;
+  const shares = Number(quantity);
+  const validQuantity = /^\d+$/.test(quantity) && Number.isSafeInteger(shares) && shares >= 1 && shares <= limit;
+  const validation = price <= 0 ? 'A verified closing price is required.'
+    : !isBuy && !heldShares ? `You do not own any shares of ${stock.ticker} to sell.`
+    : isBuy && !maxBuyShares ? 'Insufficient simulated cash to buy one share.'
+    : !/^\d+$/.test(quantity) || !Number.isSafeInteger(shares) || shares < 1 ? 'Enter a positive whole number of shares.'
+    : shares > limit ? (isBuy ? `You can afford ${limit} shares.` : `You currently own ${heldShares} shares.`) : '';
+  const totalAmount = validQuantity ? Math.round(shares * Math.round(price * 100)) / 100 : 0;
+  const changeQuantity = value => { setError(''); setQuantity(String(value)); };
+  const addShares = amount => changeQuantity(Math.max(limit ? 1 : 0, Math.min(limit, (Number.isFinite(shares) ? shares : 0) + amount)));
+  const switchMode = next => {
+    setMode(next); setError('');
+    setQuantity(String(next === 'sell' ? maxSellShares : Math.min(10, maxBuyShares)));
   };
 
-  const handlePresetAdd = (amount) => {
-    setError('');
-    setShares((prev) => Math.max(1, prev + amount));
-  };
-
-  const handleSetMax = () => {
-    setError('');
-    if (isBuy) {
-      setShares(Math.max(1, maxBuyShares));
-    } else {
-      setShares(Math.max(1, maxSellShares));
-    }
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    if (saving) { e.preventDefault(); return; }
     e.preventDefault();
     setError('');
 
-    if (shares <= 0) {
-      setError('Please select at least 1 share.');
-      return;
-    }
+    if (validation || !validQuantity) { setError(validation || 'Invalid order quantity.'); return; }
 
-    if (isBuy) {
-      if (totalAmount > cashBalance) {
-        setError(`Insufficient funds. Available: $${cashBalance.toLocaleString('en-US', { minimumFractionDigits: 2 })}`);
-        return;
-      }
-    } else {
-      if (heldShares <= 0) {
-        setError(`You do not own any shares of ${stock.ticker} in your portfolio to sell.`);
-        return;
-      }
-      if (shares > heldShares) {
-        setError(`Cannot sell ${shares} shares. You currently own ${heldShares} shares.`);
-        return;
-      }
-    }
-
-    onExecuteTrade({
+    setSaving(true);
+    try { await onExecuteTrade({
       type: isBuy ? 'BUY' : 'SELL',
       ticker: stock.ticker,
       name: stock.name,
       shares,
       price,
       total: totalAmount,
-      orderType,
     });
 
     onClose();
+    } catch (error) { setError(error.message); } finally { setSaving(false); }
   };
 
   // Sell profit preview
-  const estimatedProfit = !isBuy && avgBuyPrice > 0
+  const estimatedProfit = !isBuy && validQuantity && avgBuyPrice > 0
     ? Number(((price - avgBuyPrice) * shares).toFixed(2))
     : 0;
   const estimatedProfitPct = !isBuy && avgBuyPrice > 0
     ? Number((((price - avgBuyPrice) / avgBuyPrice) * 100).toFixed(2))
     : 0;
 
-  return (
-    <div className="trade-modal-backdrop" onClick={onClose}>
-      <div className="trade-modal-container" onClick={(e) => e.stopPropagation()}>
+  return createPortal(
+    <div className="trade-modal-backdrop" onClick={close}>
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-label="Simulated trade" className="trade-modal-container" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="trade-modal-header">
           <div className="trade-modal-stock-info">
             <div className="trade-stock-ticker-row">
               <span className="trade-ticker">{stock.ticker}</span>
-              <span className="trade-exchange-tag">S&P 500 • Groww/Zerodha Execution</span>
+              <span className="trade-exchange-tag">Simulated stock order</span>
             </div>
             <h3 className="trade-stock-name">{stock.name}</h3>
           </div>
-          <button className="trade-modal-close" onClick={onClose} aria-label="Close trade dialog">
+          <button className="trade-modal-close" onClick={close} disabled={saving} aria-label="Close trade dialog">
             ✕
           </button>
         </div>
@@ -123,8 +100,8 @@ export default function TradeModal({
         {/* Live Price Ticker Banner */}
         <div className="trade-price-banner">
           <div className="trade-price-left">
-            <span className="trade-price-label">Market Price</span>
-            <span className="trade-price-val">${price.toFixed(2)}</span>
+            <span className="trade-price-label">Latest Closing Price</span>
+            <span className="trade-price-val">{price > 0 ? `$${price.toFixed(2)}` : 'Unavailable'} <small>{stock.asOf}</small></span>
           </div>
           <div className="trade-price-right">
             <span className={`trade-change-badge ${stock.changePct >= 0 ? 'pos' : 'neg'}`}>
@@ -139,55 +116,27 @@ export default function TradeModal({
           <button
             type="button"
             className={`trade-tab-btn buy ${isBuy ? 'active' : ''}`}
-            onClick={() => {
-              setMode('buy');
-              setError('');
-            }}
+            disabled={saving} onClick={() => switchMode('buy')}
           >
             <span className="tab-dot green"></span>
-            BUY (Optimal Entry)
+            BUY (Simulated)
           </button>
           <button
             type="button"
             className={`trade-tab-btn sell ${!isBuy ? 'active' : ''}`}
-            onClick={() => {
-              setMode('sell');
-              setError('');
-              if (heldShares > 0) setShares(heldShares);
-            }}
+            disabled={saving} onClick={() => switchMode('sell')}
           >
             <span className="tab-dot red"></span>
-            SELL (Optimal Exit)
+            SELL (Simulated)
           </button>
         </div>
 
         {/* Order Form */}
         <form onSubmit={handleSubmit} className="trade-form">
-          {/* Order Type Toggle */}
-          <div className="trade-form-row">
-            <label className="trade-label">Order Type</label>
-            <div className="trade-pill-group">
-              <button
-                type="button"
-                className={`trade-pill-btn ${orderType === 'DELIVERY' ? 'active' : ''}`}
-                onClick={() => setOrderType('DELIVERY')}
-              >
-                Delivery (Long Term CNC)
-              </button>
-              <button
-                type="button"
-                className={`trade-pill-btn ${orderType === 'INTRADAY' ? 'active' : ''}`}
-                onClick={() => setOrderType('INTRADAY')}
-              >
-                Intraday (MIS)
-              </button>
-            </div>
-          </div>
-
           {/* Quantity Controls */}
           <div className="trade-form-row">
             <div className="trade-label-with-meta">
-              <label className="trade-label">Shares / Quantity</label>
+              <label className="trade-label" htmlFor="trade-quantity">Shares / Quantity</label>
               <span className="trade-meta-hint">
                 {isBuy
                   ? `Max Affordable: ${maxBuyShares} shares`
@@ -199,22 +148,22 @@ export default function TradeModal({
               <button
                 type="button"
                 className="trade-qty-stepper"
-                onClick={() => setShares((s) => Math.max(1, s - 1))}
+                aria-label="Decrease shares" disabled={saving || shares <= 1 || !limit} onClick={() => addShares(-1)}
               >
                 −
               </button>
               <input
-                type="number"
+                id="trade-quantity" aria-label="Number of shares" type="number"
                 min="1"
-                step="1"
+                step="1" max={limit} disabled={saving} aria-invalid={Boolean(validation)} aria-describedby="trade-quantity-feedback"
                 className="trade-qty-input"
-                value={shares}
-                onChange={(e) => handleSharesChange(e.target.value)}
+                value={quantity}
+                onChange={(e) => changeQuantity(e.target.value)}
               />
               <button
                 type="button"
                 className="trade-qty-stepper"
-                onClick={() => setShares((s) => s + 1)}
+                aria-label="Increase shares" disabled={saving || shares >= limit || !limit} onClick={() => addShares(1)}
               >
                 +
               </button>
@@ -222,11 +171,11 @@ export default function TradeModal({
 
             {/* Quick Share Preset Chips */}
             <div className="trade-quick-chips">
-              <button type="button" onClick={() => handlePresetAdd(5)}>+5</button>
-              <button type="button" onClick={() => handlePresetAdd(10)}>+10</button>
-              <button type="button" onClick={() => handlePresetAdd(25)}>+25</button>
-              <button type="button" onClick={() => handlePresetAdd(50)}>+50</button>
-              <button type="button" className="chip-max" onClick={handleSetMax}>
+              <button type="button" disabled={saving || shares >= limit || !limit} onClick={() => addShares(5)}>+5</button>
+              <button type="button" disabled={saving || shares >= limit || !limit} onClick={() => addShares(10)}>+10</button>
+              <button type="button" disabled={saving || shares >= limit || !limit} onClick={() => addShares(25)}>+25</button>
+              <button type="button" disabled={saving || shares >= limit || !limit} onClick={() => addShares(50)}>+50</button>
+              <button type="button" className="chip-max" disabled={saving || !limit} onClick={() => changeQuantity(limit)}>
                 MAX ({isBuy ? maxBuyShares : maxSellShares})
               </button>
             </div>
@@ -246,7 +195,7 @@ export default function TradeModal({
             <div className="breakdown-row total">
               <span>Estimated Order Value</span>
               <span className={`breakdown-val total ${isBuy ? 'text-green' : 'text-red'}`}>
-                ${totalAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                {validQuantity ? `$${totalAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })}` : 'Unavailable'}
               </span>
             </div>
 
@@ -276,11 +225,12 @@ export default function TradeModal({
             )}
           </div>
 
-          {error && <div className="trade-error-msg">{error}</div>}
+          <div id="trade-quantity-feedback" role={error || validation ? 'alert' : undefined} className={error || validation ? 'trade-error-msg' : 'trade-meta-hint'}>{error || validation || `Order limit: ${limit} whole shares`}</div>
 
           {/* Execute CTA */}
           <button
             type="submit"
+            disabled={saving || Boolean(validation) || !validQuantity}
             className={`trade-execute-btn ${isBuy ? 'buy-btn' : 'sell-btn'}`}
           >
             <span className="trade-btn-icon">
@@ -295,16 +245,16 @@ export default function TradeModal({
               )}
             </span>
             <span>
-              {isBuy ? `BUY ${stock.ticker}` : `SELL ${stock.ticker}`} • ${totalAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+              {isBuy ? `BUY ${stock.ticker}` : `SELL ${stock.ticker}`} • {validQuantity ? `$${totalAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })}` : 'Unavailable'}
             </span>
           </button>
         </form>
 
         <div className="trade-modal-footer">
-          <span>⚡ Simulated Zerodha / Groww Instant Settlement API</span>
-          <span>Zero Commission • 100% Capital Reserve</span>
+          <span>Paper trading only | No broker connection</span>
+          <span>No real money transferred</span>
         </div>
       </div>
-    </div>
+    </div>, document.body
   );
 }

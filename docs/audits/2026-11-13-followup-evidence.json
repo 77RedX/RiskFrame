@@ -1,0 +1,323 @@
+{
+  "checkedAt": "2026-11-12T19:57:46.710Z",
+  "environment": "Edge; controlled account/quote/optimizer replies; server enforcement verified separately",
+  "oversell": [
+    {
+      "path": "My Portfolio SELL",
+      "held": 2,
+      "entered": 3,
+      "inputMax": null,
+      "submitEnabled": true,
+      "error": "Cannot sell 3 shares. You currently own 2 shares.",
+      "networkWrites": 0
+    },
+    {
+      "path": "Model sell proposal / +5",
+      "held": 2,
+      "entered": "7",
+      "error": "Cannot sell 7 shares. You currently own 2 shares.",
+      "networkWrites": 0
+    },
+    {
+      "path": "Buy proposal switched to SELL (unowned)",
+      "held": 0,
+      "error": "You do not own any shares of MSFT in your portfolio to sell.",
+      "networkWrites": 0
+    }
+  ],
+  "layout": [
+    {
+      "signedIn": false,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "toast": {
+        "x": 864.265625,
+        "y": 829.838623046875,
+        "width": 547.734375,
+        "height": 53.546875,
+        "right": 1412,
+        "bottom": 883.385498046875
+      },
+      "copilot": {
+        "x": 1187.609375,
+        "y": 832,
+        "width": 228.390625,
+        "height": 44,
+        "right": 1416,
+        "bottom": 876
+      },
+      "overlap": {
+        "width": 224.390625,
+        "height": 44
+      },
+      "column": {
+        "x": 152,
+        "y": 395.40625,
+        "width": 1136,
+        "height": 607.0625,
+        "right": 1288,
+        "bottom": 1002.46875
+      },
+      "card": {
+        "x": 152,
+        "y": 444.2610168457031,
+        "width": 554,
+        "height": 172.37496948242188,
+        "right": 706,
+        "bottom": 616.635986328125
+      },
+      "columnCount": 1,
+      "headerDisplay": "block",
+      "tickerNameGap": 0,
+      "capitalChips": [
+        {
+          "selected": "false",
+          "background": "rgba(255, 255, 255, 0.04)",
+          "border": "rgba(255, 255, 255, 0.08)"
+        },
+        {
+          "selected": "false",
+          "background": "rgba(255, 255, 255, 0.04)",
+          "border": "rgba(255, 255, 255, 0.08)"
+        },
+        {
+          "selected": "false",
+          "background": "rgba(255, 255, 255, 0.04)",
+          "border": "rgba(255, 255, 255, 0.08)"
+        },
+        {
+          "selected": "false",
+          "background": "rgba(255, 255, 255, 0.04)",
+          "border": "rgba(255, 255, 255, 0.08)"
+        }
+      ]
+    },
+    {
+      "signedIn": false,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "toast": {
+        "x": 0,
+        "y": 738.90625,
+        "width": 362,
+        "height": 77.09375,
+        "right": 362,
+        "bottom": 816
+      },
+      "copilot": {
+        "x": 137.609375,
+        "y": 776,
+        "width": 228.390625,
+        "height": 44,
+        "right": 366,
+        "bottom": 820
+      },
+      "overlap": {
+        "width": 224.390625,
+        "height": 40
+      },
+      "column": {
+        "x": 32,
+        "y": 816.859375,
+        "width": 326,
+        "height": 683.84375,
+        "right": 358,
+        "bottom": 1500.703125
+      },
+      "card": {
+        "x": 32,
+        "y": 866.796875,
+        "width": 326,
+        "height": 197.96875,
+        "right": 358,
+        "bottom": 1064.765625
+      },
+      "columnCount": 1,
+      "headerDisplay": "block",
+      "tickerNameGap": 0,
+      "capitalChips": [
+        {
+          "selected": "false",
+          "background": "rgba(255, 255, 255, 0.04)",
+          "border": "rgba(255, 255, 255, 0.08)"
+        },
+        {
+          "selected": "false",
+          "background": "rgba(255, 255, 255, 0.04)",
+          "border": "rgba(255, 255, 255, 0.08)"
+        },
+        {
+          "selected": "false",
+          "background": "rgba(255, 255, 255, 0.04)",
+          "border": "rgba(255, 255, 255, 0.08)"
+        },
+        {
+          "selected": "false",
+          "background": "rgba(255, 255, 255, 0.04)",
+          "border": "rgba(255, 255, 255, 0.08)"
+        }
+      ]
+    },
+    {
+      "signedIn": true,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "toast": {
+        "x": 864.265625,
+        "y": 824.03466796875,
+        "width": 547.734375,
+        "height": 53.546875,
+        "right": 1412,
+        "bottom": 877.58154296875
+      },
+      "copilot": {
+        "x": 1187.609375,
+        "y": 832,
+        "width": 228.390625,
+        "height": 44,
+        "right": 1416,
+        "bottom": 876
+      },
+      "overlap": {
+        "width": 224.390625,
+        "height": 44
+      },
+      "column": {
+        "x": 152,
+        "y": 395.40625,
+        "width": 1136,
+        "height": 721.0625,
+        "right": 1288,
+        "bottom": 1116.46875
+      },
+      "card": {
+        "x": 152,
+        "y": 443.6927795410156,
+        "width": 554,
+        "height": 210.37496948242188,
+        "right": 706,
+        "bottom": 654.0677490234375
+      },
+      "columnCount": 2,
+      "headerDisplay": "block",
+      "tickerNameGap": 0,
+      "capitalChips": [
+        {
+          "selected": "false",
+          "background": "rgba(255, 255, 255, 0.04)",
+          "border": "rgba(255, 255, 255, 0.08)"
+        },
+        {
+          "selected": "false",
+          "background": "rgba(255, 255, 255, 0.04)",
+          "border": "rgba(255, 255, 255, 0.08)"
+        },
+        {
+          "selected": "false",
+          "background": "rgba(255, 255, 255, 0.04)",
+          "border": "rgba(255, 255, 255, 0.08)"
+        },
+        {
+          "selected": "false",
+          "background": "rgba(255, 255, 255, 0.04)",
+          "border": "rgba(255, 255, 255, 0.08)"
+        }
+      ]
+    },
+    {
+      "signedIn": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "toast": {
+        "x": 0,
+        "y": 738.90625,
+        "width": 362,
+        "height": 77.09375,
+        "right": 362,
+        "bottom": 816
+      },
+      "copilot": {
+        "x": 137.609375,
+        "y": 776,
+        "width": 228.390625,
+        "height": 44,
+        "right": 366,
+        "bottom": 820
+      },
+      "overlap": {
+        "width": 224.390625,
+        "height": 40
+      },
+      "column": {
+        "x": 32,
+        "y": 816.859375,
+        "width": 326,
+        "height": 1141.6875,
+        "right": 358,
+        "bottom": 1958.546875
+      },
+      "card": {
+        "x": 32,
+        "y": 866.796875,
+        "width": 326,
+        "height": 235.96875,
+        "right": 358,
+        "bottom": 1102.765625
+      },
+      "columnCount": 2,
+      "headerDisplay": "block",
+      "tickerNameGap": 0,
+      "capitalChips": [
+        {
+          "selected": "false",
+          "background": "rgba(255, 255, 255, 0.04)",
+          "border": "rgba(255, 255, 255, 0.08)"
+        },
+        {
+          "selected": "false",
+          "background": "rgba(255, 255, 255, 0.04)",
+          "border": "rgba(255, 255, 255, 0.08)"
+        },
+        {
+          "selected": "false",
+          "background": "rgba(255, 255, 255, 0.04)",
+          "border": "rgba(255, 255, 255, 0.08)"
+        },
+        {
+          "selected": "false",
+          "background": "rgba(255, 255, 255, 0.04)",
+          "border": "rgba(255, 255, 255, 0.08)"
+        }
+      ]
+    }
+  ],
+  "serverVerification": {
+    "excessiveSale": {
+      "owned": 1,
+      "requested": 2,
+      "httpStatus": 400,
+      "error": "Insufficient shares",
+      "cashHoldingsTradesUnchanged": true
+    },
+    "concurrentSales": {
+      "owned": 1,
+      "requests": 2,
+      "httpStatuses": [
+        200,
+        409
+      ],
+      "successfulSales": 1,
+      "finalHoldings": 0
+    },
+    "verifiedAgainstAtlas": true,
+    "temporaryAccountsDeleted": 1
+  }
+}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { checkHealth } from '../api';
 import './LoadingScreen.css';
 
@@ -10,45 +10,33 @@ const MESSAGES = [
 ];
 
 const POLL_INTERVAL = 3000;
-const TIMEOUT = 5 * 60 * 1000; // 5 minutes
-const MIN_DISPLAY = 4000; // minimum time to show loading screen
+const TIMEOUT = 30000;
 
 export default function LoadingScreen({ onReady }) {
   const [msgIndex, setMsgIndex] = useState(0);
   const [timedOut, setTimedOut] = useState(false);
 
-  const startPolling = useCallback(() => {
+  const [retryCount, setRetryCount] = useState(0);
+  useEffect(() => {
     setTimedOut(false);
     setMsgIndex(0);
     let cancelled = false;
-    const mountedAt = Date.now();
-
+    let timer;
+    let controller;
+    const started = Date.now();
     const poll = async () => {
-      while (!cancelled) {
-        if (Date.now() - mountedAt > TIMEOUT) {
-          setTimedOut(true);
-          return;
-        }
-        try {
-          if (await checkHealth()) {
-            // Wait until minimum display time has passed
-            const elapsed = Date.now() - mountedAt;
-            if (elapsed < MIN_DISPLAY) {
-              await new Promise(r => setTimeout(r, MIN_DISPLAY - elapsed));
-            }
-            if (!cancelled) onReady();
-            return;
-          }
-        } catch { /* server still waking */ }
-        await new Promise(r => setTimeout(r, POLL_INTERVAL));
-      }
+      controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      const ready = await checkHealth(controller.signal);
+      clearTimeout(timeout);
+      if (cancelled) return;
+      if (ready) onReady();
+      else if (Date.now() - started >= TIMEOUT) setTimedOut(true);
+      else timer = setTimeout(poll, POLL_INTERVAL);
     };
     poll();
-    return () => { cancelled = true; };
-  }, [onReady]);
-
-  // Start polling on mount
-  useEffect(() => startPolling(), [startPolling]);
+    return () => { cancelled = true; clearTimeout(timer); controller?.abort(); };
+  }, [onReady, retryCount]);
 
   // Advance messages once, then stop at the last one ("Almost ready...")
   useEffect(() => {
@@ -69,7 +57,7 @@ export default function LoadingScreen({ onReady }) {
           <div className="loading-error-sub">
             The backend may be experiencing high demand or undergoing maintenance.
           </div>
-          <button className="loading-retry-btn" onClick={startPolling}>
+          <button className="loading-retry-btn" onClick={() => setRetryCount(n => n + 1)}>
             Retry Connection
           </button>
           <div className="loading-reload-hint">You can also refresh the page to try again.</div>
@@ -83,6 +71,7 @@ export default function LoadingScreen({ onReady }) {
       <div className="loading-wordmark">Risk<span>Frame</span></div>
       <div className="loading-status">{MESSAGES[msgIndex]}</div>
       <div className="loading-bar-track"><div className="loading-bar-fill" /></div>
+      <button className="loading-retry-btn" onClick={() => setRetryCount(n => n + 1)}>Retry Connection</button>
     </div>
   );
 }

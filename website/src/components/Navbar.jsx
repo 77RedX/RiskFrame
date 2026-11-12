@@ -159,7 +159,7 @@ export default function Navbar({ currentUser, onOpenAuth, onLogout, holdingsCoun
                       cursor: 'pointer',
                     }}
                   >
-                    <span>👤 {currentUser.name.split(' ')[0]}</span>
+                    <span>{currentUser.name.split(' ')[0]}</span>
                   </button>
                   <button
                     onClick={onLogout}
@@ -261,14 +261,14 @@ export default function Navbar({ currentUser, onOpenAuth, onLogout, holdingsCoun
               onClick={(e) => smoothScroll(e, '#optimal-signals')}
               style={{ color: '#2EE59D', fontSize: '0.92rem', fontWeight: 600, padding: '6px 0' }}
             >
-              ⚡ Optimal Buy &amp; Sell
+              Optimal Buy &amp; Sell
             </a>
             <a
               href="#my-portfolio"
               onClick={(e) => smoothScroll(e, '#my-portfolio')}
               style={{ color: '#D4AF37', fontSize: '0.92rem', fontWeight: 600, padding: '6px 0' }}
             >
-              💼 My Portfolio ({holdingsCount})
+              My Portfolio{currentUser && ` (${holdingsCount})`}
             </a>
             <a
               href="#price-history"
@@ -312,7 +312,7 @@ export default function Navbar({ currentUser, onOpenAuth, onLogout, holdingsCoun
                     fontWeight: 600,
                   }}
                 >
-                  👤 {currentUser.name}
+                  {currentUser.name}
                 </button>
                 <button
                   onClick={() => {

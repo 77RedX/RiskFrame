@@ -38,7 +38,7 @@ function MetricCard({ svgIcon, value, suffix, decimals, label, desc, highlightCl
   );
 }
 
-export default function MetricCards({ metrics }) {
+export default function MetricCards({ metrics, riskFreeRate = 0.04 }) {
   if (!metrics) return null;
 
   const { expected_return, volatility, sharpe_ratio } = metrics;
@@ -105,7 +105,7 @@ export default function MetricCards({ metrics }) {
         suffix=""
         decimals={3}
         label="Sharpe Efficiency Ratio"
-        desc="Risk-adjusted alpha ratio relative to 4.0% risk-free rate threshold."
+        desc={`Risk-adjusted return relative to ${(riskFreeRate * 100).toFixed(2)}% annual risk-free rate.`}
         highlightClass="highlight-mint"
         isNegative={sharpe_ratio < 0}
         id="card-sharpe"

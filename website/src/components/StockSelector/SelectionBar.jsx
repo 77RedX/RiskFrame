@@ -126,7 +126,7 @@ export default function SelectionBar({
             id="calculate-btn"
             disabled={count < 2 || isCalculating}
             title={count < 2 ? 'Select at least 2 stocks to calculate' : ''}
-            onClick={onCalculate}
+            onClick={() => onCalculate()}
           >
             {isCalculating ? (
               <>

@@ -1,5 +1,6 @@
-import { useState, useCallback, useEffect } from 'react';
-import { optimizePortfolio, getProfile, clearAuthToken, updateUserPortfolio } from './api';
+import useMarketQuotes from './hooks/useMarketQuotes';
+import { useState, useCallback, useEffect, useRef } from 'react';
+import { optimizePortfolio, getProfile, getAuthToken, clearAuthToken, updateUserPortfolio } from './api';
 import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -11,19 +12,10 @@ import PriceHistory from './components/PriceHistory/PriceHistory';
 import Footer from './components/Footer';
 import AgentCopilot from './components/AgentCopilot/AgentCopilot';
 import AuthModal from './components/UserAuth/AuthModal';
-import {
-  loadUserHoldings,
-  saveUserHoldings,
-  loadCashBalance,
-  saveCashBalance,
-  DEFAULT_DEMO_HOLDINGS,
-  DEFAULT_CASH_BALANCE,
-  recordTrade,
-} from './data/marketSignals';
-import { SP500_STOCKS } from './data/stocks';
 
 export default function App() {
   const [backendReady, setBackendReady] = useState(false);
+  const markBackendReady = useCallback(() => setBackendReady(true), []);
   const [selected, setSelected] = useState(new Set());
   const [isCalculating, setIsCalculating] = useState(false);
   const [results, setResults] = useState(null);
@@ -34,37 +26,49 @@ export default function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   // User Portfolio & Trading State
-  const [holdings, setHoldings] = useState(() => loadUserHoldings('guest'));
-  const [cashBalance, setCashBalance] = useState(() => loadCashBalance('guest'));
-
-  // Restore authenticated user profile on load
-  useEffect(() => {
-    getProfile()
-      .then((data) => setCurrentUser(data.user))
-      .catch(() => setCurrentUser(null));
+  const [holdings, setHoldings] = useState([]);
+  const [cashBalance, setCashBalance] = useState(0);
+  const [accountStatus, setAccountStatus] = useState(getAuthToken() ? 'loading' : 'signed-out');
+  const [settings, setSettings] = useState({ maxWeight: 0.35, riskFreeRate: 0.04 });
+  const quotes = useMarketQuotes([...holdings.map(h => h.ticker), ...Object.keys(results?.allocation ?? {})]);
+  const saving = useRef(false);
+  const accountOwner = useRef(null);
+  accountOwner.current = currentUser?._id;
+  const calculationId = useRef(0);
+  const invalidateResults = useCallback(() => {
+    calculationId.current++;
+    setResults(null);
+    setErrorMessage('');
+    setIsCalculating(false);
   }, []);
 
-  // Synchronize user holdings & cash whenever authenticated user changes (login, logout, account switch)
-  useEffect(() => {
-    if (currentUser) {
-      const userHoldings =
-        currentUser.holdings && currentUser.holdings.length > 0
-          ? currentUser.holdings
-          : loadUserHoldings(currentUser._id);
-      const userCash =
-        currentUser.cashBalance !== undefined && currentUser.cashBalance !== null
-          ? currentUser.cashBalance
-          : loadCashBalance(currentUser._id);
 
-      setHoldings(userHoldings);
-      setCashBalance(userCash);
-      saveUserHoldings(userHoldings, currentUser._id);
-      saveCashBalance(userCash, currentUser._id);
-    } else {
-      setHoldings(loadUserHoldings('guest'));
-      setCashBalance(loadCashBalance('guest'));
-    }
-  }, [currentUser?._id]);
+  // Restore only this token's account; late replies must not undo logout.
+  useEffect(() => {
+    const token = getAuthToken();
+    if (!token) return;
+    let cancelled = false;
+    getProfile().then(data => {
+      if (!cancelled && getAuthToken() === token) {
+        setCurrentUser(data.user);
+        setAccountStatus('ready');
+      }
+    }).catch(error => {
+      if (cancelled || getAuthToken() !== token) return;
+      if (error.status === 401) {
+        clearAuthToken();
+        setAccountStatus('signed-out');
+      } else setAccountStatus('error');
+    });
+    return () => { cancelled = true; };
+  }, []);
+
+  useEffect(() => {
+    invalidateResults();
+    setSettings({ maxWeight: currentUser?.preferences?.maxAssetWeight ?? 0.35, riskFreeRate: currentUser?.preferences?.riskFreeRate ?? 0.04 });
+    setHoldings(currentUser?.holdings ?? []);
+    setCashBalance(currentUser?.cashBalance ?? 0);
+  }, [currentUser?._id, currentUser?.preferences?.maxAssetWeight, currentUser?.preferences?.riskFreeRate]);
 
   // Fix scroll position on mount
   useEffect(() => {
@@ -125,6 +129,7 @@ export default function App() {
   }, []); // Run once — MutationObserver handles all future DOM changes
 
   const handleToggle = useCallback((ticker) => {
+    invalidateResults();
     setSelected((prev) => {
       const next = new Set(prev);
       if (next.has(ticker)) {
@@ -139,6 +144,7 @@ export default function App() {
 
   // Batch select: add multiple tickers in a single state update
   const handleBatchSelect = useCallback((tickers) => {
+    invalidateResults();
     setSelected((prev) => {
       const next = new Set(prev);
       for (const t of tickers) {
@@ -151,14 +157,22 @@ export default function App() {
 
   const handleClearAll = useCallback(() => {
     setSelected(new Set());
-    setResults(null);
-    setErrorMessage('');
+    invalidateResults();
   }, []);
 
   const handleCalculate = useCallback(async (customTickers = null) => {
     const listToOptimize = customTickers || Array.from(selected);
-    if (listToOptimize.length < 2 || isCalculating) return;
+    if (listToOptimize.length < 2 || isCalculating) return false;
 
+    if (!Number.isFinite(settings.maxWeight) || settings.maxWeight < 0.05 || settings.maxWeight > 1 || !Number.isFinite(settings.riskFreeRate) || settings.riskFreeRate < 0 || settings.riskFreeRate > 1) {
+      setErrorMessage('Enter a valid exposure limit (5 to 100%) and risk-free rate (0 to 100%).');
+      return false;
+    }
+    if (listToOptimize.length * settings.maxWeight < 1 - 1e-9) {
+      setErrorMessage(`Select at least ${Math.ceil(1 / settings.maxWeight)} stocks or raise the maximum per-stock allocation.`);
+      return false;
+    }
+    const id = ++calculationId.current;
     setIsCalculating(true);
     setResults(null);
     setErrorMessage('');
@@ -175,147 +189,66 @@ export default function App() {
       setLoadingProgress(40);
       setLoadingStatus('Optimizing Portfolio...');
 
-      const data = await optimizePortfolio(listToOptimize);
+      const data = await optimizePortfolio(listToOptimize, settings);
+      if (id !== calculationId.current) return false;
       setLoadingProgress(100);
       setResults(data);
+      return true;
     } catch (error) {
+      if (id !== calculationId.current) return false;
       console.error(error);
       setErrorMessage(
         `Could not connect to the backend API. Error: ${error.message}`
       );
+      return false;
+    } finally {
+      if (id === calculationId.current) setIsCalculating(false);
     }
+  }, [selected, isCalculating, settings]);
 
-    setIsCalculating(false);
-  }, [selected, isCalculating]);
-
-  // Execute Buy / Sell Trade (Zerodha & Groww settlement model)
-  const handleExecuteTrade = useCallback((order) => {
-    const userId = currentUser?._id;
-    const { type, ticker, name, shares, price, total } = order;
-
-    if (type === 'BUY') {
-      let nextCashValue;
-      setCashBalance((prevCash) => {
-        nextCashValue = Math.max(0, Number((prevCash - total).toFixed(2)));
-        saveCashBalance(nextCashValue, userId);
-        return nextCashValue;
-      });
-
-      setHoldings((prevHoldings) => {
-        const existingIdx = prevHoldings.findIndex((h) => h.ticker === ticker);
-        let nextHoldings;
-
-        if (existingIdx >= 0) {
-          const existing = prevHoldings[existingIdx];
-          const newShares = existing.shares + shares;
-          const newAvgPrice = Number(
-            ((existing.shares * existing.avgBuyPrice + shares * price) / newShares).toFixed(2)
-          );
-          nextHoldings = [...prevHoldings];
-          nextHoldings[existingIdx] = {
-            ...existing,
-            shares: newShares,
-            avgBuyPrice: newAvgPrice,
-          };
-        } else {
-          const stockMeta = SP500_STOCKS.find((s) => s.ticker === ticker);
-          const newHolding = {
-            ticker,
-            name: name || stockMeta?.name || ticker,
-            sector: stockMeta?.sector || 'Equities',
-            shares,
-            avgBuyPrice: price,
-            buyDate: new Date().toISOString().split('T')[0],
-          };
-          nextHoldings = [newHolding, ...prevHoldings];
-        }
-
-        saveUserHoldings(nextHoldings, userId);
-        if (userId) {
-          updateUserPortfolio({ holdings: nextHoldings, cashBalance: nextCashValue, trade: order });
-        }
-        return nextHoldings;
-      });
-
-      recordTrade(order, userId);
-    } else if (type === 'SELL') {
-      let nextCashValue;
-      setCashBalance((prevCash) => {
-        nextCashValue = Number((prevCash + total).toFixed(2));
-        saveCashBalance(nextCashValue, userId);
-        return nextCashValue;
-      });
-
-      setHoldings((prevHoldings) => {
-        const nextHoldings = prevHoldings
-          .map((h) => {
-            if (h.ticker === ticker) {
-              const remaining = h.shares - shares;
-              if (remaining <= 0) return null;
-              return { ...h, shares: remaining };
-            }
-            return h;
-          })
-          .filter(Boolean);
-
-        saveUserHoldings(nextHoldings, userId);
-        if (userId) {
-          updateUserPortfolio({ holdings: nextHoldings, cashBalance: nextCashValue, trade: order });
-        }
-        return nextHoldings;
-      });
-
-      recordTrade(order, userId);
-    }
-  }, [currentUser]);
-
-  const handleResetHoldings = useCallback(() => {
-    const userId = currentUser?._id;
-    setHoldings(DEFAULT_DEMO_HOLDINGS);
-    saveUserHoldings(DEFAULT_DEMO_HOLDINGS, userId);
-    setCashBalance(DEFAULT_CASH_BALANCE);
-    saveCashBalance(DEFAULT_CASH_BALANCE, userId);
-    if (userId) {
-      updateUserPortfolio({ holdings: DEFAULT_DEMO_HOLDINGS, cashBalance: DEFAULT_CASH_BALANCE });
-    }
-  }, [currentUser]);
-
-  const handleAddCash = useCallback((amount) => {
-    const userId = currentUser?._id;
-    setCashBalance((prev) => {
-      const next = Number((prev + amount).toFixed(2));
-      saveCashBalance(next, userId);
-      if (userId) {
-        updateUserPortfolio({ cashBalance: next });
-      }
-      return next;
-    });
-  }, [currentUser]);
+  const saveOperation = useCallback(async operation => {
+    if (!currentUser) throw new Error('Sign in to change your portfolio.');
+    if (saving.current) throw new Error('An account update is already pending.');
+    saving.current = true;
+    const owner = currentUser._id;
+    try {
+      const data = await updateUserPortfolio(operation);
+      if (accountOwner.current !== owner) throw new Error('Account changed. Reload your portfolio.');
+      setHoldings(data.holdings);
+      setCashBalance(data.cashBalance);
+      setCurrentUser(user => ({ ...user, ...data }));
+      return data;
+    } finally { saving.current = false; }
+  }, [currentUser?._id]);
+  const handleExecuteTrade = useCallback(order => saveOperation({ operation: order.type.toLowerCase(), ticker: order.ticker, shares: order.shares }), [saveOperation]);
+  const handleAddCash = useCallback(amount => saveOperation({ operation: 'deposit', amount }), [saveOperation]);
 
   const handleLogout = useCallback(() => {
     clearAuthToken();
+    invalidateResults();
     setCurrentUser(null);
     setSelected(new Set());
     setResults(null);
-    setHoldings(loadUserHoldings('guest'));
-    setCashBalance(loadCashBalance('guest'));
+    setHoldings([]);
+    setCashBalance(0);
+    setAccountStatus('signed-out');
   }, []);
 
   const handleTriggerOptimizationFromSignals = useCallback(() => {
     if (selected.size >= 2) {
-      handleCalculate();
+      return handleCalculate();
     } else {
       // Select high-conviction core basket
       const defaultBasket = ['NVDA', 'AAPL', 'MSFT', 'AVGO', 'AMZN', 'LLY', 'GOOGL', 'META'];
       setSelected(new Set(defaultBasket));
-      handleCalculate(defaultBasket);
+      return handleCalculate(defaultBasket);
     }
   }, [selected, handleCalculate]);
 
   const tickers = Array.from(selected);
 
   if (!backendReady) {
-    return <LoadingScreen onReady={() => setBackendReady(true)} />;
+    return <LoadingScreen onReady={markBackendReady} />;
   }
 
   return (
@@ -334,6 +267,8 @@ export default function App() {
         onClearAll={handleClearAll}
         isCalculating={isCalculating}
         onCalculate={handleCalculate}
+        settings={settings}
+        onSettingsChange={(next) => { invalidateResults(); setSettings(next); }}
       />
       <Results
         results={results}
@@ -345,32 +280,42 @@ export default function App() {
       />
       {/* Groww & Zerodha Style Optimal Trade Signals Section */}
       <OptimalSignals
+        onSignIn={() => setIsAuthModalOpen(true)}
+        quotes={quotes}
         holdings={holdings}
         cashBalance={cashBalance}
         optimizationResults={results}
+        isAuthenticated={Boolean(currentUser)}
         onExecuteTrade={handleExecuteTrade}
         onTriggerOptimization={handleTriggerOptimizationFromSignals}
         isOptimizing={isCalculating}
       />
       {/* My Portfolio Ledger Section */}
-      <MyPortfolio
+      {currentUser ? <MyPortfolio
+        quotes={quotes}
         holdings={holdings}
         cashBalance={cashBalance}
         optimizationResults={results}
         onExecuteTrade={handleExecuteTrade}
-        onResetHoldings={handleResetHoldings}
         onAddCash={handleAddCash}
-      />
+      /> : <section id="my-portfolio" aria-labelledby="portfolio-heading">
+        <div className="container">
+          <h2 id="portfolio-heading">My Portfolio</h2>
+          <p role="status">{accountStatus === 'loading' ? 'Loading your account...' : accountStatus === 'error' ? 'Your account is temporarily unavailable. Retry to load your portfolio.' : 'Sign in to view your portfolio'}</p>
+          {accountStatus === 'signed-out' && <button className="nav-cta-pill" onClick={() => setIsAuthModalOpen(true)}>Sign In</button>}
+          {accountStatus === 'error' && <button onClick={() => window.location.reload()}>Retry Account</button>}
+        </div>
+      </section>}
       <PriceHistory />
       <Footer />
 
       {/* RiskFrame v2 Agentic Co-Pilot & Account Modal */}
-      <AgentCopilot currentUser={currentUser} />
+      <AgentCopilot key={currentUser?._id || 'guest'} currentUser={currentUser} />
       <AuthModal
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}
         user={currentUser}
-        onAuthSuccess={(user) => setCurrentUser(user)}
+        onAuthSuccess={(user) => { setCurrentUser(user); setAccountStatus('ready'); }}
         onLogout={handleLogout}
       />
     </>

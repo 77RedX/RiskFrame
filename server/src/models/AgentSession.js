@@ -38,6 +38,8 @@ const AgentSessionSchema = new mongoose.Schema(
     },
     messages: [MessageSchema],
     metadata: {
+      groqContextVersion: Number,
+      privateContextAllowed: { type: Boolean, default: false },
       lastOptimizedTickers: [String],
       activePortfolioId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -47,6 +49,7 @@ const AgentSessionSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    optimisticConcurrency: true,
   }
 );
 

@@ -15,8 +15,8 @@ const getHeaders = (extra = {}) => {
 };
 
 // Health Check
-export const checkHealth = () =>
-  fetch(`${API}/api/health`)
+export const checkHealth = (signal) =>
+  fetch(`${API}/api/live`, { signal })
     .then((r) => r.json())
     .then((d) => d.status === 'ok')
     .catch(() => false);
@@ -82,7 +82,7 @@ export const register = async (name, email, password, preferences = {}) => {
 
 export const getProfile = async () => {
   const res = await fetch(`${API}/api/auth/me`, { headers: getHeaders() });
-  if (!res.ok) throw new Error('Unauthorized');
+  if (!res.ok) { const error = new Error('Could not load account'); error.status = res.status; throw error; }
   return res.json();
 };
 
@@ -98,13 +98,13 @@ export const updatePreferences = async (preferences) => {
 
 export const updateUserPortfolio = async (portfolioData) => {
   const token = getAuthToken();
-  if (!token) return null;
+  if (!token) throw new Error('Sign in to change your portfolio.');
   const res = await fetch(`${API}/api/auth/portfolio`, {
     method: 'PUT',
     headers: getHeaders(),
     body: JSON.stringify(portfolioData),
   });
-  if (!res.ok) return null;
+  if (!res.ok) { const data = await res.json().catch(() => ({})); throw new Error(data.error || 'Account update failed. Reload before retrying.'); }
   return res.json();
 };
 
@@ -146,14 +146,14 @@ export const deletePortfolio = async (id) => {
   return res.json();
 };
 
-// Agentic Co-Pilot API
-export const sendAgentMessage = async (message, sessionId = null) => {
+// Server-only provider integration: this request never carries a Groq key.
+export const sendAgentMessage = async (message, sessionId = null, { history = [], includePortfolioContext = false } = {}) => {
   const res = await fetch(`${API}/api/agent/chat`, {
-    method: 'POST',
-    headers: getHeaders(),
-    body: JSON.stringify({ message, sessionId }),
+    method: 'POST', headers: getHeaders(), signal: AbortSignal.timeout(60000),
+    body: JSON.stringify({ message, sessionId, history, includePortfolioContext }),
   });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error || 'Agent request failed');
+  const data = await res.json().catch(() => null);
+  if (!res.ok) throw new Error(data?.error || 'Copilot unavailable. Please retry.');
+  if (typeof data?.reply !== 'string' || (data.toolCalls != null && !Array.isArray(data.toolCalls))) throw new Error('Invalid copilot response. Please retry.');
   return data;
 };

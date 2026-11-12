@@ -73,6 +73,8 @@ def negative_sharpe(weights, annualized_returns, cov_matrix, risk_free_rate=0.04
     p_ret, p_var, p_vol = calculate_portfolio_metrics(weights, annualized_returns, cov_matrix)
     
     # 2. Calculate the Sharpe Ratio
+    if p_vol <= 0:
+        return np.inf
     sharpe = (p_ret - risk_free_rate) / p_vol
     
     # 3. Return the negative value for the optimizer
@@ -84,14 +86,18 @@ def optimize_portfolio(annualized_returns, cov_matrix, risk_free_rate=0.04, max_
     """
     num_assets = len(annualized_returns)
     
-    # Ensure max_weight is at least 1/num_assets so weights can sum to 1.0
-    effective_max_weight = max(max_weight, 1.0 / num_assets)
+    if num_assets < 2 or not np.isfinite(np.asarray(annualized_returns)).all() or not np.isfinite(np.asarray(cov_matrix)).all():
+        raise ValueError("At least two assets with finite returns and covariance are required")
+    if not np.isfinite(max_weight) or not 0.05 <= max_weight <= 1 or not np.isfinite(risk_free_rate) or not 0 <= risk_free_rate <= 1:
+        raise ValueError("Invalid exposure limit or risk-free rate")
+    if num_assets * max_weight < 1 - 1e-9:
+        raise ValueError("Exposure limit is infeasible; select more assets or increase the limit")
     
     # 1. Set the starting guess (e.g., equal weights for all stocks)
     initial_weights = np.array([1.0 / num_assets] * num_assets)
     
-    # 2. Set the bounds: Minimum 0%, maximum effective_max_weight (default 20%) per stock to enforce diversification
-    bounds = tuple((0.0, effective_max_weight) for _ in range(num_assets))
+    # Keep the requested cap; infeasible limits are rejected above.
+    bounds = tuple((0.0, max_weight) for _ in range(num_assets))
     
     # 3. Set the constraints: All weights must sum up to exactly 1.0 (100%)
     # In SciPy, an 'eq' constraint means the lambda function must equal exactly 0.
@@ -109,6 +115,8 @@ def optimize_portfolio(annualized_returns, cov_matrix, risk_free_rate=0.04, max_
     )
     
     # The 'result' object contains a lot of info, but we only want the final weights ('x')
+    if not result.success or not np.isfinite(result.x).all() or abs(result.x.sum() - 1) > 1e-6 or np.any(result.x < -1e-8) or np.any(result.x > max_weight + 1e-6):
+        raise RuntimeError('Portfolio optimization did not converge to a feasible solution')
     optimal_weights = result.x
     
     return optimal_weights

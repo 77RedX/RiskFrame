@@ -24,7 +24,7 @@ export default function BreakdownTable({ data }) {
               <th>Ticker</th>
               <th>Asset Name</th>
               <th>Optimal Weight</th>
-              <th>Neural Alpha (21D)</th>
+              <th>Model Return (Annualized)</th>
               <th>Historical Return</th>
               <th>Historical Vol</th>
               <th>Sharpe (Hist)</th>

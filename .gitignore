@@ -5,7 +5,8 @@ __pycache__/
 # Virtual environments
 .venv/
 env/
-.env
+.env*
+!.env.example
 
 # VS Code settings
 .vscode/
@@ -21,6 +22,16 @@ dist/
 .DS_Store
 Thumbs.db
 
-graphify-out/
-.agents/
-
+
+
+# Local caches and generated test results
+.npm-cache/
+.npm/
+.cache/
+cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.playwright/
+test-results/
+playwright-report/

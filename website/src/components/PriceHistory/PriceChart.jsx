@@ -103,5 +103,8 @@ export default function PriceChart({ ticker, dates, prices }) {
     },
   };
 
-  return <Line ref={chartRef} data={data} options={options} />;
+  return <>
+    <Line ref={chartRef} data={data} options={options} role="img" aria-label={`${ticker} historical closing prices; data table follows`} />
+    <table className="sr-only"><caption>{ticker} historical closing prices</caption><thead><tr><th>Date</th><th>Closing price (USD)</th></tr></thead><tbody>{dates.map((date, i) => <tr key={date}><td>{date}</td><td>{prices[i]}</td></tr>)}</tbody></table>
+  </>;
 }

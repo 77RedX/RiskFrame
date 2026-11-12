@@ -1,7 +1,8 @@
 import assert from 'node:assert';
 import test from 'node:test';
+import axios from 'axios';
+import { runQuantOptimization, fetchPriceHistory } from '../src/services/quant.service.js';
 import { solveMarkowitzSharpe } from '../src/services/quant.service.js';
-import { runAgentConversation } from '../src/services/agent.service.js';
 
 test('Markowitz Sharpe Ratio Optimizer calculates non-negative weights summing to 1', () => {
   const returns = [0.25, 0.35, 0.18];
@@ -20,15 +21,18 @@ test('Markowitz Sharpe Ratio Optimizer calculates non-negative weights summing t
   assert(result.sharpeRatio > 0);
 });
 
-test('Agent Conversation detects stock tickers and executes optimization tool', async () => {
-  const agentOutput = await runAgentConversation({
-    message: 'Please optimize a portfolio with AAPL, NVDA, and MSFT',
-    userId: null,
-    userPreferences: { maxAssetWeight: 0.35, riskFreeRate: 0.04 },
-  });
 
-  assert(agentOutput.reply.length > 50);
-  assert(agentOutput.toolCalls.length >= 1);
-  assert.strictEqual(agentOutput.toolCalls[0].tool, 'optimizePortfolio');
-  assert(agentOutput.reply.includes('Expected Return'));
+
+test('unavailable quant engine never produces synthetic optimization success', async () => {
+  const original = axios.post;
+  axios.post = async () => { throw new Error('Unavailable'); };
+  try { await assert.rejects(runQuantOptimization(['AAPL', 'MSFT', 'NVDA']), /Unavailable/); }
+  finally { axios.post = original; }
+});
+
+test('unavailable price source never produces synthetic history', async () => {
+  const original = axios.get;
+  axios.get = async () => { throw new Error('Unavailable'); };
+  try { await assert.rejects(fetchPriceHistory('AAPL'), /Unavailable/); }
+  finally { axios.get = original; }
 });

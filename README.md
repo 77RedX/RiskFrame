@@ -353,45 +353,84 @@ The training procedure executes 150 epochs with early stopping (patience 20), sa
 
 ---
 
-## Deployment & Zero-Config Execution with Docker Compose
+## Running with Docker Compose
 
 RiskFrame provides complete container orchestration via **Docker Compose** so you never have to manually install Node.js, run `npm run build`, or configure Redis/MongoDB manually:
 
+Before either command, create `server/.env` from `server/.env.example` if it does not exist. Generate a private signing key with `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` and set `JWT_SECRET` to that value in your local file. Keep this file out of Git. Compose requires this key and does not automatically read `server/.env`; the commands below load it explicitly. Keep the same key across restarts to preserve valid sessions.
+
 ### Option A: One-Command Production Stack (Auto-built React + NGINX + API + Quant + Redis + Mongo)
 ```bash
-docker compose up --build
+docker compose --env-file server/.env up --build
 ```
-This automatically compiles the frontend, starts NGINX on port `3000`, Express API on port `5000`, PyTorch Quant sidecar on port `5001`, Redis cache on port `6379`, and MongoDB on port `27017`.
+This compiles the frontend and starts NGINX on port `3000`, Express on `5000`, and Python on `5001`. Redis is reachable only inside the Docker network.
+
+Set `MONGODB_URI` in `server/.env` to your Atlas connection string or explicitly to `mongodb://mongo:27017/riskframe` for the included Docker database. `127.0.0.1` inside Node's container points to that container, not MongoDB. The backend never switches databases when the selected database is unavailable; account requests report an outage instead. The development stack explicitly selects its own Docker MongoDB. Set `DATABASE_URL` to the PostgreSQL connection string used by Python.
 * Access the web terminal at: **`http://localhost:3000`**
 * Access the backend API at: **`http://localhost:5000/api/health`**
 
 ### Option B: Zero-Build Live Hot-Reloading Development (No `npm run build` Ever Needed)
 ```bash
-docker compose -f docker-compose.dev.yml up
+docker compose --env-file server/.env -f docker-compose.dev.yml up
 ```
 Mounts your local source code into the containers with **Vite Hot Module Replacement (HMR)** and **Node.js watch mode**. Any code changes to `.jsx` or `.css` are reflected live in your browser instantly without restarting containers or running builds.
 
-To stop the containers at any time:
+To stop without deleting containers or volumes:
 ```bash
-docker compose down
+docker compose --env-file server/.env stop
 ```
 
 ---
 
 ## Configuration & Environment Variables
 
+Local configuration uses ignored `.env` files; commit only the `.env.example` templates. When adding a key, update its template and this documentation in the same change, then set the private value locally or in the hosting service. Git never needs the real file.
+
+| Service | Variables | Direct local startup |
+| :--- | :--- | :--- |
+| Node API | `MONGODB_URI`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `ALLOWED_ORIGINS`, `PYTHON_QUANT_URL`, optional `REDIS_URL`, `PORT` | `server/.env` |
+| Python engine | `DATABASE_URL`, `HF_MODEL_REPO`, optional `HF_TOKEN` | root `.env`, based on `.env.example` |
+| Vite frontend | `VITE_API_URL` (public API base URL) | `website/.env`, optional for localhost |
+
+Compose reads `server/.env` using `--env-file`, including the Python values listed in that template, and forwards them to their owning containers. This differs from starting Node or Python directly. The development Compose file deliberately uses SQLite and Docker MongoDB. Its MongoDB host port is bound only to localhost; production MongoDB and Redis have no host-published ports. Node running directly on your laptop cannot reach Docker's internal Redis hostname. Without a separately configured Redis endpoint it uses the optional memory cache.
+
+`/api/live` checks that Node responds; `/api/health` returns 503 until both MongoDB and Python are ready. Redis failure falls back to memory and is reported separately. Account outages do not silently select another database. Deposits and trades are simulated and update the UI only after the database confirms them.
+
+On Render, enter variables on each owning service's Environment page. Environment groups are optional for shared settings; keep database and signing secrets off the frontend. Use deployed service addresses for `PYTHON_QUANT_URL`, `REDIS_URL` and `VITE_API_URL`, and set `ALLOWED_ORIGINS` to the frontend origin. For native Vite builds, `VITE_API_URL` is read at build time. The current frontend Dockerfile fixes that value to an empty string, so a custom API URL for Docker deployment still needs a reviewed build-argument change. The current `render.yaml` configures only Python; a reviewed multi-service deployment is still required. Compose is not automatically deployed by that file. If a production service used a historical committed JWT key, replace it with a fresh private key; this invalidates old sessions. No key rotation is performed by this branch.
+
 Key parameters are centralized in `dataset.py` (`CONFIG`) and can be overridden via environment variables:
 
 | Variable | Default | Description |
 | :--- | :--- | :--- |
 | `DATABASE_URL` | `sqlite:///local_fallback.db` | SQLAlchemy connection string (e.g. `postgresql://user:pass@host/db`). |
-| `HF_MODEL_REPO` | `77RedX/RiskFrame` | Hugging Face Hub model repository for weight downloads and checkpoint sync. |
-| `HF_TOKEN` | *Empty* | Hugging Face API token with write permissions (for automated checkpoint uploads). |
+| `HF_MODEL_REPO` | `redx-was-taken/RiskFrame` | Hugging Face Hub model repository for weight downloads and checkpoint sync. |
+| `HF_TOKEN` | *Empty* | Hugging Face token; read permission for downloads, write permission only for explicitly running training uploads. |
 | `PORT` | `7860` | Network port for Gunicorn / Flask production serving. |
 | `WINDOW_SIZE` | `63` | Lookback trading days for Temporal CNN feature input. |
 | `PREDICTION_HORIZON` | `21` | Forward return horizon in trading days (used for alpha generation). |
 | `MAX_WEIGHT` | `0.35` | Maximum individual asset weight constraint in portfolio optimization. |
 | `RISK_FREE_RATE` | `0.04` | Annualized risk-free benchmark rate ($4\%$) used in the Sharpe Ratio. |
+
+---
+
+## Groq Quant Copilot
+
+The copilot uses Groq for conversation and the existing Python engine for numerical calculations. Configure these **Node backend** variables in ignored `server/.env` (or the Node service's Render Environment settings):
+
+```dotenv
+GROQ_API_KEY=
+GROQ_MODEL=openai/gpt-oss-20b
+```
+
+Set the key privately; the example intentionally has no value. Both Compose files forward these variables only to Node. Apply changes with `docker compose --env-file server/.env up -d --no-deps backend`. No Groq key belongs in a VITE variable, browser bundle, source commit or Docker image. If Groq is unconfigured or unavailable, chat reports an error; the rest of the application remains usable.
+
+The assistant can optimize a supported basket, assess a verified calculation, retrieve dated historical closes, and read owned saved strategies when signed in with **Allow saved portfolio context with Groq** enabled. That checkbox starts a new conversation; permission is also enforced by the server. Messages and permitted tool data are sent to Groq. Public analysis is the default. The copilot cannot execute trades, deposit cash, save strategies or change accounts.
+
+Example: ask "Optimize AAPL MSFT NVDA with a 35% maximum weight and 4% risk-free rate", then "Explain the concentration risk using those results". Expand **Sources & calculations** to inspect engine/date/settings rather than treating generated prose as the numerical source of truth. Quotes are historical closes, forecasts are model estimates, and targets are not incremental trade instructions.
+
+Owned conversations retain at most 40 messages; provider context is further bounded. Guest context stays in the open browser conversation. **New** clears it; logout/account changes clear messages, permission and session IDs. Older command-only sessions must start fresh before using AI. Failed requests offer an explicit retry; they do not silently become canned successes.
+
+Initial limits: three model rounds, four tool executions, a 45-second tool/provider deadline, bounded output and history, ten messages per minute per account/guest IP and one in-flight request per client. Rate counters are per Node process; use shared Redis counters before adding replicas. Provider account limits still apply. Render topology/proxy/CORS configuration and custom frontend Docker API build arguments remain separate deployment work.
 
 ---
 

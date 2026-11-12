@@ -2,7 +2,7 @@
 # RiskFrame Production Multi-Container Orchestration
 # ============================================================
 # Usage:
-#   docker compose up --build
+#   docker compose --env-file server/.env up --build
 #   Access Frontend Terminal at: http://localhost:3000
 #   Access Backend API at:        http://localhost:5000/api/health
 # ============================================================
@@ -36,13 +36,14 @@ services:
       - 1.1.1.1
     environment:
       - PORT=5000
-      - MONGODB_URI=${MONGODB_URI}
-      - MONGODB_FALLBACK_URI=mongodb://mongo:27017/riskframe
-      - DATABASE_URL=sqlite:///local_fallback.db
+      - MONGODB_URI=${MONGODB_URI:?MONGODB_URI must be set to Atlas or mongodb://mongo:27017/riskframe}
       - REDIS_URL=redis://redis:6379
       - PYTHON_QUANT_URL=http://quant-engine:5001
       - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173,http://localhost:80
-      - JWT_SECRET=riskframe_production_jwt_secret_key_2026
+      - JWT_SECRET=${JWT_SECRET:?JWT_SECRET must be set}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN:-7d}
+      - GROQ_API_KEY=${GROQ_API_KEY:-}
+      - GROQ_MODEL=${GROQ_MODEL:-}
     depends_on:
       - redis
       - quant-engine
@@ -58,16 +59,19 @@ services:
       - "5001:5001"
     environment:
       - PORT=5001
-      - DATABASE_URL=sqlite:///local_fallback.db
+      - DATABASE_URL=${DATABASE_URL}
+      - HF_MODEL_REPO=${HF_MODEL_REPO:-redx-was-taken/RiskFrame}
+      - HF_TOKEN=${HF_TOKEN:-}
       - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5000
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     restart: unless-stopped
 
   # 4. Redis High-Speed Telemetry & Cache
   redis:
     image: redis:7-alpine
     container_name: riskframe-redis
-    ports:
-      - "6379:6379"
     restart: unless-stopped
     volumes:
       - redis_data:/data
@@ -76,8 +80,6 @@ services:
   mongo:
     image: mongo:7-jammy
     container_name: riskframe-mongo
-    ports:
-      - "27017:27017"
     restart: unless-stopped
     volumes:
       - mongo_data:/data/db

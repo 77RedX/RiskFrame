@@ -1,3 +1,7 @@
+import { getJWTSecret } from '../config/auth.js';
+import mongoose from 'mongoose';
+import { PortfolioOperationSchema, applyPortfolioOperation } from '../services/ledger.service.js';
+import { fetchPriceHistory } from '../services/quant.service.js';
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import { z } from 'zod';
@@ -5,9 +9,10 @@ import { User } from '../models/User.js';
 import { authenticate } from '../middleware/auth.middleware.js';
 
 const router = express.Router();
+router.use((req, res, next) => mongoose.connection.readyState === 1 ? next() : res.status(503).json({ error: 'Account database is unavailable. Please retry.' }));
 
 function generateToken(user) {
-  const secret = process.env.JWT_SECRET || 'riskframe_jwt_secret_default';
+  const secret = getJWTSecret();
   const expiresIn = process.env.JWT_EXPIRES_IN || '7d';
   return jwt.sign({ id: user._id, email: user.email, tier: user.tier }, secret, { expiresIn });
 }
@@ -101,59 +106,21 @@ router.post('/login', async (req, res) => {
 });
 
 // GET /api/auth/me
-router.get('/me', authenticate, async (req, res) => {
-  let needsSave = false;
-  if (!req.user.holdings || req.user.holdings.length === 0) {
-    req.user.holdings = [
-      { ticker: 'NVDA', name: 'NVIDIA Corp.', sector: 'Technology', shares: 35, avgBuyPrice: 112.5, buyDate: '2026-01-15' },
-      { ticker: 'AAPL', name: 'Apple Inc.', sector: 'Technology', shares: 25, avgBuyPrice: 195.4, buyDate: '2026-02-02' },
-      { ticker: 'MSFT', name: 'Microsoft Corp.', sector: 'Technology', shares: 18, avgBuyPrice: 402.0, buyDate: '2026-02-18' },
-      { ticker: 'AMZN', name: 'Amazon.com Inc.', sector: 'Consumer Disc.', shares: 30, avgBuyPrice: 172.8, buyDate: '2026-03-05' },
-      { ticker: 'LLY', name: 'Eli Lilly & Co.', sector: 'Healthcare', shares: 10, avgBuyPrice: 840.0, buyDate: '2026-03-20' },
-    ];
-    needsSave = true;
-  }
-  if (req.user.cashBalance === undefined || req.user.cashBalance === null) {
-    req.user.cashBalance = 24500.0;
-    needsSave = true;
-  }
-  if (!req.user.trades) {
-    req.user.trades = [];
-    needsSave = true;
-  }
-  if (needsSave) {
-    await req.user.save();
-  }
-  return res.json({ user: req.user.toSafeJSON() });
-});
+router.get('/me', authenticate, (req, res) => res.json({ user: req.user.toSafeJSON() }));
 
 // PUT /api/auth/portfolio - Update user's personal ledger (holdings, cash balance, trades)
 router.put('/portfolio', authenticate, async (req, res) => {
+  const parsed = PortfolioOperationSchema.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.errors[0].message });
   try {
-    const { holdings, cashBalance, trade } = req.body;
-    if (holdings !== undefined && Array.isArray(holdings)) {
-      req.user.holdings = holdings;
-    }
-    if (cashBalance !== undefined && typeof cashBalance === 'number') {
-      req.user.cashBalance = cashBalance;
-    }
-    if (trade) {
-      if (!Array.isArray(req.user.trades)) req.user.trades = [];
-      req.user.trades.unshift(trade);
-      if (req.user.trades.length > 50) {
-        req.user.trades = req.user.trades.slice(0, 50);
-      }
-    }
+    const operation = parsed.data;
+    const quote = operation.operation === 'deposit' ? null : await fetchPriceHistory(operation.ticker);
+    applyPortfolioOperation(req.user, operation, quote);
     await req.user.save();
-    return res.json({
-      message: 'Portfolio updated',
-      holdings: req.user.holdings,
-      cashBalance: req.user.cashBalance,
-      trades: req.user.trades,
-    });
-  } catch (err) {
-    console.error('[Auth Portfolio Update Error]:', err);
-    return res.status(500).json({ error: 'Failed to update portfolio data.' });
+    return res.json({ holdings: req.user.holdings, cashBalance: req.user.cashBalance, trades: req.user.trades, version: req.user.__v });
+  } catch (error) {
+    if (error.name === 'VersionError') return res.status(409).json({ error: 'Account changed in another request. Reload your portfolio before retrying.' });
+    return res.status(error.status || 503).json({ error: error.status ? error.message : 'Could not confirm the account update. Reload your portfolio before retrying.' });
   }
 });
 

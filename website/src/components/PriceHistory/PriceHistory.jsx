@@ -62,7 +62,7 @@ export default function PriceHistory() {
             Historical <span className="gradient-text">Pricing Feed</span>
           </h2>
           <p className="section-subtitle">
-            Inspect real-time 15-day market closing trajectory for any individual component equity in the index.
+            Inspect the latest available 15-day market closing trajectory for any individual component equity in the index.
           </p>
         </div>
 
@@ -81,7 +81,7 @@ export default function PriceHistory() {
             </span>
             <input
               type="text"
-              id="history-search"
+              id="history-search" aria-label="Search historical prices"
               className="search-input"
               list="history-datalist"
               placeholder="Query ticker or corporation name…"

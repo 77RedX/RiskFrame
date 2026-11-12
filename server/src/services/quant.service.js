@@ -80,94 +80,28 @@ export function solveMarkowitzSharpe(returns, covMatrix, maxWeight = 0.35, riskF
 /**
  * Execute optimization via Python Quant Microservice or JS Quant Fallback
  */
-export async function runQuantOptimization(tickers, maxWeight = 0.35, riskFreeRate = 0.04) {
-  // 1. Try Python Quant sidecar if active
-  try {
-    const response = await axios.post(
-      `${PYTHON_QUANT_URL}/api/optimize`,
-      { tickers, max_weight: maxWeight, risk_free_rate: riskFreeRate },
-      { timeout: 3500 }
-    );
-    if (response.data && response.data.allocation) {
-      return {
-        ...response.data,
-        engine: 'python-pytorch-slsqp',
-      };
-    }
-  } catch (err) {
-    // Python service unreachable or starting up - use JS quant engine
-  }
-
-  // 2. High-speed JS Quant Engine
-  const n = tickers.length;
-  // Estimate annualized return and volatility approximations for portfolio universe
-  const baseReturns = [0.24, 0.32, 0.18, 0.22, 0.15, 0.28, 0.19, 0.25, 0.14, 0.21];
-  const returns = tickers.map((_, i) => baseReturns[i % baseReturns.length] + ((i * 17) % 7) * 0.01);
-
-  // Covariance matrix approximation with pairwise correlation ~ 0.45
-  const covMatrix = Array.from({ length: n }, (_, i) =>
-    Array.from({ length: n }, (_, j) => {
-      const volI = 0.18 + ((i * 13) % 9) * 0.01;
-      const volJ = 0.18 + ((j * 13) % 9) * 0.01;
-      if (i === j) return volI * volI;
-      return 0.45 * volI * volJ;
-    })
+export async function runQuantOptimization(tickers, maxWeight = 0.35, riskFreeRate = 0.04, { signal } = {}) {
+  const response = await axios.post(
+    `${PYTHON_QUANT_URL}/api/optimize`,
+    { tickers, max_weight: maxWeight, risk_free_rate: riskFreeRate },
+    { timeout: 15000, signal }
   );
-
-  const solution = solveMarkowitzSharpe(returns, covMatrix, maxWeight, riskFreeRate);
-
-  const allocation = {};
-  const aiPredictions = {};
-  const individualMetrics = {};
-
-  tickers.forEach((ticker, idx) => {
-    allocation[ticker] = solution.weights[idx];
-    aiPredictions[ticker] = Number(returns[idx].toFixed(4));
-    individualMetrics[ticker] = {
-      historical_return: Number(returns[idx].toFixed(4)),
-      historical_volatility: Number(Math.sqrt(covMatrix[idx][idx]).toFixed(4)),
-      historical_sharpe: Number(((returns[idx] - riskFreeRate) / Math.sqrt(covMatrix[idx][idx])).toFixed(4)),
-    };
-  });
-
-  return {
-    allocation,
-    metrics: {
-      expected_return: solution.expectedReturn,
-      volatility: solution.volatility,
-      sharpe_ratio: solution.sharpeRatio,
-    },
-    ai_predictions: aiPredictions,
-    individual_metrics: individualMetrics,
-    engine: 'js-markowitz-projected-gradient',
-  };
+  if (!response.data?.allocation || !response.data?.metrics) throw new Error('Invalid quant response');
+  return { ...response.data, engine: 'python-pytorch-slsqp' };
 }
 
 /**
  * Fetch 15-day price history for a given ticker
  */
-export async function fetchPriceHistory(ticker) {
-  // 1. Try Python quant microservice
-  try {
-    const response = await axios.get(`${PYTHON_QUANT_URL}/api/prices?ticker=${ticker}`, { timeout: 2500 });
-    if (response.data && response.data.prices) {
-      return response.data;
-    }
-  } catch {}
+export async function fetchPriceHistory(ticker, { signal } = {}) {
+  const response = await axios.get(`${PYTHON_QUANT_URL}/api/prices?ticker=${encodeURIComponent(ticker)}`, { timeout: 10000, signal });
+  const data = response.data;
+  if (!Array.isArray(data?.dates) || !Array.isArray(data?.prices) || !data.prices.length || data.dates.length !== data.prices.length || data.prices.some(p => !Number.isFinite(p) || p <= 0) || data.dates.some(d => !/^\d{4}-\d{2}-\d{2}$/.test(d))) throw new Error('Invalid historical price data');
+  return { ...data, source: 'historical-close', as_of: data.dates.at(-1) };
+}
 
-  // 2. Synthesize last 15 trading days
-  const dates = [];
-  const prices = [];
-  let basePrice = 150 + ((ticker.charCodeAt(0) * 7) % 250);
-
-  const today = new Date();
-  for (let i = 14; i >= 0; i--) {
-    const d = new Date(today);
-    d.setDate(d.getDate() - i);
-    dates.push(d.toISOString().split('T')[0]);
-    basePrice = Number((basePrice * (1 + (Math.sin(i * 1.5) * 0.02 + 0.003))).toFixed(2));
-    prices.push(basePrice);
-  }
-
-  return { dates, prices };
+export async function fetchSupportedTickers({ signal } = {}) {
+  const { data } = await axios.get(`${PYTHON_QUANT_URL}/api/tickers`, { timeout: 10000, signal });
+  if (!Array.isArray(data?.tickers) || !data.tickers.length || data.tickers.some(t => typeof t !== 'string')) throw new Error('Invalid supported ticker data');
+  return data.tickers;
 }

@@ -7,7 +7,7 @@ import BreakdownTable from './BreakdownTable';
 export default function Results({ results, isLoading, loadingProgress, loadingStatus, tickers, errorMessage }) {
   const hasResults = results && results.metrics;
 
-  const dateStr = new Date().toLocaleDateString('en-US', {
+  const dateStr = new Date(results?.calculated_at || Date.now()).toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
@@ -59,7 +59,8 @@ export default function Results({ results, isLoading, loadingProgress, loadingSt
         {/* Populated Results */}
         {!isLoading && hasResults && (
           <div id="results-populated">
-            <MetricCards metrics={results.metrics} />
+            <MetricCards metrics={results.metrics} riskFreeRate={results.applied_settings?.risk_free_rate} />
+            <p className="metric-disclaimer">Engine: {results.engine || 'Not reported'} | Data as of: {results.market_data_as_of || 'Not reported'} | {results.cached ? 'Cached calculation' : 'New calculation'}{results.applied_settings && ` | Max weight: ${(results.applied_settings.max_weight * 100).toFixed(0)}%`}</p>
 
             <SharpeBadge sharpeRatio={results.metrics.sharpe_ratio} meta={meta} />
 

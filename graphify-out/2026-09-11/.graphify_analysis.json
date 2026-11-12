@@ -1,0 +1,275 @@
+{
+  "communities": {
+    "0": [
+      "website_script",
+      "website_script_animatevalue",
+      "website_script_applyfilters",
+      "website_script_breakdowntbody",
+      "website_script_calculatebtn",
+      "website_script_clearbtn",
+      "website_script_company_map",
+      "website_script_copybtn",
+      "website_script_ctx",
+      "website_script_filtertabs",
+      "website_script_historybtn",
+      "website_script_historychartcontainer",
+      "website_script_historydatalist",
+      "website_script_historyerror",
+      "website_script_historyinput",
+      "website_script_historyloading",
+      "website_script_limitwarning",
+      "website_script_loadingprogressbar",
+      "website_script_loadingstocks",
+      "website_script_loadingsub",
+      "website_script_metricreturn",
+      "website_script_metricsharpe",
+      "website_script_metricvol",
+      "website_script_navbar",
+      "website_script_noresults",
+      "website_script_noresultsterm",
+      "website_script_orbs",
+      "website_script_populatehistorydatalist",
+      "website_script_previewinner",
+      "website_script_previewplaceholder",
+      "website_script_renderchart",
+      "website_script_resultsempty",
+      "website_script_resultsloading",
+      "website_script_resultsmeta",
+      "website_script_resultspopulated",
+      "website_script_scrollobs",
+      "website_script_searchclearbtn",
+      "website_script_searchinput",
+      "website_script_sectionobs",
+      "website_script_sector_badge",
+      "website_script_selectallbtn",
+      "website_script_selected",
+      "website_script_selectioncount",
+      "website_script_selectionprogress",
+      "website_script_sharpebadge",
+      "website_script_sharpelabel",
+      "website_script_showresultsempty",
+      "website_script_showresultsloading",
+      "website_script_showresultspopulated",
+      "website_script_sp500_stocks",
+      "website_script_stockgrid"
+    ],
+    "1": [
+      "app",
+      "app_get_prices",
+      "app_initialize_backend",
+      "app_optimize",
+      "app_refresh_cache_if_needed",
+      "app_serve_frontend",
+      "main",
+      "main_main",
+      "optimizer",
+      "optimizer_calculate_annualized_covariance",
+      "optimizer_calculate_annualized_returns",
+      "optimizer_calculate_daily_returns",
+      "optimizer_calculate_portfolio_metrics",
+      "optimizer_negative_sharpe",
+      "optimizer_optimize_portfolio",
+      "optimizer_rationale_21",
+      "optimizer_rationale_33",
+      "optimizer_rationale_50",
+      "optimizer_rationale_6",
+      "optimizer_rationale_67",
+      "optimizer_rationale_82",
+      "route"
+    ],
+    "2": [
+      "data_loader",
+      "data_loader_get_sp500_tickers",
+      "data_loader_load_portfolio_data",
+      "data_loader_rationale_27",
+      "data_loader_rationale_7",
+      "dataset",
+      "dataset_download_and_prepare_data",
+      "dataset_get_tickers",
+      "dataset_portfoliodataset",
+      "dataset_portfoliodataset_getitem",
+      "dataset_portfoliodataset_len",
+      "dataset_rationale_37",
+      "dataset_rationale_61",
+      "dataset_rationale_91",
+      "scripts_update_data",
+      "train",
+      "train_train"
+    ],
+    "3": [
+      "model",
+      "model_rationale_164",
+      "model_rationale_53",
+      "model_rationale_7",
+      "model_residualblock",
+      "model_residualblock_forward",
+      "model_residualblock_init",
+      "model_temporalcnn",
+      "model_temporalcnn_forward",
+      "model_temporalcnn_init",
+      "model_temporalcnn_initialize_weights"
+    ],
+    "4": [
+      "dataset_portfoliodataset_init",
+      "feature_eng",
+      "feature_eng_compute_macd",
+      "feature_eng_compute_rsi",
+      "feature_eng_engineer_features",
+      "feature_eng_rationale_193",
+      "feature_eng_rationale_23",
+      "feature_eng_rationale_43",
+      "feature_eng_rationale_61",
+      "feature_eng_save_engineered_features"
+    ],
+    "5": [
+      "website_script_buildgrid",
+      "website_script_togglestock",
+      "website_script_updatepreview",
+      "website_script_updateui"
+    ]
+  },
+  "cohesion": {
+    "0": 0.0392156862745098,
+    "1": 0.19047619047619047,
+    "2": 0.18382352941176472,
+    "3": 0.23636363636363636,
+    "4": 0.26666666666666666,
+    "5": 0.6666666666666666
+  },
+  "gods": [
+    {
+      "id": "dataset_download_and_prepare_data",
+      "label": "download_and_prepare_data()",
+      "degree": 12
+    },
+    {
+      "id": "model_temporalcnn",
+      "label": "TemporalCNN",
+      "degree": 11
+    },
+    {
+      "id": "feature_eng_engineer_features",
+      "label": "engineer_features()",
+      "degree": 8
+    },
+    {
+      "id": "dataset_portfoliodataset",
+      "label": "PortfolioDataset",
+      "degree": 7
+    },
+    {
+      "id": "main_main",
+      "label": "main()",
+      "degree": 7
+    },
+    {
+      "id": "optimizer_calculate_portfolio_metrics",
+      "label": "calculate_portfolio_metrics()",
+      "degree": 7
+    },
+    {
+      "id": "optimizer_optimize_portfolio",
+      "label": "optimize_portfolio()",
+      "degree": 7
+    },
+    {
+      "id": "app_initialize_backend",
+      "label": "initialize_backend()",
+      "degree": 6
+    },
+    {
+      "id": "optimizer_calculate_annualized_covariance",
+      "label": "calculate_annualized_covariance()",
+      "degree": 6
+    },
+    {
+      "id": "optimizer_calculate_daily_returns",
+      "label": "calculate_daily_returns()",
+      "degree": 6
+    }
+  ],
+  "surprises": [
+    {
+      "source": "initialize_backend()",
+      "target": "TemporalCNN",
+      "source_files": [
+        "app.py",
+        "model.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "main()",
+      "target": "TemporalCNN",
+      "source_files": [
+        "main.py",
+        "model.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "train()",
+      "target": "TemporalCNN",
+      "source_files": [
+        "train.py",
+        "model.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "initialize_backend()",
+      "target": "download_and_prepare_data()",
+      "source_files": [
+        "app.py",
+        "dataset.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "main()",
+      "target": "download_and_prepare_data()",
+      "source_files": [
+        "main.py",
+        "dataset.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `download_and_prepare_data()` connect `dataset.py` to `app.py`, `engineer_features`?",
+      "why": "High betweenness centrality (0.057) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `TemporalCNN` connect `TemporalCNN` to `app.py`, `dataset.py`?",
+      "why": "High betweenness centrality (0.051) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `engineer_features()` connect `engineer_features` to `dataset.py`?",
+      "why": "High betweenness centrality (0.038) - this node is a cross-community bridge."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `breakdownTbody`, `calculateBtn`, `clearBtn` to the rest of the system?",
+      "why": "42 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `script.js` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.0392156862745098 - nodes in this community are weakly interconnected."
+    }
+  ]
+}

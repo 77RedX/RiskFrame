@@ -113,8 +113,8 @@ router.post('/:id/rebalance', async (req, res) => {
       return res.status(404).json({ error: 'Portfolio not found' });
     }
 
-    const maxWeight = req.user.preferences?.maxAssetWeight || 0.35;
-    const riskFreeRate = req.user.preferences?.riskFreeRate || 0.04;
+    const maxWeight = req.user.preferences?.maxAssetWeight ?? 0.35;
+    const riskFreeRate = req.user.preferences?.riskFreeRate ?? 0.04;
 
     // 1. Re-run optimization on the portfolio's tickers
     const newResult = await runQuantOptimization(portfolio.tickers, maxWeight, riskFreeRate);
