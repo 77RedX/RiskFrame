@@ -396,7 +396,7 @@ export default function MyPortfolio({
                   <input
                     type="number"
                     min="100"
-                    step="500"
+                    step="0.01"
                     className="trade-qty-input custom-dep"
                     value={depositAmount}
                     onChange={(e) => setDepositAmount(Number(e.target.value))}
