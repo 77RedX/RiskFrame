@@ -623,6 +623,7 @@ section {
 
 .selection-actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 10px;
 }
@@ -748,7 +749,7 @@ section {
 .search-wrap {
   position: relative;
   flex: 1;
-  min-width: 260px;
+  min-width: min(260px, 100%);
 }
 
 .search-icon {
@@ -1518,7 +1519,15 @@ section {
   .stock-card { padding: 12px; }
 }
 
-.calculation-settings { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 24px 0; border: 1px solid var(--border-subtle, #353535); padding: 16px; }
+.calculation-settings { min-inline-size: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 24px 0; border: 1px solid var(--border-subtle, #353535); padding: 16px; }
 .calculation-settings input { width: 90px; padding: 8px; background: #152238; color: #eae0ce; border: 1px solid #687180; border-radius: 6px; }
 
 body:has(.trade-modal-backdrop, .auth-modal-backdrop) { overflow: hidden; }
+
+@media (max-width: 600px) {
+  .selection-info, .footer-links { flex-wrap: wrap; }
+  .footer-inner, .footer-links, .footer-copy { min-width: 0; max-width: 100%; }
+  .dock-left, .dock-right { min-width: 0; width: 100%; }
+  .capital-picker, .capital-buttons, .signals-tab-pills { flex-wrap: wrap; }
+  .btn-optimize-signals { max-width: 100%; white-space: normal; }
+}

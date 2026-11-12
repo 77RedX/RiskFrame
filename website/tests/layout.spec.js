@@ -16,3 +16,15 @@ test('mobile trade dialog fits the viewport and sits above page controls', async
   await close.click();
   await expect(dialog).toHaveCount(0);
 });
+
+test('mobile controls never widen the document', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('rf_auth_token', 'test-token'));
+  await page.route('**/api/health', r => r.fulfill({ json: { status: 'ok' } }));
+  await page.route('**/api/auth/me', r => r.fulfill({ json: { user: { _id: 'test', name: 'Test User', holdings: [], cashBalance: 0 } } }));
+  await page.goto('http://localhost:3000');
+  await page.locator('#calculate-btn').waitFor();
+  for (const width of [320, 390, 768, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 844 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+  }
+});
