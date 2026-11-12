@@ -24,7 +24,7 @@ export function applyPortfolioOperation(user, operation, quote) {
   const { ticker, shares } = operation;
   const date = quote?.dates?.at(-1);
   const age = Date.now() - Date.parse(`${date}T00:00:00Z`);
-  if (!Number.isFinite(age) || age < -86400000 || age > 7 * 86400000) invalid('A closing price from the past seven days is required', 503);
+  if (!Number.isFinite(age) || age < 0 || age > 7 * 86400000) invalid('A closing price from the past seven days is required', 503);
   const price = cents(quote?.prices?.at(-1));
   const total = price * shares;
   if (!price || !Number.isSafeInteger(total)) invalid('Invalid order value');
