@@ -163,14 +163,14 @@ export function generateOptimalSignals(currentHoldings = [], optimizationResults
     let alpha = item.baseAlpha;
     let weight = 0.20;
 
-    if (optimizationResults?.allocation?.[item.ticker]) {
+    if (optimizationResults?.allocation?.[item.ticker] != null) {
       weight = optimizationResults.allocation[item.ticker];
     }
-    if (optimizationResults?.ai_predictions?.[item.ticker]) {
+    if (optimizationResults?.ai_predictions?.[item.ticker] != null) {
       alpha = optimizationResults.ai_predictions[item.ticker];
     }
 
-    const suggestedAllocationAmount = targetCapital * (weight || 0.15);
+    const suggestedAllocationAmount = targetCapital * weight;
     const suggestedShares = Math.max(1, Math.round(suggestedAllocationAmount / market.price));
 
     return {
@@ -180,7 +180,7 @@ export function generateOptimalSignals(currentHoldings = [], optimizationResults
       price: market.price,
       changePct: market.changePct,
       projectedAlphaPct: Number((alpha * 100).toFixed(2)),
-      optimalWeightPct: Number(((weight || 0.15) * 100).toFixed(1)),
+      optimalWeightPct: Number((weight * 100).toFixed(1)),
       convictionScore: item.score,
       badgeText: item.score >= 94 ? 'Strong Buy' : 'Optimal Buy',
       suggestedShares,
@@ -190,6 +190,8 @@ export function generateOptimalSignals(currentHoldings = [], optimizationResults
       heldShares: holdingsMap[item.ticker]?.shares || 0,
     };
   });
+
+  optimalBuySignals = optimalBuySignals.filter(item => item.optimalWeightPct > 0);
 
   // Sort optimal buys by conviction score descending
   optimalBuySignals.sort((a, b) => b.convictionScore - a.convictionScore);
@@ -201,7 +203,8 @@ export function generateOptimalSignals(currentHoldings = [], optimizationResults
   currentHoldings.forEach((holding) => {
     const market = getStockPrice(holding.ticker);
     const pnlPct = ((market.price - holding.avgBuyPrice) / holding.avgBuyPrice) * 100;
-    const isModelWeightLow = optimizationResults && (optimizationResults.allocation[holding.ticker] || 0) < 0.05;
+    const modelWeight = optimizationResults?.allocation?.[holding.ticker];
+    const isModelWeightLow = modelWeight != null && modelWeight < 0.05;
 
     // Conditions where selling is optimal:
     // a) Large profit target reached (> 20%) -> Harvest optimal profits

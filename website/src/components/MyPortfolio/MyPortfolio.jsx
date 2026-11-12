@@ -29,10 +29,12 @@ export default function MyPortfolio({
       const dayReturn = Number(((market.changeAmount || 0) * h.shares).toFixed(2));
 
       // Model advisory based on optimization results
-      const optimalWeight = optimizationResults?.allocation?.[h.ticker] || null;
+      const optimalWeight = optimizationResults?.allocation?.[h.ticker] ?? null;
 
       let advisory = { label: 'Optimal Hold', type: 'hold' };
-      if (pnlPct >= 20) {
+      if (optimalWeight === 0) {
+        advisory = { label: 'Rebalance Exit', type: 'sell' };
+      } else if (pnlPct >= 20) {
         advisory = { label: 'Take Profit / Trim', type: 'trim' };
       } else if (optimalWeight !== null && optimalWeight < 0.05) {
         advisory = { label: 'Rebalance Exit', type: 'sell' };

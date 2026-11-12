@@ -127,3 +127,12 @@ test('per-run exposure and zero risk-free rate reach the optimizer', async ({ pa
   expect(body.risk_free_rate).toBe(0);
   await expect(page.locator('#results')).toContainText('0.00% annual risk-free rate');
 });
+
+test('zero model weight is never replaced by a default buy allocation', async ({ page }) => {
+  await page.route('**/api/optimize', route => route.fulfill({ json: { allocation: { AAPL: 0, MSFT: 0.35, NVDA: 0.35, AMZN: 0.3 }, ai_predictions: { AAPL: 0, MSFT: 0, NVDA: 0, AMZN: 0 }, metrics: { expected_return: 0.1, volatility: 0.2, sharpe_ratio: 0.3 } } }));
+  await select(page);
+  await page.locator('#calculate-btn').click();
+  await expect(page.locator('#results-populated')).toBeVisible();
+  await expect(page.locator('.buy-card').filter({ has: page.locator('.card-ticker', { hasText: /^AAPL$/ }) })).toHaveCount(0);
+  await expect(page.locator('.buy-card').filter({ has: page.locator('.card-ticker', { hasText: /^MSFT$/ }) })).toContainText('+0%');
+});
