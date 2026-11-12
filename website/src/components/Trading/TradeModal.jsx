@@ -301,7 +301,7 @@ export default function TradeModal({
         </form>
 
         <div className="trade-modal-footer">
-          <span>⚡ Simulated Zerodha / Groww Instant Settlement API</span>
+          <span>Simulated Zerodha / Groww Instant Settlement API</span>
           <span>Zero Commission • 100% Capital Reserve</span>
         </div>
       </div>

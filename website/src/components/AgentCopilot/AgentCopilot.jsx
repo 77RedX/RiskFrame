@@ -8,7 +8,7 @@ export default function AgentCopilot({ currentUser, onSelectTickers }) {
     {
       role: 'assistant',
       content:
-        '👋 Hi! I am your **RiskFrame Quantitative Co-Pilot**.\n\nI can analyze your portfolios, optimize custom stock baskets with our PyTorch Temporal CNN model, and assess risk trade-offs.',
+        'Hi! I am your **RiskFrame Quantitative Co-Pilot**.\n\nI can analyze your portfolios, optimize custom stock baskets with our PyTorch Temporal CNN model, and assess risk trade-offs.',
       toolCalls: [],
     },
   ]);
@@ -49,7 +49,7 @@ export default function AgentCopilot({ currentUser, onSelectTickers }) {
         ...prev,
         {
           role: 'assistant',
-          content: `⚠️ Error executing agent reasoning: ${err.message}`,
+          content: `Error executing agent reasoning: ${err.message}`,
           toolCalls: [],
         },
       ]);
@@ -73,7 +73,6 @@ export default function AgentCopilot({ currentUser, onSelectTickers }) {
         onClick={() => setIsOpen(!isOpen)}
         title="Toggle Quantitative AI Co-Pilot"
       >
-        <span className="agent-icon">🤖</span>
         <span className="agent-label">AI Quant Co-Pilot</span>
         <span className="agent-badge">Agentic v2</span>
       </button>
@@ -83,7 +82,6 @@ export default function AgentCopilot({ currentUser, onSelectTickers }) {
         <div className="agent-drawer">
           <div className="agent-drawer-header">
             <div className="agent-drawer-title">
-              <span className="agent-avatar">🤖</span>
               <div>
                 <h4>RiskFrame AI Co-Pilot</h4>
                 <span className="agent-status">
@@ -103,7 +101,7 @@ export default function AgentCopilot({ currentUser, onSelectTickers }) {
                   <div className="agent-text" dangerouslySetInnerHTML={{ __html: formatMarkdown(m.content) }} />
                   {m.toolCalls && m.toolCalls.length > 0 && (
                     <div className="agent-tools-executed">
-                      <div className="tools-title">⚡ Tools Executed:</div>
+                      <div className="tools-title">Tools Executed:</div>
                       {m.toolCalls.map((t, tIdx) => (
                         <div key={tIdx} className="tool-chip">
                           <span className="tool-name">{t.tool}</span>

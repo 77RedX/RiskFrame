@@ -21,12 +21,12 @@ export function initRedis() {
 
     redisClient.on('connect', () => {
       isRedisConnected = true;
-      console.log('⚡ [Redis] Successfully connected to Redis instance at', redisUrl);
+      console.log('[Redis] Successfully connected to Redis instance at', redisUrl);
     });
 
     redisClient.on('error', (err) => {
       isRedisConnected = false;
-      console.warn(`⚠️  [Redis] Redis connection notice (${err.code || err.message}). Fallback cache active.`);
+      console.warn(`[Redis] Redis connection notice (${err.code || err.message}). Fallback cache active.`);
     });
 
     redisClient.on('close', () => {
@@ -35,12 +35,12 @@ export function initRedis() {
 
     // Initiate connection asynchronously
     redisClient.connect().catch((err) => {
-      console.warn(`⚠️  [Redis] Initial connect attempt: ${err.message}. Fallback in-memory cache active.`);
+      console.warn(`[Redis] Initial connect attempt: ${err.message}. Fallback in-memory cache active.`);
     });
 
     return redisClient;
   } catch (error) {
-    console.warn(`⚠️  [Redis] Could not initialize ioredis: ${error.message}`);
+    console.warn(`[Redis] Could not initialize ioredis: ${error.message}`);
     return null;
   }
 }

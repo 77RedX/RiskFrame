@@ -65,7 +65,7 @@ app.use((err, req, res, next) => {
 // Start Server & Connect Databases
 async function startServer() {
   try {
-    console.log('🚀 [RiskFrame] Starting v2 Node.js & MongoDB Engine...');
+    console.log('[RiskFrame] Starting v2 Node.js & MongoDB Engine...');
     
     // 1. Connect MongoDB
     await connectDB();
@@ -76,18 +76,18 @@ async function startServer() {
     // 3. Listen on network port
     const server = app.listen(PORT, () => {
       console.log(`\n==================================================`);
-      console.log(`✅ RiskFrame Backend v2 Running on http://localhost:${PORT}`);
-      console.log(`⚡ Redis Acceleration: ${isRedisReady() ? 'Active (Connected)' : 'Fallback Layer'}`);
-      console.log(`🤖 Agentic Co-Pilot API: http://localhost:${PORT}/api/agent/chat`);
+      console.log(`RiskFrame Backend v2 Running on http://localhost:${PORT}`);
+      console.log(`Redis Acceleration: ${isRedisReady() ? 'Active (Connected)' : 'Fallback Layer'}`);
+      console.log(`Agentic Co-Pilot API: http://localhost:${PORT}/api/agent/chat`);
       console.log(`==================================================\n`);
     });
 
     // Graceful Shutdown
     const shutdown = async () => {
-      console.log('\n🛑 Gracefully shutting down RiskFrame server...');
+      console.log('\nGracefully shutting down RiskFrame server...');
       server.close(async () => {
         await disconnectDB();
-        console.log('👋 Goodbye!');
+        console.log('Goodbye!');
         process.exit(0);
       });
     };
@@ -95,7 +95,7 @@ async function startServer() {
     process.on('SIGINT', shutdown);
     process.on('SIGTERM', shutdown);
   } catch (error) {
-    console.error('❌ Failed to start RiskFrame server:', error);
+    console.error('Failed to start RiskFrame server:', error);
     process.exit(1);
   }
 }

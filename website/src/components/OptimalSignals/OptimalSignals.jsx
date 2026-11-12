@@ -33,8 +33,8 @@ export default function OptimalSignals({
   const handleTradeSuccess = (order) => {
     onExecuteTrade?.(order);
     const msg = order.type === 'BUY'
-      ? `🎉 Order Executed: Bought ${order.shares} shares of ${order.ticker} ($${order.total.toLocaleString()}). Added to My Portfolio!`
-      : `💸 Order Executed: Sold ${order.shares} shares of ${order.ticker} ($${order.total.toLocaleString()}). Cash balance credited!`;
+      ? `Order Executed: Bought ${order.shares} shares of ${order.ticker} ($${order.total.toLocaleString()}). Added to My Portfolio!`
+      : `Order Executed: Sold ${order.shares} shares of ${order.ticker} ($${order.total.toLocaleString()}). Cash balance credited!`;
     setToastMessage(msg);
     setTimeout(() => setToastMessage(''), 4500);
   };
@@ -46,7 +46,7 @@ export default function OptimalSignals({
     }
     setTimeout(() => {
       setOptimizingLocal(false);
-      setToastMessage('⚡ Algorithmic Optimization Complete: Signals updated to latest market frontier!');
+      setToastMessage('Algorithmic Optimization Complete: Signals updated to latest market frontier!');
       setTimeout(() => setToastMessage(''), 4000);
     }, 1200);
   };
@@ -70,7 +70,6 @@ export default function OptimalSignals({
         {/* Toast Notification */}
         {toastMessage && (
           <div className="signals-toast fade-up">
-            <span className="toast-icon">✨</span>
             <span>{toastMessage}</span>
           </div>
         )}
@@ -102,7 +101,7 @@ export default function OptimalSignals({
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                     <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="#08080A" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="#D4AF37" />
                   </svg>
-                  <span>⚡ Optimize According to Stocks</span>
+                  <span>Optimize According to Stocks</span>
                 </>
               )}
             </button>
@@ -230,7 +229,7 @@ export default function OptimalSignals({
 
                       {isOwned && (
                         <div className="card-owned-indicator">
-                          <span>💼 Already in My Portfolio: {item.heldShares} shares</span>
+                          <span>Already in My Portfolio: {item.heldShares} shares</span>
                         </div>
                       )}
                     </div>
@@ -263,7 +262,7 @@ export default function OptimalSignals({
                             <span className="card-ticker">{item.ticker}</span>
                             <span className="card-sector">{item.sector}</span>
                             {item.isPortfolioHolding && (
-                              <span className="portfolio-alert-tag">⚡ Current Holding</span>
+                              <span className="portfolio-alert-tag">Current Holding</span>
                             )}
                           </div>
                           <span className="card-company-name">{item.name}</span>

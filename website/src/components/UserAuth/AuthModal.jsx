@@ -169,7 +169,7 @@ export default function AuthModal({ isOpen, onClose, user, onAuthSuccess, onLogo
                 cursor: 'pointer',
               }}
             >
-              ⚙️ Risk Preferences &amp; Limits
+              Risk Preferences &amp; Limits
             </button>
           </div>
         </div>
