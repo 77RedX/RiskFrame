@@ -60,9 +60,9 @@ export const agentTools = {
         maxConcentration: `${(maxConcentration * 100).toFixed(1)}%`,
         isDiversified: !isHighlyConcentrated && weights.length >= 4,
         sharpeAssessment:
-          metrics.sharpeRatio > 1.2
+          metrics.sharpe_ratio > 1.2
             ? 'Strong risk-adjusted alpha'
-            : metrics.sharpeRatio > 0.8
+            : metrics.sharpe_ratio > 0.8
             ? 'Acceptable risk/reward'
             : 'Suboptimal Sharpe; consider adding macro hedge ETFs (GLD, TLT)',
       };

@@ -217,3 +217,4 @@ Verification performed: inspected both Compose files, README startup instruction
 - Quote fix integration gate: rebuilt and started Compose; container ledger tests 3/3 and Edge portfolio/market-data tests 6/6 passed. Future-date finding resolved.
 - 2026-11-13 startup documentation: reproduced missing-key failure; documented private key generation and explicit --env-file for both Compose commands, including dev header. Both commands parse with a temporary fixture. No signing key was changed.
 - 2026-11-13 MongoDB configuration: removed obsolete fallback variable and made primary URI mandatory. Documented Atlas versus Docker-local selection. Database/readiness tests 2/2 passed; fixture Compose checks reject missing URI and preserve each explicit selection. No silent fallback restored.
+- 2026-11-13 copilot risk metrics: pending regression failed on camelCase lookup, passed after using canonical sharpe_ratio. Full backend suite 16/16 passed.
