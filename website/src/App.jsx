@@ -12,12 +12,6 @@ import PriceHistory from './components/PriceHistory/PriceHistory';
 import Footer from './components/Footer';
 import AgentCopilot from './components/AgentCopilot/AgentCopilot';
 import AuthModal from './components/UserAuth/AuthModal';
-import {
-  saveUserHoldings,
-  saveCashBalance,
-  recordTrade,
-} from './data/marketSignals';
-import { SP500_STOCKS } from './data/stocks';
 
 export default function App() {
   const [backendReady, setBackendReady] = useState(false);
@@ -37,6 +31,9 @@ export default function App() {
   const [accountStatus, setAccountStatus] = useState(getAuthToken() ? 'loading' : 'signed-out');
   const [settings, setSettings] = useState({ maxWeight: 0.35, riskFreeRate: 0.04 });
   const quotes = useMarketQuotes([...holdings.map(h => h.ticker), ...Object.keys(results?.allocation ?? {})]);
+  const saving = useRef(false);
+  const accountOwner = useRef(null);
+  accountOwner.current = currentUser?._id;
   const calculationId = useRef(0);
   const invalidateResults = useCallback(() => {
     calculationId.current++;
@@ -209,100 +206,22 @@ export default function App() {
     }
   }, [selected, isCalculating, settings]);
 
-  // Execute Buy / Sell Trade (Zerodha & Groww settlement model)
-  const handleExecuteTrade = useCallback((order) => {
-    if (!currentUser) throw new Error("Sign in to change your portfolio.");
-    const userId = currentUser._id;
-    const { type, ticker, name, shares, price, total } = order;
-
-    if (type === 'BUY') {
-      let nextCashValue;
-      setCashBalance((prevCash) => {
-        nextCashValue = Math.max(0, Number((prevCash - total).toFixed(2)));
-        saveCashBalance(nextCashValue, userId);
-        return nextCashValue;
-      });
-
-      setHoldings((prevHoldings) => {
-        const existingIdx = prevHoldings.findIndex((h) => h.ticker === ticker);
-        let nextHoldings;
-
-        if (existingIdx >= 0) {
-          const existing = prevHoldings[existingIdx];
-          const newShares = existing.shares + shares;
-          const newAvgPrice = Number(
-            ((existing.shares * existing.avgBuyPrice + shares * price) / newShares).toFixed(2)
-          );
-          nextHoldings = [...prevHoldings];
-          nextHoldings[existingIdx] = {
-            ...existing,
-            shares: newShares,
-            avgBuyPrice: newAvgPrice,
-          };
-        } else {
-          const stockMeta = SP500_STOCKS.find((s) => s.ticker === ticker);
-          const newHolding = {
-            ticker,
-            name: name || stockMeta?.name || ticker,
-            sector: stockMeta?.sector || 'Equities',
-            shares,
-            avgBuyPrice: price,
-            buyDate: new Date().toISOString().split('T')[0],
-          };
-          nextHoldings = [newHolding, ...prevHoldings];
-        }
-
-        saveUserHoldings(nextHoldings, userId);
-        if (userId) {
-          updateUserPortfolio({ holdings: nextHoldings, cashBalance: nextCashValue, trade: order });
-        }
-        return nextHoldings;
-      });
-
-      recordTrade(order, userId);
-    } else if (type === 'SELL') {
-      let nextCashValue;
-      setCashBalance((prevCash) => {
-        nextCashValue = Number((prevCash + total).toFixed(2));
-        saveCashBalance(nextCashValue, userId);
-        return nextCashValue;
-      });
-
-      setHoldings((prevHoldings) => {
-        const nextHoldings = prevHoldings
-          .map((h) => {
-            if (h.ticker === ticker) {
-              const remaining = h.shares - shares;
-              if (remaining <= 0) return null;
-              return { ...h, shares: remaining };
-            }
-            return h;
-          })
-          .filter(Boolean);
-
-        saveUserHoldings(nextHoldings, userId);
-        if (userId) {
-          updateUserPortfolio({ holdings: nextHoldings, cashBalance: nextCashValue, trade: order });
-        }
-        return nextHoldings;
-      });
-
-      recordTrade(order, userId);
-    }
-  }, [currentUser]);
-
-  const handleAddCash = useCallback((amount) => {
-    if (!currentUser) throw new Error("Sign in to change your portfolio.");
-    const userId = currentUser._id;
-    setCashBalance((prev) => {
-      const next = Number((prev + amount).toFixed(2));
-      saveCashBalance(next, userId);
-      if (userId) {
-        updateUserPortfolio({ cashBalance: next });
-      }
-      return next;
-    });
-  }, [currentUser]);
+  const saveOperation = useCallback(async operation => {
+    if (!currentUser) throw new Error('Sign in to change your portfolio.');
+    if (saving.current) throw new Error('An account update is already pending.');
+    saving.current = true;
+    const owner = currentUser._id;
+    try {
+      const data = await updateUserPortfolio(operation);
+      if (accountOwner.current !== owner) throw new Error('Account changed. Reload your portfolio.');
+      setHoldings(data.holdings);
+      setCashBalance(data.cashBalance);
+      setCurrentUser(user => ({ ...user, ...data }));
+      return data;
+    } finally { saving.current = false; }
+  }, [currentUser?._id]);
+  const handleExecuteTrade = useCallback(order => saveOperation({ operation: order.type.toLowerCase(), ticker: order.ticker, shares: order.shares }), [saveOperation]);
+  const handleAddCash = useCallback(amount => saveOperation({ operation: 'deposit', amount }), [saveOperation]);
 
   const handleLogout = useCallback(() => {
     clearAuthToken();

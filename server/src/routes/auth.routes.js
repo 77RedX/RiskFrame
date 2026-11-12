@@ -1,3 +1,5 @@
+import { PortfolioOperationSchema, applyPortfolioOperation } from '../services/ledger.service.js';
+import { fetchPriceHistory } from '../services/quant.service.js';
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import { z } from 'zod';
@@ -105,31 +107,17 @@ router.get('/me', authenticate, (req, res) => res.json({ user: req.user.toSafeJS
 
 // PUT /api/auth/portfolio - Update user's personal ledger (holdings, cash balance, trades)
 router.put('/portfolio', authenticate, async (req, res) => {
+  const parsed = PortfolioOperationSchema.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: parsed.error.errors[0].message });
   try {
-    const { holdings, cashBalance, trade } = req.body;
-    if (holdings !== undefined && Array.isArray(holdings)) {
-      req.user.holdings = holdings;
-    }
-    if (cashBalance !== undefined && typeof cashBalance === 'number') {
-      req.user.cashBalance = cashBalance;
-    }
-    if (trade) {
-      if (!Array.isArray(req.user.trades)) req.user.trades = [];
-      req.user.trades.unshift(trade);
-      if (req.user.trades.length > 50) {
-        req.user.trades = req.user.trades.slice(0, 50);
-      }
-    }
+    const operation = parsed.data;
+    const quote = operation.operation === 'deposit' ? null : await fetchPriceHistory(operation.ticker);
+    applyPortfolioOperation(req.user, operation, quote);
     await req.user.save();
-    return res.json({
-      message: 'Portfolio updated',
-      holdings: req.user.holdings,
-      cashBalance: req.user.cashBalance,
-      trades: req.user.trades,
-    });
-  } catch (err) {
-    console.error('[Auth Portfolio Update Error]:', err);
-    return res.status(500).json({ error: 'Failed to update portfolio data.' });
+    return res.json({ holdings: req.user.holdings, cashBalance: req.user.cashBalance, trades: req.user.trades, version: req.user.__v });
+  } catch (error) {
+    if (error.name === 'VersionError') return res.status(409).json({ error: 'Account changed in another request. Reload your portfolio before retrying.' });
+    return res.status(error.status || 503).json({ error: error.status ? error.message : 'Could not confirm the account update. Reload your portfolio before retrying.' });
   }
 });
 

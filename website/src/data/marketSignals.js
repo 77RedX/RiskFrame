@@ -4,48 +4,6 @@ export function getStockPrice(ticker, quotes = {}) {
   return quotes[ticker] ?? { price: null, changePct: null, changeAmount: null, asOf: null };
 }
 
-// LocalStorage Key Helpers (scoped per user so accounts don't leak or collide)
-const getHoldingsKey = (userId) => `rf_portfolio_holdings_${userId || 'guest'}`;
-const getCashKey = (userId) => `rf_portfolio_cash_${userId || 'guest'}`;
-const getTradesKey = (userId) => `rf_trade_history_${userId || 'guest'}`;
-
-export function saveUserHoldings(holdings, userId = 'guest') {
-  try {
-    localStorage.setItem(getHoldingsKey(userId), JSON.stringify(holdings));
-  } catch (e) {
-    console.warn('Error saving holdings to localStorage', e);
-  }
-}
-
-export function saveCashBalance(cash, userId = 'guest') {
-  try {
-    localStorage.setItem(getCashKey(userId), cash.toString());
-  } catch (e) {}
-}
-
-export function loadTradeHistory(userId = 'guest') {
-  try {
-    const raw = localStorage.getItem(getTradesKey(userId));
-    if (raw) return JSON.parse(raw);
-  } catch (e) {}
-  return [];
-}
-
-export function recordTrade(trade, userId = 'guest') {
-  try {
-    const history = loadTradeHistory(userId);
-    const updated = [
-      {
-        id: `tr_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
-        timestamp: new Date().toISOString(),
-        ...trade,
-      },
-      ...history.slice(0, 49),
-    ];
-    localStorage.setItem(getTradesKey(userId), JSON.stringify(updated));
-  } catch (e) {}
-}
-
 export function generateOptimalSignals(currentHoldings = [], results = null, targetCapital = 10000, quotes = {}) {
   if (!results?.allocation) return { buySignals: [], sellSignals: [] };
   const makeSignal = (ticker, weight) => {

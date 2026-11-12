@@ -98,13 +98,13 @@ export const updatePreferences = async (preferences) => {
 
 export const updateUserPortfolio = async (portfolioData) => {
   const token = getAuthToken();
-  if (!token) return null;
+  if (!token) throw new Error('Sign in to change your portfolio.');
   const res = await fetch(`${API}/api/auth/portfolio`, {
     method: 'PUT',
     headers: getHeaders(),
     body: JSON.stringify(portfolioData),
   });
-  if (!res.ok) return null;
+  if (!res.ok) { const data = await res.json().catch(() => ({})); throw new Error(data.error || 'Account update failed. Reload before retrying.'); }
   return res.json();
 };
 

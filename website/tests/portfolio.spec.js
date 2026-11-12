@@ -19,3 +19,25 @@ test('all deposit presets and custom cents are valid', async ({ page }) => {
   await input.fill('99.99');
   expect(await input.evaluate(e => e.checkValidity())).toBe(false);
 });
+
+test('failed deposit retains confirmed cash and displays a retryable error', async ({ page }) => {
+  await page.route('**/api/auth/portfolio', r => r.fulfill({ status: 500, json: { error: 'Test save failed' } }));
+  await page.locator('.custom-dep').fill('100.25');
+  await page.locator('.deposit-form button[type=submit]').click();
+  await expect(page.getByRole('dialog', { name: 'Deposit simulated cash' })).toBeVisible();
+  await expect(page.locator('.deposit-form')).toContainText('Test save failed');
+  await expect(page.locator('#my-portfolio')).toContainText('Cash: $0.00');
+});
+
+test('successful deposit uses the server-confirmed account state', async ({ page }) => {
+  let operation;
+  await page.route('**/api/auth/portfolio', r => {
+    operation = r.request().postDataJSON();
+    return r.fulfill({ json: { holdings: [], cashBalance: 100.25, trades: [] } });
+  });
+  await page.locator('.custom-dep').fill('100.25');
+  await page.locator('.deposit-form button[type=submit]').click();
+  await expect(page.getByRole('dialog', { name: 'Deposit simulated cash' })).toHaveCount(0);
+  await expect(page.locator('#my-portfolio')).toContainText('Cash: $100.25');
+  expect(operation).toEqual({ operation: 'deposit', amount: 100.25 });
+});

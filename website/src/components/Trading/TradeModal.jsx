@@ -17,6 +17,8 @@ export default function TradeModal({
   const [shares, setShares] = useState(10);
   const [orderType, setOrderType] = useState('DELIVERY'); // 'DELIVERY' or 'INTRADAY'
   const [error, setError] = useState('');
+  const [saving, setSaving] = useState(false);
+  const close = () => { if (!saving) onClose(); };
 
   useEffect(() => {
     if (isOpen) {
@@ -26,7 +28,7 @@ export default function TradeModal({
     }
   }, [isOpen, initialMode, heldShares]);
 
-  const dialogRef = useDialog(isOpen && Boolean(stock), onClose);
+  const dialogRef = useDialog(isOpen && Boolean(stock), close);
   if (!isOpen || !stock) return null;
 
   const price = stock.price;
@@ -60,7 +62,8 @@ export default function TradeModal({
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    if (saving) { e.preventDefault(); return; }
     e.preventDefault();
     setError('');
 
@@ -86,7 +89,8 @@ export default function TradeModal({
       }
     }
 
-    onExecuteTrade({
+    setSaving(true);
+    try { await onExecuteTrade({
       type: isBuy ? 'BUY' : 'SELL',
       ticker: stock.ticker,
       name: stock.name,
@@ -97,6 +101,7 @@ export default function TradeModal({
     });
 
     onClose();
+    } catch (error) { setError(error.message); } finally { setSaving(false); }
   };
 
   // Sell profit preview
@@ -108,7 +113,7 @@ export default function TradeModal({
     : 0;
 
   return createPortal(
-    <div className="trade-modal-backdrop" onClick={onClose}>
+    <div className="trade-modal-backdrop" onClick={close}>
       <div ref={dialogRef} role="dialog" aria-modal="true" aria-label="Simulated trade" className="trade-modal-container" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="trade-modal-header">
@@ -119,7 +124,7 @@ export default function TradeModal({
             </div>
             <h3 className="trade-stock-name">{stock.name}</h3>
           </div>
-          <button className="trade-modal-close" onClick={onClose} aria-label="Close trade dialog">
+          <button className="trade-modal-close" onClick={close} aria-label="Close trade dialog">
             ✕
           </button>
         </div>
@@ -285,6 +290,7 @@ export default function TradeModal({
           {/* Execute CTA */}
           <button
             type="submit"
+            disabled={saving}
             className={`trade-execute-btn ${isBuy ? 'buy-btn' : 'sell-btn'}`}
           >
             <span className="trade-btn-icon">
