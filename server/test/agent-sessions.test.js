@@ -1,3 +1,4 @@
+import axios from 'axios';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import express from 'express';
@@ -9,7 +10,9 @@ import { agentTools } from '../src/services/agent.service.js';
 import routes from '../src/routes/agent.routes.js';
 
 test('chat validates ownership before tools and bounds owned history', async () => {
-  const originals = { findUser: User.findById, findSession: AgentSession.findOne, optimize: agentTools.optimizePortfolio.execute, state: mongoose.connection.readyState, secret: process.env.JWT_SECRET };
+  const originals = { findUser: User.findById, findSession: AgentSession.findOne, optimize: agentTools.optimizePortfolio.execute, state: mongoose.connection.readyState, secret: process.env.JWT_SECRET, post: axios.post, key: process.env.GROQ_API_KEY, model: process.env.GROQ_MODEL };
+  process.env.GROQ_API_KEY = 'fixture-key'; process.env.GROQ_MODEL = 'fixture-model';
+  axios.post = async () => ({ data: { choices: [{ finish_reason: 'stop', message: { role: 'assistant', content: 'Ready' } }] } });
   process.env.JWT_SECRET = 'session-test-only'; mongoose.connection.readyState = 1;
   const user = { _id: new mongoose.Types.ObjectId(), preferences: {} };
   User.findById = () => ({ select: async () => user });
@@ -36,6 +39,8 @@ test('chat validates ownership before tools and bounds owned history', async () 
     assert.equal(session.messages.at(-2).content, 'Hello');
     assert.equal(saves, 1);
   } finally {
+    axios.post = originals.post;
+    for (const [name, value] of [['GROQ_API_KEY', originals.key], ['GROQ_MODEL', originals.model]]) { if (value == null) delete process.env[name]; else process.env[name] = value; }
     User.findById = originals.findUser; AgentSession.findOne = originals.findSession; agentTools.optimizePortfolio.execute = originals.optimize;
     mongoose.connection.readyState = originals.state;
     if (originals.secret == null) delete process.env.JWT_SECRET; else process.env.JWT_SECRET = originals.secret;

@@ -80,11 +80,11 @@ export function solveMarkowitzSharpe(returns, covMatrix, maxWeight = 0.35, riskF
 /**
  * Execute optimization via Python Quant Microservice or JS Quant Fallback
  */
-export async function runQuantOptimization(tickers, maxWeight = 0.35, riskFreeRate = 0.04) {
+export async function runQuantOptimization(tickers, maxWeight = 0.35, riskFreeRate = 0.04, { signal } = {}) {
   const response = await axios.post(
     `${PYTHON_QUANT_URL}/api/optimize`,
     { tickers, max_weight: maxWeight, risk_free_rate: riskFreeRate },
-    { timeout: 15000 }
+    { timeout: 15000, signal }
   );
   if (!response.data?.allocation || !response.data?.metrics) throw new Error('Invalid quant response');
   return { ...response.data, engine: 'python-pytorch-slsqp' };
@@ -93,15 +93,15 @@ export async function runQuantOptimization(tickers, maxWeight = 0.35, riskFreeRa
 /**
  * Fetch 15-day price history for a given ticker
  */
-export async function fetchPriceHistory(ticker) {
-  const response = await axios.get(`${PYTHON_QUANT_URL}/api/prices?ticker=${encodeURIComponent(ticker)}`, { timeout: 10000 });
+export async function fetchPriceHistory(ticker, { signal } = {}) {
+  const response = await axios.get(`${PYTHON_QUANT_URL}/api/prices?ticker=${encodeURIComponent(ticker)}`, { timeout: 10000, signal });
   const data = response.data;
   if (!Array.isArray(data?.dates) || !Array.isArray(data?.prices) || !data.prices.length || data.dates.length !== data.prices.length || data.prices.some(p => !Number.isFinite(p) || p <= 0) || data.dates.some(d => !/^\d{4}-\d{2}-\d{2}$/.test(d))) throw new Error('Invalid historical price data');
   return { ...data, source: 'historical-close', as_of: data.dates.at(-1) };
 }
 
-export async function fetchSupportedTickers() {
-  const { data } = await axios.get(`${PYTHON_QUANT_URL}/api/tickers`, { timeout: 10000 });
+export async function fetchSupportedTickers({ signal } = {}) {
+  const { data } = await axios.get(`${PYTHON_QUANT_URL}/api/tickers`, { timeout: 10000, signal });
   if (!Array.isArray(data?.tickers) || !data.tickers.length || data.tickers.some(t => typeof t !== 'string')) throw new Error('Invalid supported ticker data');
   return data.tickers;
 }

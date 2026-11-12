@@ -62,8 +62,8 @@ router.post('/chat', optionalAuthenticate, async (req, res) => {
       sessionId: session?._id || null,
     });
   } catch (err) {
-    console.error('[Agent Route Error]:', err);
-    return res.status(500).json({ error: 'Failed to process agent request.' });
+    console.warn('[Copilot] Request could not be completed.');
+    return res.status(err.code === 'COPILOT' ? err.status : 503).json({ error: err.code === 'COPILOT' ? err.message : 'Could not confirm the conversation. Please retry.' });
   }
 });
 
