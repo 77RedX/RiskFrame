@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { optimizePortfolio, getProfile, getAuthToken, clearAuthToken, updateUserPortfolio } from './api';
 import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
@@ -34,6 +34,14 @@ export default function App() {
   const [holdings, setHoldings] = useState([]);
   const [cashBalance, setCashBalance] = useState(0);
   const [accountStatus, setAccountStatus] = useState(getAuthToken() ? 'loading' : 'signed-out');
+  const calculationId = useRef(0);
+  const invalidateResults = useCallback(() => {
+    calculationId.current++;
+    setResults(null);
+    setErrorMessage('');
+    setIsCalculating(false);
+  }, []);
+
 
   // Restore only this token's account; late replies must not undo logout.
   useEffect(() => {
@@ -56,6 +64,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    invalidateResults();
     setHoldings(currentUser?.holdings ?? []);
     setCashBalance(currentUser?.cashBalance ?? 0);
   }, [currentUser?._id]);
@@ -119,6 +128,7 @@ export default function App() {
   }, []); // Run once — MutationObserver handles all future DOM changes
 
   const handleToggle = useCallback((ticker) => {
+    invalidateResults();
     setSelected((prev) => {
       const next = new Set(prev);
       if (next.has(ticker)) {
@@ -133,6 +143,7 @@ export default function App() {
 
   // Batch select: add multiple tickers in a single state update
   const handleBatchSelect = useCallback((tickers) => {
+    invalidateResults();
     setSelected((prev) => {
       const next = new Set(prev);
       for (const t of tickers) {
@@ -145,14 +156,14 @@ export default function App() {
 
   const handleClearAll = useCallback(() => {
     setSelected(new Set());
-    setResults(null);
-    setErrorMessage('');
+    invalidateResults();
   }, []);
 
   const handleCalculate = useCallback(async (customTickers = null) => {
     const listToOptimize = customTickers || Array.from(selected);
     if (listToOptimize.length < 2 || isCalculating) return false;
 
+    const id = ++calculationId.current;
     setIsCalculating(true);
     setResults(null);
     setErrorMessage('');
@@ -170,17 +181,19 @@ export default function App() {
       setLoadingStatus('Optimizing Portfolio...');
 
       const data = await optimizePortfolio(listToOptimize);
+      if (id !== calculationId.current) return false;
       setLoadingProgress(100);
       setResults(data);
       return true;
     } catch (error) {
+      if (id !== calculationId.current) return false;
       console.error(error);
       setErrorMessage(
         `Could not connect to the backend API. Error: ${error.message}`
       );
       return false;
     } finally {
-      setIsCalculating(false);
+      if (id === calculationId.current) setIsCalculating(false);
     }
   }, [selected, isCalculating]);
 
@@ -281,6 +294,7 @@ export default function App() {
 
   const handleLogout = useCallback(() => {
     clearAuthToken();
+    invalidateResults();
     setCurrentUser(null);
     setSelected(new Set());
     setResults(null);

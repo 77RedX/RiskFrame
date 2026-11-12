@@ -81,3 +81,29 @@ test('signals never announce success after a failed optimization', async ({ page
   await page.waitForTimeout(1500);
   await expect(page.locator('.signals-toast').filter({ hasText: 'Optimization Complete' })).toHaveCount(0);
 });
+
+test('changing selected stocks invalidates displayed results', async ({ page }) => {
+  await intercept(page);
+  await select(page);
+  await page.locator('#calculate-btn').click();
+  await expect(page.locator('#results-populated')).toBeVisible();
+  await page.locator('.stock-card[data-ticker="MSFT"]').click();
+  await expect(page.locator('#results-populated')).toHaveCount(0);
+});
+
+test('late response cannot restore results for an obsolete selection', async ({ page }) => {
+  let release;
+  const pending = new Promise(resolve => { release = resolve; });
+  await page.route('**/api/optimize', async route => {
+    await pending;
+    await route.fulfill({ json: { allocation: { AAPL: 1 }, ai_predictions: { AAPL: 0.1 }, metrics: { expected_return: 0.1, volatility: 0.2, sharpe_ratio: 0.3 } } });
+  });
+  await select(page);
+  await page.locator('#calculate-btn').click();
+  await expect(page.locator('#results-loading')).toBeVisible();
+  await page.locator('.stock-card[data-ticker="MSFT"]').click();
+  const response = page.waitForResponse(r => r.url().includes('/api/optimize'));
+  release(); await response;
+  await expect(page.locator('#results-populated')).toHaveCount(0);
+  await expect(page.locator('#results-loading')).toHaveCount(0);
+});
