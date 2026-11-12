@@ -384,13 +384,27 @@ docker compose --env-file server/.env stop
 
 ## Configuration & Environment Variables
 
+Local configuration uses ignored `.env` files; commit only the `.env.example` templates. When adding a key, update its template and this documentation in the same change, then set the private value locally or in the hosting service. Git never needs the real file.
+
+| Service | Variables | Direct local startup |
+| :--- | :--- | :--- |
+| Node API | `MONGODB_URI`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `ALLOWED_ORIGINS`, `PYTHON_QUANT_URL`, optional `REDIS_URL`, `PORT` | `server/.env` |
+| Python engine | `DATABASE_URL`, `HF_MODEL_REPO`, optional `HF_TOKEN` | root `.env`, based on `.env.example` |
+| Vite frontend | `VITE_API_URL` (public API base URL) | `website/.env`, optional for localhost |
+
+Compose reads `server/.env` using `--env-file`, including the Python values listed in that template, and forwards them to their owning containers. This differs from starting Node or Python directly. The development Compose file deliberately uses SQLite and Docker MongoDB. Its MongoDB host port is bound only to localhost; production MongoDB and Redis have no host-published ports. Node running directly on your laptop cannot reach Docker's internal Redis hostname. Without a separately configured Redis endpoint it uses the optional memory cache.
+
+`/api/live` checks that Node responds; `/api/health` returns 503 until both MongoDB and Python are ready. Redis failure falls back to memory and is reported separately. Account outages do not silently select another database. Deposits and trades are simulated and update the UI only after the database confirms them.
+
+On Render, enter variables on each owning service's Environment page. Environment groups are optional for shared settings; keep database and signing secrets off the frontend. Use deployed service addresses for `PYTHON_QUANT_URL`, `REDIS_URL` and `VITE_API_URL`, and set `ALLOWED_ORIGINS` to the frontend origin. For native Vite builds, `VITE_API_URL` is read at build time. The current frontend Dockerfile fixes that value to an empty string, so a custom API URL for Docker deployment still needs a reviewed build-argument change. The current `render.yaml` configures only Python; a reviewed multi-service deployment is still required. Compose is not automatically deployed by that file. If a production service used a historical committed JWT key, replace it with a fresh private key; this invalidates old sessions. No key rotation is performed by this branch.
+
 Key parameters are centralized in `dataset.py` (`CONFIG`) and can be overridden via environment variables:
 
 | Variable | Default | Description |
 | :--- | :--- | :--- |
 | `DATABASE_URL` | `sqlite:///local_fallback.db` | SQLAlchemy connection string (e.g. `postgresql://user:pass@host/db`). |
-| `HF_MODEL_REPO` | `77RedX/RiskFrame` | Hugging Face Hub model repository for weight downloads and checkpoint sync. |
-| `HF_TOKEN` | *Empty* | Hugging Face API token with write permissions (for automated checkpoint uploads). |
+| `HF_MODEL_REPO` | `redx-was-taken/RiskFrame` | Hugging Face Hub model repository for weight downloads and checkpoint sync. |
+| `HF_TOKEN` | *Empty* | Hugging Face token; read permission for downloads, write permission only for explicitly running training uploads. |
 | `PORT` | `7860` | Network port for Gunicorn / Flask production serving. |
 | `WINDOW_SIZE` | `63` | Lookback trading days for Temporal CNN feature input. |
 | `PREDICTION_HORIZON` | `21` | Forward return horizon in trading days (used for alpha generation). |

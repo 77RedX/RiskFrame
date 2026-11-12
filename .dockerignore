@@ -14,3 +14,9 @@ website/node_modules
 website/dist
 server/node_modules
 .DS_Store
+**/node_modules
+**/.npm-cache
+**/.cache
+**/cache
+**/test-results
+**/playwright-report
