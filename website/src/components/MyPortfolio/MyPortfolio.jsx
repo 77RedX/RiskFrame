@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom';
 import { useState, useMemo } from 'react';
 import { getStockPrice } from '../../data/marketSignals';
 import TradeModal from '../Trading/TradeModal';
@@ -372,7 +373,7 @@ export default function MyPortfolio({
         )}
 
         {/* Deposit Cash Modal */}
-        {isDepositModalOpen && (
+        {isDepositModalOpen && createPortal(
           <div className="trade-modal-backdrop" onClick={() => setIsDepositModalOpen(false)}>
             <div className="trade-modal-container deposit-container" onClick={(e) => e.stopPropagation()}>
               <div className="trade-modal-header">
@@ -410,7 +411,7 @@ export default function MyPortfolio({
               </form>
             </div>
           </div>
-        )}
+        , document.body)}
 
         {/* Trade Modal */}
         {selectedHoldingForTrade && (

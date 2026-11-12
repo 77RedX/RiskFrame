@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom';
 import { useState, useEffect } from 'react';
 import './TradeModal.css';
 
@@ -103,7 +104,7 @@ export default function TradeModal({
     ? Number((((price - avgBuyPrice) / avgBuyPrice) * 100).toFixed(2))
     : 0;
 
-  return (
+  return createPortal(
     <div className="trade-modal-backdrop" onClick={onClose}>
       <div className="trade-modal-container" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
@@ -305,6 +306,6 @@ export default function TradeModal({
           <span>Zero Commission • 100% Capital Reserve</span>
         </div>
       </div>
-    </div>
+    </div>, document.body
   );
 }

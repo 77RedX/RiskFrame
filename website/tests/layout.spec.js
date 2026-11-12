@@ -1,0 +1,18 @@
+import { test, expect } from '@playwright/test';
+test.use({ channel: 'msedge' });
+
+test('mobile trade dialog fits the viewport and sits above page controls', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 667 });
+  await page.addInitScript(() => localStorage.setItem('rf_auth_token', 'test-token'));
+  await page.route('**/api/health', r => r.fulfill({ json: { status: 'ok' } }));
+  await page.route('**/api/auth/me', r => r.fulfill({ json: { user: { _id: 'test', name: 'Test User', holdings: [{ ticker: 'AAPL', shares: 2, avgBuyPrice: 200 }], cashBalance: 1000 } } }));
+  await page.goto('http://localhost:3000');
+  await page.locator('.btn-holding-buy').first().click();
+  const dialog = page.locator('.trade-modal-container');
+  const bounds = await dialog.boundingBox();
+  expect(bounds.y).toBeGreaterThanOrEqual(0);
+  expect(bounds.y + bounds.height).toBeLessThanOrEqual(667);
+  const close = page.getByRole('button', { name: 'Close trade dialog' });
+  await close.click();
+  await expect(dialog).toHaveCount(0);
+});

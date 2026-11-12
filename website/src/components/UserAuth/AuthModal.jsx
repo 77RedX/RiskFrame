@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom';
 import { useState, useEffect } from 'react';
 import { login, register, updatePreferences } from '../../api';
 import './AuthModal.css';
@@ -66,7 +67,7 @@ export default function AuthModal({ isOpen, onClose, user, onAuthSuccess, onLogo
 
   // 1. Signed-in Account View: when user is already authenticated
   if (user && !isPreferences) {
-    return (
+    return createPortal(
       <div className="auth-modal-backdrop" onClick={onClose}>
         <div className="auth-modal-content" onClick={(e) => e.stopPropagation()}>
           <button className="auth-modal-close" onClick={onClose}>
@@ -184,12 +185,12 @@ export default function AuthModal({ isOpen, onClose, user, onAuthSuccess, onLogo
             </button>
           </div>
         </div>
-      </div>
+      </div>, document.body
     );
   }
 
   // 2. Preferences Form or Guest Sign In / Register View
-  return (
+  return createPortal(
     <div className="auth-modal-backdrop" onClick={onClose}>
       <div className="auth-modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="auth-modal-close" onClick={onClose}>
@@ -330,6 +331,6 @@ export default function AuthModal({ isOpen, onClose, user, onAuthSuccess, onLogo
           </div>
         )}
       </div>
-    </div>
+    </div>, document.body
   );
 }
