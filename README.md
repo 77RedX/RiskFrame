@@ -363,7 +363,9 @@ Before either command, create `server/.env` from `server/.env.example` if it doe
 ```bash
 docker compose --env-file server/.env up --build
 ```
-This automatically compiles the frontend, starts NGINX on port `3000`, Express API on port `5000`, PyTorch Quant sidecar on port `5001`, Redis cache on port `6379`, and MongoDB on port `27017`.
+This compiles the frontend and starts NGINX on port `3000`, Express on `5000`, and Python on `5001`. Redis is reachable only inside the Docker network.
+
+Set `MONGODB_URI` in `server/.env` to your Atlas connection string or explicitly to `mongodb://mongo:27017/riskframe` for the included Docker database. `127.0.0.1` inside Node's container points to that container, not MongoDB. The backend never switches databases when the selected database is unavailable; account requests report an outage instead. The development stack explicitly selects its own Docker MongoDB. Set `DATABASE_URL` to the PostgreSQL connection string used by Python.
 * Access the web terminal at: **`http://localhost:3000`**
 * Access the backend API at: **`http://localhost:5000/api/health`**
 
