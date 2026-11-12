@@ -22,7 +22,7 @@ export const agentTools = {
     name: 'getUserPortfolios',
     description: "Fetches user's active portfolios saved in MongoDB.",
     execute: async ({ userId }) => {
-      if (!userId) return { error: 'Anonymous user: no saved portfolios found.' };
+      if (!userId) return { error: 'Sign in to view your saved portfolios.' };
       const portfolios = await Portfolio.find({ userId }).select('name tickers metrics allocations').lean();
       return { portfolios };
     },
@@ -86,8 +86,10 @@ export async function runAgentConversation({ message, userId, userPreferences })
   ]);
   const detectedTickers = [...new Set(tickerMatches.filter((t) => validUniverse.has(t)))];
 
+  const wantsSaved = query.includes('saved') || query.includes('my portfolios') || /^list\b/.test(query);
+
   // 1. Tool Execution: If user asks to optimize or mentions tickers
-  if (detectedTickers.length >= 2 || query.includes('optimize') || query.includes('portfolio') || query.includes('basket')) {
+  if (!wantsSaved && (detectedTickers.length >= 2 || query.includes('optimize') || query.includes('portfolio') || query.includes('basket'))) {
     const tickersToUse = detectedTickers.length >= 2 ? detectedTickers : ['AAPL', 'NVDA', 'MSFT', 'AMZN', 'GLD'];
     const maxWeight = userPreferences?.maxAssetWeight || 0.35;
     const riskFreeRate = userPreferences?.riskFreeRate || 0.04;
@@ -121,12 +123,14 @@ ${allocationSummary}
 - **Risk Assessment**: ${riskAssessment.riskRating} (${riskAssessment.sharpeAssessment})
 
 *Notice*: Maximum single-asset concentration is capped at ${(maxWeight * 100).toFixed(0)}% to preserve diversification against drawdown shocks.`;
-  } else if (query.includes('saved') || query.includes('my portfolios') || query.includes('list')) {
+  } else if (wantsSaved) {
     // 2. Tool Execution: Fetch user portfolios
     const userPortfolios = await agentTools.getUserPortfolios.execute({ userId });
     toolCallsMade.push({ tool: 'getUserPortfolios', result: userPortfolios });
 
-    if (userPortfolios.error || !userPortfolios.portfolios || userPortfolios.portfolios.length === 0) {
+    if (userPortfolios.error) {
+      responseText = userPortfolios.error;
+    } else if (!userPortfolios.portfolios || userPortfolios.portfolios.length === 0) {
       responseText = `You don't have any saved portfolios in MongoDB yet. Select stocks on the terminal or ask me to generate a basket like *"Optimize NVDA, AAPL, MSFT, and GLD"* and save it!`;
     } else {
       const list = userPortfolios.portfolios
