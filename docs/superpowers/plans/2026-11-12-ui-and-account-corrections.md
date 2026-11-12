@@ -215,3 +215,4 @@ Verification performed: inspected both Compose files, README startup instruction
 
 - 2026-11-13 quote freshness: regression reproduced tomorrow being accepted; changed the lower age bound to zero. Ledger/account/auth/API checks: 11/11 passed, including UTC midnight/end-of-day, stale dates, current dates, and unchanged buy/sell state on rejection. Docker verification pending availability.
 - Quote fix integration gate: rebuilt and started Compose; container ledger tests 3/3 and Edge portfolio/market-data tests 6/6 passed. Future-date finding resolved.
+- 2026-11-13 startup documentation: reproduced missing-key failure; documented private key generation and explicit --env-file for both Compose commands, including dev header. Both commands parse with a temporary fixture. No signing key was changed.

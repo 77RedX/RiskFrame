@@ -353,13 +353,15 @@ The training procedure executes 150 epochs with early stopping (patience 20), sa
 
 ---
 
-## Deployment & Zero-Config Execution with Docker Compose
+## Running with Docker Compose
 
 RiskFrame provides complete container orchestration via **Docker Compose** so you never have to manually install Node.js, run `npm run build`, or configure Redis/MongoDB manually:
 
+Before either command, create `server/.env` from `server/.env.example` if it does not exist. Generate a private signing key with `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` and set `JWT_SECRET` to that value in your local file. Keep this file out of Git. Compose requires this key and does not automatically read `server/.env`; the commands below load it explicitly. Keep the same key across restarts to preserve valid sessions.
+
 ### Option A: One-Command Production Stack (Auto-built React + NGINX + API + Quant + Redis + Mongo)
 ```bash
-docker compose up --build
+docker compose --env-file server/.env up --build
 ```
 This automatically compiles the frontend, starts NGINX on port `3000`, Express API on port `5000`, PyTorch Quant sidecar on port `5001`, Redis cache on port `6379`, and MongoDB on port `27017`.
 * Access the web terminal at: **`http://localhost:3000`**
@@ -367,13 +369,13 @@ This automatically compiles the frontend, starts NGINX on port `3000`, Express A
 
 ### Option B: Zero-Build Live Hot-Reloading Development (No `npm run build` Ever Needed)
 ```bash
-docker compose -f docker-compose.dev.yml up
+docker compose --env-file server/.env -f docker-compose.dev.yml up
 ```
 Mounts your local source code into the containers with **Vite Hot Module Replacement (HMR)** and **Node.js watch mode**. Any code changes to `.jsx` or `.css` are reflected live in your browser instantly without restarting containers or running builds.
 
-To stop the containers at any time:
+To stop without deleting containers or volumes:
 ```bash
-docker compose down
+docker compose --env-file server/.env stop
 ```
 
 ---

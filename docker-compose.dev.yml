@@ -2,7 +2,7 @@
 # RiskFrame Live Hot-Reloading Development Orchestration
 # ============================================================
 # Usage:
-#   docker compose -f docker-compose.dev.yml up
+#   docker compose --env-file server/.env -f docker-compose.dev.yml up
 #
 # Features:
 #   - Vite React live HMR (Hot Module Replacement)
