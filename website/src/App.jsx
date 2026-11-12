@@ -165,7 +165,7 @@ export default function App() {
     if (listToOptimize.length < 2 || isCalculating) return false;
 
     if (!Number.isFinite(settings.maxWeight) || settings.maxWeight < 0.05 || settings.maxWeight > 1 || !Number.isFinite(settings.riskFreeRate) || settings.riskFreeRate < 0 || settings.riskFreeRate > 1) {
-      setErrorMessage('Enter a valid exposure limit (5?100%) and risk-free rate (0?100%).');
+      setErrorMessage('Enter a valid exposure limit (5 to 100%) and risk-free rate (0 to 100%).');
       return false;
     }
     if (listToOptimize.length * settings.maxWeight < 1 - 1e-9) {

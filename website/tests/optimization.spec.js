@@ -136,3 +136,10 @@ test('zero model weight is never replaced by a default buy allocation', async ({
   await expect(page.locator('.buy-card').filter({ has: page.locator('.card-ticker', { hasText: /^AAPL$/ }) })).toHaveCount(0);
   await expect(page.locator('.buy-card').filter({ has: page.locator('.card-ticker', { hasText: /^MSFT$/ }) })).toContainText('+0%');
 });
+
+test('invalid calculation settings explain the allowed percentage ranges', async ({ page }) => {
+  await select(page);
+  await page.locator('#max-asset-weight').fill('4');
+  await page.locator('#calculate-btn').click();
+  await expect(page.locator('#results')).toContainText('exposure limit (5 to 100%) and risk-free rate (0 to 100%)');
+});

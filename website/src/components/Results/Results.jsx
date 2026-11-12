@@ -60,7 +60,7 @@ export default function Results({ results, isLoading, loadingProgress, loadingSt
         {!isLoading && hasResults && (
           <div id="results-populated">
             <MetricCards metrics={results.metrics} riskFreeRate={results.applied_settings?.risk_free_rate} />
-            <p className="metric-disclaimer">Engine: {results.engine || 'Not reported'} ? Data as of: {results.market_data_as_of || 'Not reported'} ? {results.cached ? 'Cached calculation' : 'New calculation'}{results.applied_settings && ` ? Max weight: ${(results.applied_settings.max_weight * 100).toFixed(0)}%`}</p>
+            <p className="metric-disclaimer">Engine: {results.engine || 'Not reported'} | Data as of: {results.market_data_as_of || 'Not reported'} | {results.cached ? 'Cached calculation' : 'New calculation'}{results.applied_settings && ` | Max weight: ${(results.applied_settings.max_weight * 100).toFixed(0)}%`}</p>
 
             <SharpeBadge sharpeRatio={results.metrics.sharpe_ratio} meta={meta} />
 
