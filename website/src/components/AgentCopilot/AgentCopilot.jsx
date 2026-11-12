@@ -167,6 +167,9 @@ export default function AgentCopilot({ currentUser, onSelectTickers }) {
 function formatMarkdown(text) {
   if (!text) return '';
   return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.*?)\*/g, '<em>$1</em>')
     .replace(/### (.*?)\n/g, '<h5 style="margin: 8px 0 4px; color: #D4AF37;">$1</h5>')
