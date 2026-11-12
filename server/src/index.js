@@ -1,3 +1,4 @@
+import { getJWTSecret } from './config/auth.js';
 import healthRoutes from './routes/health.routes.js';
 import express from 'express';
 import cors from 'cors';
@@ -56,6 +57,7 @@ app.use((err, req, res, next) => {
 // Start Server & Connect Databases
 async function startServer() {
   try {
+    getJWTSecret();
     console.log('[RiskFrame] Starting v2 Node.js & MongoDB Engine...');
     
     // 1. Connect MongoDB

@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import { User } from '../src/models/User.js';
 import authRoutes from '../src/routes/auth.routes.js';
 mongoose.connection.readyState = 1;
+process.env.JWT_SECRET ||= 'unit-test-secret-not-for-deployment';
 
 test('new accounts have no invented positions or cash', () => {
   const user = new User({ name: 'Test User', email: 'test@example.invalid', password: 'test-password' });

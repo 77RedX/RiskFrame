@@ -1,3 +1,4 @@
+import { getJWTSecret } from '../config/auth.js';
 import mongoose from 'mongoose';
 import { PortfolioOperationSchema, applyPortfolioOperation } from '../services/ledger.service.js';
 import { fetchPriceHistory } from '../services/quant.service.js';
@@ -11,7 +12,7 @@ const router = express.Router();
 router.use((req, res, next) => mongoose.connection.readyState === 1 ? next() : res.status(503).json({ error: 'Account database is unavailable. Please retry.' }));
 
 function generateToken(user) {
-  const secret = process.env.JWT_SECRET || 'riskframe_jwt_secret_default';
+  const secret = getJWTSecret();
   const expiresIn = process.env.JWT_EXPIRES_IN || '7d';
   return jwt.sign({ id: user._id, email: user.email, tier: user.tier }, secret, { expiresIn });
 }
