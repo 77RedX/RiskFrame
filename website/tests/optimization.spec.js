@@ -143,3 +143,22 @@ test('invalid calculation settings explain the allowed percentage ranges', async
   await page.locator('#calculate-btn').click();
   await expect(page.locator('#results')).toContainText('exposure limit (5 to 100%) and risk-free rate (0 to 100%)');
 });
+
+test('optimization feedback stays in flow and disappears with invalidated results', async ({ page }) => {
+  await intercept(page);
+  await page.locator('.btn-optimize-signals').click();
+  await expect(page.locator('.signals-toast')).toBeVisible();
+  await expect(page.locator('.signals-toast')).toHaveCSS('position', 'static');
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.locator('.signals-control-dock').scrollIntoViewIfNeeded();
+    const overlap = await page.evaluate(() => {
+      const a = document.querySelector('.signals-toast').getBoundingClientRect();
+      const b = document.querySelector('.agent-toggle-btn').getBoundingClientRect();
+      return Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left)) * Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
+    });
+    expect(overlap).toBe(0);
+  }
+  await page.locator('.stock-card[data-ticker="MSFT"]').click();
+  await expect(page.locator('.signals-toast')).toHaveCount(0);
+});

@@ -21,8 +21,9 @@ export default function OptimalSignals({ isAuthenticated = false, holdings = [],
     <div className="signals-control-dock"><div className="dock-left">
       <button className="btn-optimize-signals" disabled={pending || isOptimizing} onClick={optimize}>Optimize According to Stocks</button>
       <div className="capital-picker"><span className="capital-label">Hypothetical capital:</span><div className="capital-buttons">{[5000, 10000, 25000, 50000].map(value => <button className="cap-chip" key={value} aria-pressed={capital === value} onClick={() => setCapital(value)}>${value / 1000}k</button>)}</div></div>
-    </div></div>
-    {message && <p role="status" className="signals-toast">{message}</p>}
+    </div>
+    {message && optimizationResults && <p role="status" className="signals-toast">{message}</p>}
+    </div>
     {!optimizationResults && <p>Run an optimization to see model allocations. No model recommendations have been calculated yet.</p>}
     <div className="signals-columns-layout">{[['buy', buySignals], ...(isAuthenticated ? [['sell', sellSignals]] : [])].map(([mode, signals]) => <div className={`signals-column ${mode}-col`} key={mode}>
       <h3>{mode === 'buy' ? 'Positive Target Allocations' : 'Holdings With Low Target Allocations'}</h3>
