@@ -70,8 +70,6 @@ services:
   redis:
     image: redis:7-alpine
     container_name: riskframe-redis-dev
-    ports:
-      - "6379:6379"
 
   # 5. MongoDB
   mongo:
