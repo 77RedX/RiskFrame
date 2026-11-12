@@ -240,3 +240,7 @@ Verification performed: inspected both Compose files, README startup instruction
 - Deferred by scope: Groq model/credentials/tool loop; Render multi-service topology, CORS and frontend Docker API build arguments; actual external signing-key retirement. These are not represented as completed or production-tested.
 - Verification limits: browser regressions use controlled service replies; Atlas persistence and public engine checks were also tested separately live. No real broker orders, model quality review, exhaustive screen-reader/zoom audit, or Render rollout was performed.
 - Graphify code refresh and coverage check follow this source/documentation commit. Semantic document labels remain cached; no external LLM was invoked for relabeling.
+
+## New issues reported after completion - 2026-11-13
+
+New verified follow-up work is open in [Trading and Proposal UI Follow-up](2026-11-13-trading-and-proposal-ui-followup.md): quantity-bound feedback (successful overselling not reproduced), optimization notice/copilot overlap, hidden capital selection, and proposal layout. See docs/audits/2026-11-13-trading-and-proposals-followup.md for browser and isolated Atlas evidence. Plan only; no application code changes made in this review.
