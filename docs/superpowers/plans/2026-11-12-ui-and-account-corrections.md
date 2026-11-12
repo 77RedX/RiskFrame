@@ -248,3 +248,7 @@ New verified follow-up work is open in [Trading and Proposal UI Follow-up](2026-
 ## Groq feature queued - 2026-11-13
 
 The user requested adding the Groq implementation proposal to the roadmap and has obtained an API key. See [Groq Copilot plan](2026-11-13-groq-copilot.md), scheduled after the four current trading/proposal fixes. Planning and blank template entries only; provider code, Compose forwarding, model selection and live calls remain pending.
+
+## Groq and UI follow-up completed - 2026-11-13
+
+The four trading/proposal fixes and the separate Groq feature are now implemented, tested and committed independently. See the linked follow-up/Groq plans and docs/audits/2026-11-13-groq-integration.md for live checks and limitations. Model openai/gpt-oss-20b is configured locally; actual credentials remain ignored. Current outstanding deployment boundaries: Render multi-service/proxy/CORS/frontend build configuration, any external historical JWT-key retirement, and shared rate limiting before horizontal scaling.

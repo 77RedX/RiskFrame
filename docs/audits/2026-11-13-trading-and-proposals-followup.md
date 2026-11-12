@@ -46,3 +46,7 @@ Also distinguish hypothetical allocation sizing from an executable order: buying
 ## Resolution update
 
 All four confirmed UI issues are corrected in separate tested commits: bounded/immediately validated quantities and honest paper-order controls; inline optimization feedback; visible 15k capital and selected preset; rebuilt proposal hierarchy/full-width guest content/empty sell explanations. The underlying successful-oversell claim remains unconfirmed; another isolated Atlas check rejected excess and concurrent duplicate sales and removed the test account. Gates: Edge 39/39, backend 22/22, Python 6/6; Docker builds passed. Responsive and 200% CSS zoom checks passed. See proposal-cards-fixed and proposals-fixed PNGs dated 2026-11-13 for reviewed results.
+
+## Groq follow-on verification
+
+The separate Groq feature is implemented with validated read-only tools, owned/bounded follow-up history, explicit permission for saved-strategy context, provider failure/retry handling, inspectable numerical sources, and no account mutation tools. Live provider checks passed against the real optimizer and isolated owned fixture strategy; all test data was removed. Real Edge guest conversation and mobile drawer controls passed. Final independent review found a missing Mongo query cancellation signal, which was fixed and regression-tested. Provider credentials remain server-only; public deployment and external key rotation are not part of these changes.

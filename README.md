@@ -413,6 +413,27 @@ Key parameters are centralized in `dataset.py` (`CONFIG`) and can be overridden 
 
 ---
 
+## Groq Quant Copilot
+
+The copilot uses Groq for conversation and the existing Python engine for numerical calculations. Configure these **Node backend** variables in ignored `server/.env` (or the Node service's Render Environment settings):
+
+```dotenv
+GROQ_API_KEY=
+GROQ_MODEL=openai/gpt-oss-20b
+```
+
+Set the key privately; the example intentionally has no value. Both Compose files forward these variables only to Node. Apply changes with `docker compose --env-file server/.env up -d --no-deps backend`. No Groq key belongs in a VITE variable, browser bundle, source commit or Docker image. If Groq is unconfigured or unavailable, chat reports an error; the rest of the application remains usable.
+
+The assistant can optimize a supported basket, assess a verified calculation, retrieve dated historical closes, and read owned saved strategies when signed in with **Allow saved portfolio context with Groq** enabled. That checkbox starts a new conversation; permission is also enforced by the server. Messages and permitted tool data are sent to Groq. Public analysis is the default. The copilot cannot execute trades, deposit cash, save strategies or change accounts.
+
+Example: ask "Optimize AAPL MSFT NVDA with a 35% maximum weight and 4% risk-free rate", then "Explain the concentration risk using those results". Expand **Sources & calculations** to inspect engine/date/settings rather than treating generated prose as the numerical source of truth. Quotes are historical closes, forecasts are model estimates, and targets are not incremental trade instructions.
+
+Owned conversations retain at most 40 messages; provider context is further bounded. Guest context stays in the open browser conversation. **New** clears it; logout/account changes clear messages, permission and session IDs. Older command-only sessions must start fresh before using AI. Failed requests offer an explicit retry; they do not silently become canned successes.
+
+Initial limits: three model rounds, four tool executions, a 45-second tool/provider deadline, bounded output and history, ten messages per minute per account/guest IP and one in-flight request per client. Rate counters are per Node process; use shared Redis counters before adding replicas. Provider account limits still apply. Render topology/proxy/CORS configuration and custom frontend Docker API build arguments remain separate deployment work.
+
+---
+
 ## Automated CI/CD Workflows
 
 The repository includes GitHub Actions for automated maintenance:
