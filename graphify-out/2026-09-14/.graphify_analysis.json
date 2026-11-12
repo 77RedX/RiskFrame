@@ -1,0 +1,326 @@
+{
+  "communities": {
+    "0": [
+      "app",
+      "app_get_prices",
+      "app_health",
+      "app_initialize_backend",
+      "app_optimize",
+      "app_refresh_cache_if_needed",
+      "main",
+      "main_main",
+      "model",
+      "model_rationale_164",
+      "model_rationale_53",
+      "model_temporalcnn",
+      "model_temporalcnn_forward",
+      "optimizer",
+      "optimizer_calculate_annualized_covariance",
+      "optimizer_calculate_annualized_returns",
+      "optimizer_calculate_daily_returns",
+      "optimizer_calculate_portfolio_metrics",
+      "optimizer_negative_sharpe",
+      "optimizer_optimize_portfolio",
+      "optimizer_rationale_21",
+      "optimizer_rationale_33",
+      "optimizer_rationale_50",
+      "optimizer_rationale_6",
+      "optimizer_rationale_67",
+      "optimizer_rationale_82",
+      "route"
+    ],
+    "1": [
+      "data_loader",
+      "data_loader_get_sp500_tickers",
+      "data_loader_load_portfolio_data",
+      "data_loader_rationale_27",
+      "data_loader_rationale_7",
+      "dataset",
+      "dataset_download_and_prepare_data",
+      "dataset_get_tickers",
+      "dataset_portfoliodataset",
+      "dataset_portfoliodataset_getitem",
+      "dataset_portfoliodataset_init",
+      "dataset_portfoliodataset_len",
+      "dataset_rationale_40",
+      "dataset_rationale_64",
+      "dataset_rationale_94",
+      "feature_eng",
+      "feature_eng_compute_macd",
+      "feature_eng_compute_rsi",
+      "feature_eng_engineer_features",
+      "feature_eng_rationale_193",
+      "feature_eng_rationale_23",
+      "feature_eng_rationale_43",
+      "feature_eng_rationale_61",
+      "feature_eng_save_engineered_features",
+      "scripts_update_data",
+      "train",
+      "train_train"
+    ],
+    "2": [
+      "website_src_api",
+      "website_src_api_checkhealth",
+      "website_src_api_fetchprices",
+      "website_src_api_optimizeportfolio",
+      "website_src_app",
+      "website_src_app_app",
+      "website_src_components_footer",
+      "website_src_components_footer_footer",
+      "website_src_components_hero",
+      "website_src_components_hero_hero",
+      "website_src_components_loadingscreen",
+      "website_src_components_loadingscreen_loadingscreen",
+      "website_src_components_loadingscreen_messages",
+      "website_src_components_navbar",
+      "website_src_components_navbar_navbar",
+      "website_src_components_pricehistory_pricechart",
+      "website_src_components_pricehistory_pricechart_pricechart",
+      "website_src_components_pricehistory_pricehistory",
+      "website_src_components_pricehistory_pricehistory_pricehistory",
+      "website_src_components_stockselector_stockselector_stockselector",
+      "website_src_main"
+    ],
+    "3": [
+      "chart_js",
+      "react",
+      "react_chartjs_2",
+      "react_dom",
+      "website_package",
+      "website_package_dependencies",
+      "website_package_dependencies_chart_js",
+      "website_package_dependencies_react",
+      "website_package_dependencies_react_chartjs_2",
+      "website_package_dependencies_react_dom",
+      "website_package_name",
+      "website_package_private",
+      "website_package_scripts",
+      "website_package_scripts_build",
+      "website_package_scripts_dev",
+      "website_package_scripts_preview",
+      "website_package_type",
+      "website_package_version"
+    ],
+    "4": [
+      "readme",
+      "readme_1_clone_the_repository",
+      "readme_2_environment_variables_optional",
+      "readme_3_setup_local",
+      "readme_4_setup_docker",
+      "readme_algorithmic_portfolio_optimizer",
+      "readme_automation_ci_cd",
+      "readme_cli_inference",
+      "readme_feature_engineering",
+      "readme_features",
+      "readme_how_it_works",
+      "readme_model_architecture_temporal_cnn",
+      "readme_portfolio_optimization_details",
+      "readme_project_structure",
+      "readme_quick_start",
+      "readme_training_from_scratch",
+      "readme_usage",
+      "readme_web_dashboard_flask_server"
+    ],
+    "5": [
+      "website_src_components_stockselector_filtertabs",
+      "website_src_components_stockselector_filtertabs_filtertabs",
+      "website_src_components_stockselector_selectedpreview",
+      "website_src_components_stockselector_selectedpreview_selectedpreview",
+      "website_src_components_stockselector_selectionbar",
+      "website_src_components_stockselector_selectionbar_selectionbar",
+      "website_src_components_stockselector_stockcard",
+      "website_src_components_stockselector_stockcard_stockcard",
+      "website_src_components_stockselector_stockgrid",
+      "website_src_components_stockselector_stockgrid_stockgrid",
+      "website_src_components_stockselector_stockselector",
+      "website_src_data_stocks",
+      "website_src_data_stocks_max_stocks",
+      "website_src_data_stocks_risk_free",
+      "website_src_data_stocks_sector_badge",
+      "website_src_data_stocks_sectors",
+      "website_src_data_stocks_sp500_stocks",
+      "website_src_data_stocks_trading_days"
+    ],
+    "6": [
+      "website_src_components_results_breakdowntable",
+      "website_src_components_results_breakdowntable_breakdowntable",
+      "website_src_components_results_emptystate",
+      "website_src_components_results_emptystate_emptystate",
+      "website_src_components_results_loadingstate",
+      "website_src_components_results_loadingstate_loadingstate",
+      "website_src_components_results_metriccards",
+      "website_src_components_results_metriccards_animatevalue",
+      "website_src_components_results_metriccards_metriccard",
+      "website_src_components_results_metriccards_metriccards",
+      "website_src_components_results_results",
+      "website_src_components_results_results_results",
+      "website_src_components_results_sharpebadge",
+      "website_src_components_results_sharpebadge_sharpebadge",
+      "website_src_components_results_sharpebadge_sharpelabel",
+      "website_src_data_stocks_company_map"
+    ],
+    "7": [
+      "playwright_test",
+      "types_react",
+      "types_react_dom",
+      "vite",
+      "vitejs_plugin_react",
+      "website_package_devdependencies",
+      "website_package_devdependencies_playwright_test",
+      "website_package_devdependencies_types_react",
+      "website_package_devdependencies_types_react_dom",
+      "website_package_devdependencies_vite",
+      "website_package_devdependencies_vitejs_plugin_react"
+    ],
+    "8": [
+      "model_rationale_7",
+      "model_residualblock",
+      "model_residualblock_forward",
+      "model_residualblock_init",
+      "model_temporalcnn_init",
+      "model_temporalcnn_initialize_weights"
+    ],
+    "9": [
+      "website_vercel",
+      "website_vercel_buildcommand",
+      "website_vercel_framework",
+      "website_vercel_outputdirectory",
+      "website_vercel_rewrites"
+    ],
+    "10": [
+      "website_src_hooks_useintersectionobserver",
+      "website_src_hooks_useintersectionobserver_useintersectionobserver",
+      "website_src_hooks_useintersectionobserver_useintersectionobserverall"
+    ],
+    "11": [
+      "website_vite_config"
+    ]
+  },
+  "cohesion": {
+    "0": 0.150997150997151,
+    "1": 0.1168091168091168,
+    "2": 0.16666666666666666,
+    "3": 0.1111111111111111,
+    "4": 0.1111111111111111,
+    "5": 0.19607843137254902,
+    "6": 0.18333333333333332,
+    "7": 0.18181818181818182,
+    "8": 0.4,
+    "9": 0.4,
+    "10": 0.6666666666666666,
+    "11": 1.0
+  },
+  "gods": [
+    {
+      "id": "dataset_download_and_prepare_data",
+      "label": "download_and_prepare_data()",
+      "degree": 12
+    },
+    {
+      "id": "readme_algorithmic_portfolio_optimizer",
+      "label": "\ud83d\udcc8 Algorithmic Portfolio Optimizer",
+      "degree": 11
+    },
+    {
+      "id": "model_temporalcnn",
+      "label": "TemporalCNN",
+      "degree": 9
+    },
+    {
+      "id": "feature_eng_engineer_features",
+      "label": "engineer_features()",
+      "degree": 8
+    },
+    {
+      "id": "main_main",
+      "label": "main()",
+      "degree": 7
+    },
+    {
+      "id": "dataset_portfoliodataset",
+      "label": "PortfolioDataset",
+      "degree": 7
+    },
+    {
+      "id": "optimizer_calculate_portfolio_metrics",
+      "label": "calculate_portfolio_metrics()",
+      "degree": 7
+    },
+    {
+      "id": "optimizer_optimize_portfolio",
+      "label": "optimize_portfolio()",
+      "degree": 7
+    },
+    {
+      "id": "app_initialize_backend",
+      "label": "initialize_backend()",
+      "degree": 6
+    },
+    {
+      "id": "optimizer_calculate_daily_returns",
+      "label": "calculate_daily_returns()",
+      "degree": 6
+    }
+  ],
+  "surprises": [
+    {
+      "source": "train()",
+      "target": "TemporalCNN",
+      "source_files": [
+        "train.py",
+        "model.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "main()",
+      "target": "download_and_prepare_data()",
+      "source_files": [
+        "main.py",
+        "dataset.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "initialize_backend()",
+      "target": "download_and_prepare_data()",
+      "source_files": [
+        "app.py",
+        "dataset.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "initialize_backend()",
+      "target": "TemporalCNN",
+      "source_files": [
+        "app.py",
+        "model.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories"
+    },
+    {
+      "source": "main()",
+      "target": "TemporalCNN",
+      "source_files": [
+        "main.py",
+        "model.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}

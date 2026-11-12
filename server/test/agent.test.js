@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import axios from 'axios';
-import { runAgentConversation } from '../src/services/agent.service.js';
+import { runAgentConversation, agentTools } from '../src/services/agent.service.js';
 
 test('saved portfolio request never triggers an unrelated optimization', async () => {
   const original = axios.post;
@@ -13,4 +13,9 @@ test('saved portfolio request never triggers an unrelated optimization', async (
     assert.equal(result.toolCalls[0].tool, 'getUserPortfolios');
     assert.match(result.reply, /sign in/i);
   } finally { axios.post = original; }
+});
+
+test('risk tool evaluates canonical optimizer metrics', async () => {
+  const result = await agentTools.analyzeRisk.execute({ allocations: { AAPL: 0.25, MSFT: 0.25, NVDA: 0.25, AMZN: 0.25 }, metrics: { volatility: 0.15, sharpe_ratio: 1.4 } });
+  assert.equal(result.sharpeAssessment, 'Strong risk-adjusted alpha');
 });
