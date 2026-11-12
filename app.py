@@ -1,5 +1,6 @@
 import os
 import threading
+from datetime import datetime, timezone
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -147,16 +148,21 @@ def optimize():
     if not BACKEND_READY:
         return jsonify({"error": "Backend is still initializing. Please wait a moment."}), 503
     refresh_cache_if_needed()
-    data = request.json
-    if not data or 'tickers' not in data:
-        return jsonify({"error": "Missing 'tickers' in request"}), 400
-        
-    selected_tickers = data['tickers']
-    
-    # Ensure selected tickers are supported
-    valid_tickers = [t for t in selected_tickers if t in TICKERS_LIST]
-    if len(valid_tickers) < 2:
-        return jsonify({"error": "Select at least 2 valid stocks"}), 400
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        return jsonify({"error": "A JSON object is required"}), 400
+    valid_tickers = data.get('tickers')
+    if not isinstance(valid_tickers, list) or not 2 <= len(valid_tickers) <= 35 or any(not isinstance(t, str) for t in valid_tickers):
+        return jsonify({"error": "Select 2 to 35 supported ticker strings"}), 400
+    if len(set(valid_tickers)) != len(valid_tickers) or any(t not in TICKERS_LIST for t in valid_tickers):
+        return jsonify({"error": "Tickers must be unique and supported"}), 400
+    max_weight = data.get('max_weight', 0.35)
+    risk_free_rate = data.get('risk_free_rate', 0.04)
+    for value, lower, upper in [(max_weight, 0.05, 1), (risk_free_rate, 0, 1)]:
+        if isinstance(value, bool) or not isinstance(value, (int, float)) or not np.isfinite(value) or not lower <= value <= upper:
+            return jsonify({"error": "Invalid exposure limit or risk-free rate"}), 400
+    if len(valid_tickers) * max_weight < 1 - 1e-9:
+        return jsonify({"error": "Exposure limit is infeasible; select more assets or increase the limit"}), 400
 
     # 1. Get latest window of data
     window_size = CONFIG["WINDOW_SIZE"]
@@ -186,20 +192,25 @@ def optimize():
     subset_cov_matrix = COV_MATRIX.loc[valid_tickers, valid_tickers]
     
     # 4. Optimize Portfolio
-    optimal_weights = optimize_portfolio(subset_returns, subset_cov_matrix, max_weight=0.35)
+    try:
+        optimal_weights = optimize_portfolio(subset_returns, subset_cov_matrix, risk_free_rate=risk_free_rate, max_weight=max_weight)
+    except ValueError as error:
+        return jsonify({"error": str(error)}), 400
+    except RuntimeError as error:
+        return jsonify({"error": str(error)}), 503
     
     # 5. Calculate Metrics
     opt_return, opt_variance, opt_volatility = calculate_portfolio_metrics(
         optimal_weights, subset_returns, subset_cov_matrix
     )
-    opt_sharpe = (opt_return - 0.04) / opt_volatility if opt_volatility > 0 else 0
+    opt_sharpe = (opt_return - risk_free_rate) / opt_volatility if opt_volatility > 0 else 0
     
     # 6. Gather Individual Historical Metrics
     individual_metrics = {}
     for ticker in valid_tickers:
         ann_ret = float(ANNUAL_MEANS[ticker])
         ann_vol = float(np.sqrt(COV_MATRIX.loc[ticker, ticker]))
-        sharpe = (ann_ret - 0.04) / ann_vol if ann_vol > 0 else 0
+        sharpe = (ann_ret - risk_free_rate) / ann_vol if ann_vol > 0 else 0
         individual_metrics[ticker] = {
             "historical_return": ann_ret,
             "historical_volatility": ann_vol,
@@ -217,7 +228,10 @@ def optimize():
         },
         "allocation": allocation,
         "ai_predictions": {ticker: float(subset_returns[ticker]) for ticker in valid_tickers},
-        "individual_metrics": individual_metrics
+        "individual_metrics": individual_metrics,
+        "applied_settings": {"max_weight": max_weight, "risk_free_rate": risk_free_rate},
+        "calculated_at": datetime.now(timezone.utc).isoformat(),
+        "market_data_as_of": str(HISTORICAL_PRICES.index[-1].date())
     }
     
     return jsonify(response)

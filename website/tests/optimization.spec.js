@@ -107,3 +107,23 @@ test('late response cannot restore results for an obsolete selection', async ({ 
   await expect(page.locator('#results-populated')).toHaveCount(0);
   await expect(page.locator('#results-loading')).toHaveCount(0);
 });
+
+test('per-run exposure and zero risk-free rate reach the optimizer', async ({ page }) => {
+  await page.locator('#max-asset-weight').fill('20');
+  await page.locator('#risk-free-rate').fill('0');
+  let body;
+  await page.route('**/api/optimize', async route => {
+    body = route.request().postDataJSON();
+    await route.fulfill({ json: { allocation: Object.fromEntries(body.tickers.map(t => [t, 0.2])), ai_predictions: {}, metrics: { expected_return: 0.1, volatility: 0.2, sharpe_ratio: 0.5 }, applied_settings: { max_weight: 0.2, risk_free_rate: 0 } } });
+  });
+  await select(page);
+  await page.locator('#calculate-btn').click();
+  await expect(page.locator('#results')).toContainText('Select at least 5 stocks');
+  expect(body).toBeUndefined();
+  await page.locator('.stock-card[data-ticker="GOOGL"]').click();
+  await page.locator('#calculate-btn').click();
+  await expect(page.locator('#results-populated')).toBeVisible();
+  expect(body.max_weight).toBe(0.2);
+  expect(body.risk_free_rate).toBe(0);
+  await expect(page.locator('#results')).toContainText('0.00% annual risk-free rate');
+});

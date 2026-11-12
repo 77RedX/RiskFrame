@@ -1517,3 +1517,6 @@ section {
   .stock-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .stock-card { padding: 12px; }
 }
+
+.calculation-settings { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 24px 0; border: 1px solid var(--border-subtle, #353535); padding: 16px; }
+.calculation-settings input { width: 90px; padding: 8px; background: #152238; color: #eae0ce; border: 1px solid #687180; border-radius: 6px; }

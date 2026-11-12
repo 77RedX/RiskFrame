@@ -34,6 +34,7 @@ export default function App() {
   const [holdings, setHoldings] = useState([]);
   const [cashBalance, setCashBalance] = useState(0);
   const [accountStatus, setAccountStatus] = useState(getAuthToken() ? 'loading' : 'signed-out');
+  const [settings, setSettings] = useState({ maxWeight: 0.35, riskFreeRate: 0.04 });
   const calculationId = useRef(0);
   const invalidateResults = useCallback(() => {
     calculationId.current++;
@@ -65,9 +66,10 @@ export default function App() {
 
   useEffect(() => {
     invalidateResults();
+    setSettings({ maxWeight: currentUser?.preferences?.maxAssetWeight ?? 0.35, riskFreeRate: currentUser?.preferences?.riskFreeRate ?? 0.04 });
     setHoldings(currentUser?.holdings ?? []);
     setCashBalance(currentUser?.cashBalance ?? 0);
-  }, [currentUser?._id]);
+  }, [currentUser?._id, currentUser?.preferences?.maxAssetWeight, currentUser?.preferences?.riskFreeRate]);
 
   // Fix scroll position on mount
   useEffect(() => {
@@ -163,6 +165,14 @@ export default function App() {
     const listToOptimize = customTickers || Array.from(selected);
     if (listToOptimize.length < 2 || isCalculating) return false;
 
+    if (!Number.isFinite(settings.maxWeight) || settings.maxWeight < 0.05 || settings.maxWeight > 1 || !Number.isFinite(settings.riskFreeRate) || settings.riskFreeRate < 0 || settings.riskFreeRate > 1) {
+      setErrorMessage('Enter a valid exposure limit (5?100%) and risk-free rate (0?100%).');
+      return false;
+    }
+    if (listToOptimize.length * settings.maxWeight < 1 - 1e-9) {
+      setErrorMessage(`Select at least ${Math.ceil(1 / settings.maxWeight)} stocks or raise the maximum per-stock allocation.`);
+      return false;
+    }
     const id = ++calculationId.current;
     setIsCalculating(true);
     setResults(null);
@@ -180,7 +190,7 @@ export default function App() {
       setLoadingProgress(40);
       setLoadingStatus('Optimizing Portfolio...');
 
-      const data = await optimizePortfolio(listToOptimize);
+      const data = await optimizePortfolio(listToOptimize, settings);
       if (id !== calculationId.current) return false;
       setLoadingProgress(100);
       setResults(data);
@@ -195,7 +205,7 @@ export default function App() {
     } finally {
       if (id === calculationId.current) setIsCalculating(false);
     }
-  }, [selected, isCalculating]);
+  }, [selected, isCalculating, settings]);
 
   // Execute Buy / Sell Trade (Zerodha & Groww settlement model)
   const handleExecuteTrade = useCallback((order) => {
@@ -336,6 +346,8 @@ export default function App() {
         onClearAll={handleClearAll}
         isCalculating={isCalculating}
         onCalculate={handleCalculate}
+        settings={settings}
+        onSettingsChange={(next) => { invalidateResults(); setSettings(next); }}
       />
       <Results
         results={results}

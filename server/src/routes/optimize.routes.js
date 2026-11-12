@@ -13,9 +13,9 @@ import { runQuantOptimization, fetchPriceHistory } from '../services/quant.servi
 const router = express.Router();
 
 const OptimizeRequestSchema = z.object({
-  tickers: z.array(z.string()).min(2, 'At least 2 tickers required'),
-  max_weight: z.number().min(0.05).max(1.0).optional(),
-  risk_free_rate: z.number().optional(),
+  tickers: z.array(z.string().trim().toUpperCase()).min(2, 'At least 2 tickers required').max(35).refine(t => new Set(t).size === t.length, 'Tickers must be unique'),
+  max_weight: z.number().finite().min(0.05).max(1.0).optional(),
+  risk_free_rate: z.number().finite().min(0).max(1).optional(),
 });
 
 // POST /api/optimize
@@ -30,9 +30,11 @@ router.post('/optimize', optionalAuthenticate, async (req, res) => {
     const { tickers } = parsed.data;
     // If user is authenticated, check their custom risk preferences
     const maxWeight =
-      parsed.data.max_weight || req.user?.preferences?.maxAssetWeight || 0.35;
+      parsed.data.max_weight ?? req.user?.preferences?.maxAssetWeight ?? 0.35;
     const riskFreeRate =
-      parsed.data.risk_free_rate || req.user?.preferences?.riskFreeRate || 0.04;
+      parsed.data.risk_free_rate ?? req.user?.preferences?.riskFreeRate ?? 0.04;
+
+    if (tickers.length * maxWeight < 1 - 1e-9) return res.status(400).json({ error: 'Exposure limit is infeasible; select more assets or increase the limit' });
 
     // 1. Check Redis / In-memory memoization cache
     const cached = await getCachedOptimization(tickers, maxWeight, riskFreeRate);
@@ -65,7 +67,7 @@ router.post('/optimize', optionalAuthenticate, async (req, res) => {
     });
   } catch (err) {
     console.error('[Optimization Route Error]:', err);
-    return res.status(500).json({ error: 'Failed to optimize portfolio.' });
+    return res.status(err.response?.status === 400 ? 400 : 503).json({ error: err.response?.status === 400 ? err.response.data.error : 'Quant engine unavailable. Please retry.' });
   }
 });
 

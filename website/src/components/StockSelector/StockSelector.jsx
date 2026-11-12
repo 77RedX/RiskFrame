@@ -12,6 +12,8 @@ export default function StockSelector({
   onClearAll,
   isCalculating,
   onCalculate,
+  settings,
+  onSettingsChange,
 }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeSector, setActiveSector] = useState('all');
@@ -85,6 +87,14 @@ export default function StockSelector({
             Curate <strong>2–35 equities</strong> from the S&amp;P 500 index. The neural network will project forward alphas and solve for optimal Ledoit-Wolf risk-weighted allocations.
           </p>
         </div>
+
+        <fieldset className="calculation-settings">
+          <legend>Calculation Settings</legend>
+          <label htmlFor="max-asset-weight">Maximum per-stock allocation (%)</label>
+          <input id="max-asset-weight" type="number" min="5" max="100" step="1" value={Number((settings.maxWeight * 100).toFixed(6))} onChange={e => onSettingsChange({ ...settings, maxWeight: Number(e.target.value) / 100 })} />
+          <label htmlFor="risk-free-rate">Annual risk-free rate (%)</label>
+          <input id="risk-free-rate" type="number" min="0" max="100" step="0.1" value={Number((settings.riskFreeRate * 100).toFixed(6))} onChange={e => onSettingsChange({ ...settings, riskFreeRate: Number(e.target.value) / 100 })} />
+        </fieldset>
 
         {/* Selection Status Bar */}
         <SelectionBar

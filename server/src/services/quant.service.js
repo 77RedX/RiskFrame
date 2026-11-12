@@ -81,66 +81,13 @@ export function solveMarkowitzSharpe(returns, covMatrix, maxWeight = 0.35, riskF
  * Execute optimization via Python Quant Microservice or JS Quant Fallback
  */
 export async function runQuantOptimization(tickers, maxWeight = 0.35, riskFreeRate = 0.04) {
-  // 1. Try Python Quant sidecar if active
-  try {
-    const response = await axios.post(
-      `${PYTHON_QUANT_URL}/api/optimize`,
-      { tickers, max_weight: maxWeight, risk_free_rate: riskFreeRate },
-      { timeout: 3500 }
-    );
-    if (response.data && response.data.allocation) {
-      return {
-        ...response.data,
-        engine: 'python-pytorch-slsqp',
-      };
-    }
-  } catch (err) {
-    // Python service unreachable or starting up - use JS quant engine
-  }
-
-  // 2. High-speed JS Quant Engine
-  const n = tickers.length;
-  // Estimate annualized return and volatility approximations for portfolio universe
-  const baseReturns = [0.24, 0.32, 0.18, 0.22, 0.15, 0.28, 0.19, 0.25, 0.14, 0.21];
-  const returns = tickers.map((_, i) => baseReturns[i % baseReturns.length] + ((i * 17) % 7) * 0.01);
-
-  // Covariance matrix approximation with pairwise correlation ~ 0.45
-  const covMatrix = Array.from({ length: n }, (_, i) =>
-    Array.from({ length: n }, (_, j) => {
-      const volI = 0.18 + ((i * 13) % 9) * 0.01;
-      const volJ = 0.18 + ((j * 13) % 9) * 0.01;
-      if (i === j) return volI * volI;
-      return 0.45 * volI * volJ;
-    })
+  const response = await axios.post(
+    `${PYTHON_QUANT_URL}/api/optimize`,
+    { tickers, max_weight: maxWeight, risk_free_rate: riskFreeRate },
+    { timeout: 15000 }
   );
-
-  const solution = solveMarkowitzSharpe(returns, covMatrix, maxWeight, riskFreeRate);
-
-  const allocation = {};
-  const aiPredictions = {};
-  const individualMetrics = {};
-
-  tickers.forEach((ticker, idx) => {
-    allocation[ticker] = solution.weights[idx];
-    aiPredictions[ticker] = Number(returns[idx].toFixed(4));
-    individualMetrics[ticker] = {
-      historical_return: Number(returns[idx].toFixed(4)),
-      historical_volatility: Number(Math.sqrt(covMatrix[idx][idx]).toFixed(4)),
-      historical_sharpe: Number(((returns[idx] - riskFreeRate) / Math.sqrt(covMatrix[idx][idx])).toFixed(4)),
-    };
-  });
-
-  return {
-    allocation,
-    metrics: {
-      expected_return: solution.expectedReturn,
-      volatility: solution.volatility,
-      sharpe_ratio: solution.sharpeRatio,
-    },
-    ai_predictions: aiPredictions,
-    individual_metrics: individualMetrics,
-    engine: 'js-markowitz-projected-gradient',
-  };
+  if (!response.data?.allocation || !response.data?.metrics) throw new Error('Invalid quant response');
+  return { ...response.data, engine: 'python-pytorch-slsqp' };
 }
 
 /**
