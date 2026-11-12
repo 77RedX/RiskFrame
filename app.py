@@ -125,6 +125,12 @@ def health():
         return jsonify({"status": "ok"})
     return jsonify({"status": "loading"}), 503
 
+@app.route('/api/tickers', methods=['GET'])
+def supported_tickers():
+    if not BACKEND_READY:
+        return jsonify({"error": "Quant engine is initializing"}), 503
+    return jsonify({"tickers": TICKERS_LIST})
+
 @app.route('/api/prices', methods=['GET'])
 def get_prices():
     if not BACKEND_READY:

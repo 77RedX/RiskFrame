@@ -1,4 +1,4 @@
-import { runQuantOptimization } from './quant.service.js';
+import { runQuantOptimization, fetchSupportedTickers } from './quant.service.js';
 import { Portfolio } from '../models/Portfolio.js';
 
 /**
@@ -78,21 +78,19 @@ export async function runAgentConversation({ message, userId, userPreferences })
   const toolCallsMade = [];
   let responseText = '';
 
-  // Extract stock tickers mentioned in user message (2-5 uppercase letters)
-  const tickerMatches = message.match(/\b[A-Z]{2,5}\b/g) || [];
-  const validUniverse = new Set([
-    'AAPL', 'MSFT', 'NVDA', 'AVGO', 'AMD', 'AMZN', 'GOOGL', 'META', 'TSLA', 'JPM',
-    'V', 'UNH', 'LLY', 'XOM', 'PG', 'COST', 'GLD', 'TLT', 'IEF', 'SHY', 'TIP',
-  ]);
-  const detectedTickers = [...new Set(tickerMatches.filter((t) => validUniverse.has(t)))];
+  const detectedTickers = [...new Set((message.match(/\b[A-Z][A-Z0-9.-]{0,9}\b/g) || []).filter(t => t !== 'I'))];
 
   const wantsSaved = query.includes('saved') || query.includes('my portfolios') || /^list\b/.test(query);
 
   // 1. Tool Execution: If user asks to optimize or mentions tickers
-  if (!wantsSaved && (detectedTickers.length >= 2 || query.includes('optimize') || query.includes('portfolio') || query.includes('basket'))) {
-    const tickersToUse = detectedTickers.length >= 2 ? detectedTickers : ['AAPL', 'NVDA', 'MSFT', 'AMZN', 'GLD'];
-    const maxWeight = userPreferences?.maxAssetWeight || 0.35;
-    const riskFreeRate = userPreferences?.riskFreeRate || 0.04;
+  if (!wantsSaved && (detectedTickers.length >= 2 || query.includes('optimize'))) {
+    if (detectedTickers.length < 2 || detectedTickers.length > 35) return { reply: 'Specify 2 to 35 supported uppercase ticker symbols, for example: Optimize AAPL MSFT NVDA.', toolCalls: [] };
+    const universe = new Set(await fetchSupportedTickers());
+    const unsupported = detectedTickers.filter(t => !universe.has(t));
+    if (unsupported.length) return { reply: `Unsupported ticker symbols: ${unsupported.join(', ')}. Choose symbols from the stock selector.`, toolCalls: [] };
+    const tickersToUse = detectedTickers;
+    const maxWeight = userPreferences?.maxAssetWeight ?? 0.35;
+    const riskFreeRate = userPreferences?.riskFreeRate ?? 0.04;
 
     const optResult = await agentTools.optimizePortfolio.execute({
       tickers: tickersToUse,

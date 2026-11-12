@@ -23,7 +23,8 @@ test('Markowitz Sharpe Ratio Optimizer calculates non-negative weights summing t
 });
 
 test('Agent Conversation detects stock tickers and executes optimization tool', async () => {
-  const original = axios.post;
+  const original = axios.post, originalGet = axios.get;
+  axios.get = async () => ({ data: { tickers: ['AAPL', 'NVDA', 'MSFT'] } });
   axios.post = async () => ({ data: { allocation: { AAPL: 0.35, NVDA: 0.35, MSFT: 0.3 }, metrics: { expected_return: 0.2, volatility: 0.15, sharpe_ratio: 1.1 } } });
   try {
   const agentOutput = await runAgentConversation({
@@ -36,7 +37,7 @@ test('Agent Conversation detects stock tickers and executes optimization tool', 
   assert(agentOutput.toolCalls.length >= 1);
   assert.strictEqual(agentOutput.toolCalls[0].tool, 'optimizePortfolio');
   assert(agentOutput.reply.includes('Expected Return'));
-  } finally { axios.post = original; }
+  } finally { axios.post = original; axios.get = originalGet; }
 });
 
 test('unavailable quant engine never produces synthetic optimization success', async () => {

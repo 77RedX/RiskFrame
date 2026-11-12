@@ -99,3 +99,9 @@ export async function fetchPriceHistory(ticker) {
   if (!Array.isArray(data?.dates) || !Array.isArray(data?.prices) || !data.prices.length || data.dates.length !== data.prices.length || data.prices.some(p => !Number.isFinite(p) || p <= 0) || data.dates.some(d => !/^\d{4}-\d{2}-\d{2}$/.test(d))) throw new Error('Invalid historical price data');
   return { ...data, source: 'historical-close', as_of: data.dates.at(-1) };
 }
+
+export async function fetchSupportedTickers() {
+  const { data } = await axios.get(`${PYTHON_QUANT_URL}/api/tickers`, { timeout: 10000 });
+  if (!Array.isArray(data?.tickers) || !data.tickers.length || data.tickers.some(t => typeof t !== 'string')) throw new Error('Invalid supported ticker data');
+  return data.tickers;
+}

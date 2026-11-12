@@ -33,6 +33,11 @@ class OptimizationTests(unittest.TestCase):
         self.assertTrue(all(w <= 0.200001 for w in r.json['allocation'].values()))
         self.assertAlmostEqual(sum(r.json['allocation'].values()), 1)
 
+    def test_supported_tickers_match_initialized_engine_universe(self):
+        response = self.backend.app.test_client().get('/api/tickers')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json['tickers'], self.backend.TICKERS_LIST)
+
     def test_applies_zero_risk_free_rate(self):
         r = self.request(risk_free_rate=0)
         self.assertEqual(r.status_code, 200)
