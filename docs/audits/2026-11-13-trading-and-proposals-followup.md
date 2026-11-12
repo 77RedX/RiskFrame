@@ -42,3 +42,7 @@ Also distinguish hypothetical allocation sizing from an executable order: buying
 - Browser fixtures used an account with 2 AAPL and deterministic prices/allocations. These establish UI behavior, not live account state. Atlas verification was performed separately as described above.
 - No real broker orders, existing account mutations, or successful oversell bypass observed. The user's original successful-sale path may differ from the tested paths; if it recurs, capture entry point, held/submitted quantity and API response before changing server logic.
 - Fix plan: ../superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md.
+
+## Resolution update
+
+All four confirmed UI issues are corrected in separate tested commits: bounded/immediately validated quantities and honest paper-order controls; inline optimization feedback; visible 15k capital and selected preset; rebuilt proposal hierarchy/full-width guest content/empty sell explanations. The underlying successful-oversell claim remains unconfirmed; another isolated Atlas check rejected excess and concurrent duplicate sales and removed the test account. Gates: Edge 39/39, backend 22/22, Python 6/6; Docker builds passed. Responsive and 200% CSS zoom checks passed. See proposal-cards-fixed and proposals-fixed PNGs dated 2026-11-13 for reviewed results.

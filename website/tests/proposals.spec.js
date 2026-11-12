@@ -38,3 +38,25 @@ test('zero-share sizing and unavailable quotes remain explicit', async ({ page }
   await expect(page.locator('.buy-card').filter({ hasText: 'AAPL' })).toContainText('Hypothetical order: 0 whole shares');
   await expect(page.locator('.buy-card').filter({ hasText: 'MSFT' })).toContainText('Unavailable');
 });
+
+test('guest proposals use the available width and separate stock names from metrics', async ({ page }) => {
+  await page.goto('http://localhost:3000');
+  await page.locator('.btn-optimize-signals').click();
+  const columns = page.locator('.signals-columns-layout');
+  const buy = page.locator('.buy-col');
+  await expect(buy).toBeVisible();
+  expect((await buy.boundingBox()).width).toBeGreaterThan((await columns.boundingBox()).width * 0.95);
+  await expect(page.locator('.buy-card').first().locator('dl')).toContainText('Target weight');
+  await expect(page.locator('.buy-card').first().locator('.card-header')).toHaveCSS('display', 'flex');
+  await page.locator('#optimal-signals').getByRole('button', { name: 'Sign in to paper trade' }).click();
+  await expect(page.getByRole('dialog', { name: 'RiskFrame account' })).toBeVisible();
+});
+
+test('signed-in proposals explain an empty sell list', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('rf_auth_token', 'test-token'));
+  await page.route('**/api/auth/me', r => r.fulfill({ json: { user: { _id: 'empty', name: 'Empty account', holdings: [], cashBalance: 0 } } }));
+  await page.goto('http://localhost:3000');
+  await page.locator('.btn-optimize-signals').click();
+  await expect(page.locator('.sell-col')).toContainText('No owned holdings have a low target allocation');
+  await expect(page.locator('.sell-card')).toHaveCount(0);
+});

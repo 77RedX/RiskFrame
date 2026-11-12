@@ -280,6 +280,7 @@ export default function App() {
       />
       {/* Groww & Zerodha Style Optimal Trade Signals Section */}
       <OptimalSignals
+        onSignIn={() => setIsAuthModalOpen(true)}
         quotes={quotes}
         holdings={holdings}
         cashBalance={cashBalance}
