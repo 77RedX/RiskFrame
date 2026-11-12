@@ -20,7 +20,7 @@ export default function OptimalSignals({ isAuthenticated = false, holdings = [],
     <p className="section-subtitle">Research allocations from your latest calculation. Orders are simulated using dated closing prices, not live brokerage execution.</p>
     <div className="signals-control-dock"><div className="dock-left">
       <button className="btn-optimize-signals" disabled={pending || isOptimizing} onClick={optimize}>Optimize According to Stocks</button>
-      <div className="capital-picker"><span className="capital-label">Hypothetical capital:</span><div className="capital-buttons">{[5000, 10000, 25000, 50000].map(value => <button className="cap-chip" key={value} aria-pressed={capital === value} onClick={() => setCapital(value)}>${value / 1000}k</button>)}</div></div>
+      <div className="capital-picker"><span className="capital-label">Hypothetical capital: ${capital.toLocaleString('en-US')}</span><div className="capital-buttons">{[5000, 10000, 15000, 25000, 50000].map(value => <button className="cap-chip" key={value} aria-pressed={capital === value} onClick={() => setCapital(value)}>${value / 1000}k</button>)}</div></div>
     </div>
     {message && optimizationResults && <p role="status" className="signals-toast">{message}</p>}
     </div>

@@ -107,7 +107,7 @@
   color: #FFFFFF;
 }
 
-.cap-chip.active {
+.cap-chip[aria-pressed="true"] {
   background: rgba(212, 175, 55, 0.14);
   border-color: rgba(212, 175, 55, 0.4);
   color: #EAE0CE;
@@ -511,3 +511,5 @@
   color: var(--gold-light);
   font-weight: 600;
 }
+
+.cap-chip:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
