@@ -64,17 +64,17 @@ export const agentTools = {
         isDiversified: !isHighlyConcentrated && weights.length >= 4,
         sharpeAssessment:
           metrics.sharpe_ratio > 1.2
-            ? 'Strong risk-adjusted alpha'
+            ? 'Strong risk-adjusted return'
             : metrics.sharpe_ratio > 0.8
             ? 'Acceptable risk/reward'
-            : 'Suboptimal Sharpe; consider adding macro hedge ETFs (GLD, TLT)',
+            : 'Low risk-adjusted return',
       };
     },
   },
 };
 
 /**
- * Autonomous Quant Agent ReAct loop
+ * Command-based quant assistant
  */
 export async function runAgentConversation({ message, userId, userPreferences }) {
   const query = message.toLowerCase();
@@ -117,6 +117,8 @@ export async function runAgentConversation({ message, userId, userPreferences })
 ### Recommended Allocation:
 ${allocationSummary}
 
+Engine: ${optResult.engine || 'Not reported'}. Market data as of: ${optResult.market_data_as_of || 'Not reported'}.
+
 ### Quantitative Metrics:
 - **Expected Return**: ${(optResult.metrics.expected_return * 100).toFixed(2)}%
 - **Portfolio Volatility**: ${(optResult.metrics.volatility * 100).toFixed(2)}%
@@ -132,7 +134,7 @@ ${allocationSummary}
     if (userPortfolios.error) {
       responseText = userPortfolios.error;
     } else if (!userPortfolios.portfolios || userPortfolios.portfolios.length === 0) {
-      responseText = `You don't have any saved portfolios in MongoDB yet. Select stocks on the terminal or ask me to generate a basket like *"Optimize NVDA, AAPL, MSFT, and GLD"* and save it!`;
+      responseText = `You do not have any saved strategies. Saved strategies are separate from your paper-trading holdings.`;
     } else {
       const list = userPortfolios.portfolios
         .map((p) => `• **${p.name}** (${p.tickers.join(', ')}): Sharpe ${p.metrics.sharpeRatio.toFixed(2)}`)
@@ -140,13 +142,14 @@ ${allocationSummary}
       responseText = `Here are your saved portfolios from MongoDB:\n\n${list}`;
     }
   } else {
-    // 3. General Financial AI Guidance
-    responseText = `Hello! I am your **RiskFrame Quantitative Co-Pilot**. I bridge your deep-learning alpha model with real-time portfolio optimization and MongoDB account management.
+    // Explain the supported commands.
+    responseText = `This is a **command-based quant assistant**. It does not interpret conversation history or provide open-ended AI advice.
 
-You can ask me to:
-1. **Optimize a custom basket**: *"Optimize AAPL, NVDA, GOOGL, and GLD with low risk"*
-2. **Review your holdings**: *"Show my saved portfolios"*
-3. **Assess risk**: *"How can I hedge against tech drawdowns?"*`;
+Supported commands:
+1. **Optimize uppercase symbols**: "Optimize AAPL MSFT NVDA GLD". Calculation settings come from your saved preferences, or public defaults for guests; phrases like "low risk" do not change them.
+2. **Read saved strategies**: "Show my saved portfolios" (sign-in required).
+
+Prices are dated historical closes. Account balances and trades are simulated.`;
   }
 
   return {

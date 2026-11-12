@@ -18,7 +18,7 @@ test('saved portfolio request never triggers an unrelated optimization', async (
 
 test('risk tool evaluates canonical optimizer metrics', async () => {
   const result = await agentTools.analyzeRisk.execute({ allocations: { AAPL: 0.25, MSFT: 0.25, NVDA: 0.25, AMZN: 0.25 }, metrics: { volatility: 0.15, sharpe_ratio: 1.4 } });
-  assert.equal(result.sharpeAssessment, 'Strong risk-adjusted alpha');
+  assert.equal(result.sharpeAssessment, 'Strong risk-adjusted return');
 });
 
 test('copilot uses the engine universe, rejects unknown symbols, and preserves a zero risk-free rate', async () => {
@@ -58,4 +58,12 @@ test('copilot preserves result provenance and adapts canonical metrics for saved
     assert.equal(stored.metrics.sharpeRatio, 0);
     assert.equal(stored.metrics.volatility, 0.2);
   } finally { axios.post = post; Portfolio.prototype.save = save; }
+});
+
+test('copilot help discloses command-based operation and supported actions', async () => {
+  const result = await runAgentConversation({ message: 'Help' });
+  assert.match(result.reply, /command-based/i);
+  assert.match(result.reply, /does not interpret.*history/i);
+  assert.doesNotMatch(result.reply, /hedge against tech|real-time|autonomous/i);
+  assert.deepEqual(result.toolCalls, []);
 });

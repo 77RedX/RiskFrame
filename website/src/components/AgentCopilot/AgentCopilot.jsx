@@ -2,13 +2,13 @@ import { useState, useRef, useEffect } from 'react';
 import { sendAgentMessage } from '../../api';
 import './AgentCopilot.css';
 
-export default function AgentCopilot({ currentUser, onSelectTickers }) {
+export default function AgentCopilot({ currentUser }) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
       content:
-        'Hi! I am your **RiskFrame Quantitative Co-Pilot**.\n\nI can analyze your portfolios, optimize custom stock baskets with our PyTorch Temporal CNN model, and assess risk trade-offs.',
+        'This is a **command-based quant assistant**, without a generative AI provider.\n\nUse uppercase ticker symbols to optimize a basket, or sign in to list saved strategies. Each command is independent; conversation history does not change calculations.',
       toolCalls: [],
     },
   ]);
@@ -49,7 +49,7 @@ export default function AgentCopilot({ currentUser, onSelectTickers }) {
         ...prev,
         {
           role: 'assistant',
-          content: `Error executing agent reasoning: ${err.message}`,
+          content: `Command failed: ${err.message}`,
           toolCalls: [],
         },
       ]);
@@ -60,9 +60,9 @@ export default function AgentCopilot({ currentUser, onSelectTickers }) {
 
   const quickPrompts = [
     'Optimize AAPL, NVDA, and MSFT',
-    'Build a tech basket with defensive GLD hedge',
+    'Optimize AAPL MSFT NVDA GLD',
     'Show my saved portfolios',
-    'Explain Ledoit-Wolf shrinkage risk',
+    'Help',
   ];
 
   return (
@@ -71,10 +71,10 @@ export default function AgentCopilot({ currentUser, onSelectTickers }) {
       <button
         className="agent-toggle-btn"
         onClick={() => setIsOpen(!isOpen)}
-        title="Toggle Quantitative AI Co-Pilot"
+        title="Toggle Quant Copilot"
       >
-        <span className="agent-label">AI Quant Co-Pilot</span>
-        <span className="agent-badge">Agentic v2</span>
+        <span className="agent-label">Quant Copilot</span>
+        <span className="agent-badge">Commands</span>
       </button>
 
       {/* Slide-out Agent Window */}
@@ -83,9 +83,9 @@ export default function AgentCopilot({ currentUser, onSelectTickers }) {
           <div className="agent-drawer-header">
             <div className="agent-drawer-title">
               <div>
-                <h4>RiskFrame AI Co-Pilot</h4>
+                <h4>RiskFrame Quant Copilot</h4>
                 <span className="agent-status">
-                  {currentUser ? `Signed in as ${currentUser.name}` : 'Autonomous Quant Agent'}
+                  {currentUser ? `Signed in as ${currentUser.name}` : 'Command assistant'}
                 </span>
               </div>
             </div>
@@ -124,7 +124,7 @@ export default function AgentCopilot({ currentUser, onSelectTickers }) {
                   <span></span>
                   <span></span>
                 </div>
-                <div className="agent-loading-text">Analyzing market dynamics & optimizing weights...</div>
+                <div className="agent-loading-text">Processing command...</div>
               </div>
             )}
             <div ref={messagesEndRef} />
@@ -149,7 +149,7 @@ export default function AgentCopilot({ currentUser, onSelectTickers }) {
           >
             <input
               type="text"
-              aria-label="Message the copilot" placeholder="Ask anything or request portfolio allocation..."
+              aria-label="Message the copilot" placeholder="Optimize uppercase tickers or list saved strategies..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               disabled={loading}
