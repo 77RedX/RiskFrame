@@ -36,7 +36,7 @@ export default function OptimalSignals({ isAuthenticated = false, holdings = [],
             <div><dt>Target weight</dt><dd>{(item.weight * 100).toFixed(2)}%</dd></div>
             <div><dt>Annualized model return</dt><dd>{item.projectedAlphaPct == null ? 'Not reported' : `${item.projectedAlphaPct >= 0 ? '+' : ''}${Number(item.projectedAlphaPct.toFixed(2))}%`}</dd></div>
           </dl>
-          <p className="proposal-quote">Latest available close: <strong>{item.price == null ? 'Unavailable' : `$${item.price.toFixed(2)}`}</strong>{item.price != null && <> ? <time dateTime={item.asOf}>{item.asOf}</time></>}</p>
+          <p className="proposal-quote">Latest available close: <strong>{item.price == null ? 'Unavailable' : `$${item.price.toFixed(2)}`}</strong>{item.price != null && <> | <time dateTime={item.asOf}>{item.asOf}</time></>}</p>
           <div className="proposal-sizing">
             {mode === 'buy' && <p>Hypothetical order: {item.suggestedShares} whole shares</p>}
             {isAuthenticated && <p>Held: {item.heldShares} shares</p>}

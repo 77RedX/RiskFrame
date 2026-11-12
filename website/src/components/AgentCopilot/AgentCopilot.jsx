@@ -8,7 +8,7 @@ const percent = value => Number.isFinite(value) ? `${Number((value * 100).toFixe
 
 function ToolResult({ call }) {
   const result = call.result || {};
-  return <details className="tool-chip"><summary>{toolLabels[call.tool] || 'Unavailable request'}{result.error ? ' ? Unavailable' : ''}</summary>
+  return <details className="tool-chip"><summary>{toolLabels[call.tool] || 'Unavailable request'}{result.error ? ' | Unavailable' : ''}</summary>
     <div className="tool-detail">
       {result.error ? <p>{String(result.error)}</p> : <>
         {call.tool === 'optimizePortfolio' && <><p>Engine: {result.engine || 'Not reported'}</p><p>Market data as of: {result.market_data_as_of || 'Not reported'}</p><p>Sharpe: {Number.isFinite(result.metrics?.sharpe_ratio) ? result.metrics.sharpe_ratio.toFixed(2) : 'Not reported'}</p><p>Maximum weight: {percent(result.applied_settings?.max_weight)}</p><p>Risk-free rate: {percent(result.applied_settings?.risk_free_rate)}</p></>}
@@ -52,8 +52,8 @@ export default function AgentCopilot({ currentUser }) {
   return <div className={`agent-copilot-container ${isOpen ? 'open' : ''}`}>
     <button className="agent-toggle-btn" onClick={() => setIsOpen(!isOpen)} title="Toggle Quant Copilot" aria-expanded={isOpen} aria-controls="quant-copilot-drawer"><span className="agent-label">Quant Copilot</span><span className="agent-badge">Groq AI</span></button>
     {isOpen && <aside id="quant-copilot-drawer" aria-label="Quant copilot" className="agent-drawer">
-      <div className="agent-drawer-header"><div className="agent-drawer-title"><div><h4>RiskFrame Quant Copilot</h4><span className="agent-status">Groq AI{currentUser ? ` ? ${currentUser.name}` : ' ? Public market analysis'}</span></div></div>
-        <div className="agent-header-actions"><button disabled={loading} onClick={() => reset()} aria-label="Start new conversation">New</button><button aria-label="Close copilot" className="agent-close-btn" onClick={() => setIsOpen(false)}>?</button></div>
+      <div className="agent-drawer-header"><div className="agent-drawer-title"><div><h4>RiskFrame Quant Copilot</h4><span className="agent-status">Groq AI{currentUser ? ` | ${currentUser.name}` : ' | Public market analysis'}</span></div></div>
+        <div className="agent-header-actions"><button disabled={loading} onClick={() => reset()} aria-label="Start new conversation">New</button><button aria-label="Close copilot" className="agent-close-btn" onClick={() => setIsOpen(false)}>&times;</button></div>
       </div>
       <div className="agent-privacy"><p>Messages and permitted tool results are sent to Groq. Do not include credentials.</p>
         {currentUser && <label><input type="checkbox" checked={includePortfolioContext} disabled={loading} onChange={e => reset(e.target.checked)} />Allow saved portfolio context with Groq</label>}
