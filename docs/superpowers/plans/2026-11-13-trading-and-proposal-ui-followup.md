@@ -64,3 +64,7 @@ Alternatives considered: raising the toast layer only moves the obstruction onto
 No invalid sell looks executable; server enforcement remains authoritative and tested under concurrent requests. Quantities and capital are visible and consistent. Ticker/name/metric/date hierarchy is readable, empty columns do not waste space, and calculation status does not share the copilot's fixed corner. Each tested issue gets a separate commit on the existing fixes branch; no push, deployment, provider integration or external credential changes.
 
 The successful oversell claim remains unconfirmed. If the user reproduces an actual holdings/cash mutation, collect the entry point, before/after holdings, submitted quantity and API status, without recording tokens or private connection strings, and elevate it to a ledger integrity issue.
+
+## Follow-on feature phase - Groq Copilot
+
+After Tasks 1-4 are tested and committed, implement the separately scoped [Groq Copilot plan](2026-11-13-groq-copilot.md). The user has an API key; place it in server/.env as GROQ_API_KEY. The current application does not yet consume it, and Docker forwarding is part of that future phase. This turn records the plan/template only and does not start integration.

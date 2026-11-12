@@ -244,3 +244,7 @@ Verification performed: inspected both Compose files, README startup instruction
 ## New issues reported after completion - 2026-11-13
 
 New verified follow-up work is open in [Trading and Proposal UI Follow-up](2026-11-13-trading-and-proposal-ui-followup.md): quantity-bound feedback (successful overselling not reproduced), optimization notice/copilot overlap, hidden capital selection, and proposal layout. See docs/audits/2026-11-13-trading-and-proposals-followup.md for browser and isolated Atlas evidence. Plan only; no application code changes made in this review.
+
+## Groq feature queued - 2026-11-13
+
+The user requested adding the Groq implementation proposal to the roadmap and has obtained an API key. See [Groq Copilot plan](2026-11-13-groq-copilot.md), scheduled after the four current trading/proposal fixes. Planning and blank template entries only; provider code, Compose forwarding, model selection and live calls remain pending.
