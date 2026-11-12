@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 test.use({ channel: 'msedge' });
+test.beforeEach(async ({ page }) => { await page.route('**/api/prices?*', r => r.fulfill({ json: { dates: ['2026-11-10', '2026-11-11'], prices: [320, 321.25] } })); });
 
 test('mobile trade dialog fits the viewport and sits above page controls', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 667 });

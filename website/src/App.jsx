@@ -1,3 +1,4 @@
+import useMarketQuotes from './hooks/useMarketQuotes';
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { optimizePortfolio, getProfile, getAuthToken, clearAuthToken, updateUserPortfolio } from './api';
 import LoadingScreen from './components/LoadingScreen';
@@ -35,6 +36,7 @@ export default function App() {
   const [cashBalance, setCashBalance] = useState(0);
   const [accountStatus, setAccountStatus] = useState(getAuthToken() ? 'loading' : 'signed-out');
   const [settings, setSettings] = useState({ maxWeight: 0.35, riskFreeRate: 0.04 });
+  const quotes = useMarketQuotes([...holdings.map(h => h.ticker), ...Object.keys(results?.allocation ?? {})]);
   const calculationId = useRef(0);
   const invalidateResults = useCallback(() => {
     calculationId.current++;
@@ -359,6 +361,7 @@ export default function App() {
       />
       {/* Groww & Zerodha Style Optimal Trade Signals Section */}
       <OptimalSignals
+        quotes={quotes}
         holdings={holdings}
         cashBalance={cashBalance}
         optimizationResults={results}
@@ -369,6 +372,7 @@ export default function App() {
       />
       {/* My Portfolio Ledger Section */}
       {currentUser ? <MyPortfolio
+        quotes={quotes}
         holdings={holdings}
         cashBalance={cashBalance}
         optimizationResults={results}

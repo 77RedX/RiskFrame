@@ -29,7 +29,7 @@ export default function TradeModal({
   const dialogRef = useDialog(isOpen && Boolean(stock), onClose);
   if (!isOpen || !stock) return null;
 
-  const price = stock.price || 100;
+  const price = stock.price;
   const totalAmount = Number((shares * price).toFixed(2));
   const isBuy = mode === 'buy';
 
@@ -64,6 +64,7 @@ export default function TradeModal({
     e.preventDefault();
     setError('');
 
+    if (!Number.isFinite(price) || price <= 0) { setError("A verified closing price is required."); return; }
     if (shares <= 0) {
       setError('Please select at least 1 share.');
       return;
@@ -126,8 +127,8 @@ export default function TradeModal({
         {/* Live Price Ticker Banner */}
         <div className="trade-price-banner">
           <div className="trade-price-left">
-            <span className="trade-price-label">Market Price</span>
-            <span className="trade-price-val">${price.toFixed(2)}</span>
+            <span className="trade-price-label">Latest Closing Price</span>
+            <span className="trade-price-val">${price.toFixed(2)} <small>{stock.asOf}</small></span>
           </div>
           <div className="trade-price-right">
             <span className={`trade-change-badge ${stock.changePct >= 0 ? 'pos' : 'neg'}`}>
@@ -304,7 +305,7 @@ export default function TradeModal({
         </form>
 
         <div className="trade-modal-footer">
-          <span>Simulated Zerodha / Groww Instant Settlement API</span>
+          <span>Paper trading only ? No broker connection</span>
           <span>Zero Commission • 100% Capital Reserve</span>
         </div>
       </div>

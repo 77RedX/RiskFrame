@@ -79,7 +79,7 @@ export async function setCachedOptimization(tickers, maxWeight, riskFreeRate, da
 }
 
 export async function getCachedPrices(ticker) {
-  const key = `rf:prices:${ticker.toUpperCase()}`;
+  const key = `rf:prices:v2:${ticker.toUpperCase()}`;
 
   if (isRedisReady()) {
     try {
@@ -100,7 +100,7 @@ export async function getCachedPrices(ticker) {
 }
 
 export async function setCachedPrices(ticker, data, ttlSeconds = 3600) {
-  const key = `rf:prices:${ticker.toUpperCase()}`;
+  const key = `rf:prices:v2:${ticker.toUpperCase()}`;
 
   if (isRedisReady()) {
     try {

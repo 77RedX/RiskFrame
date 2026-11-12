@@ -94,7 +94,7 @@ router.get('/prices', async (req, res) => {
     return res.json({ ...data, cached: false, runtimeMs: Date.now() - startTime });
   } catch (err) {
     console.error('[Prices Route Error]:', err);
-    return res.status(500).json({ error: 'Failed to fetch price series.' });
+    return res.status(err.response?.status === 400 ? 400 : 503).json({ error: 'Historical prices unavailable. Please retry.' });
   }
 });
 
@@ -102,22 +102,10 @@ router.get('/prices', async (req, res) => {
 router.get('/signals', async (req, res) => {
   try {
     const buyCandidates = ['NVDA', 'AAPL', 'AVGO', 'MSFT', 'AMZN', 'LLY', 'GOOGL', 'META'];
-    const sellCandidates = ['INTC', 'BA', 'PFE', 'WFC', 'CVX'];
-
     const quantResult = await runQuantOptimization(buyCandidates);
 
-    const buySignals = buyCandidates.map((ticker) => ({
-      ticker,
-      weight: quantResult.allocation[ticker] || 0.12,
-      alpha: quantResult.ai_predictions[ticker] || 0.25,
-      signal: 'BUY',
-    }));
-
-    const sellSignals = sellCandidates.map((ticker) => ({
-      ticker,
-      signal: 'SELL',
-      urgency: 'High',
-    }));
+    const buySignals = Object.entries(quantResult.allocation).filter(([, weight]) => weight > 1e-8).map(([ticker, weight]) => ({ ticker, weight, alpha: quantResult.ai_predictions?.[ticker] ?? null, signal: 'BUY' }));
+    const sellSignals = [];
 
     return res.json({
       buySignals,

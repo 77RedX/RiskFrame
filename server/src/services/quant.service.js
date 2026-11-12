@@ -94,27 +94,8 @@ export async function runQuantOptimization(tickers, maxWeight = 0.35, riskFreeRa
  * Fetch 15-day price history for a given ticker
  */
 export async function fetchPriceHistory(ticker) {
-  // 1. Try Python quant microservice
-  try {
-    const response = await axios.get(`${PYTHON_QUANT_URL}/api/prices?ticker=${ticker}`, { timeout: 2500 });
-    if (response.data && response.data.prices) {
-      return response.data;
-    }
-  } catch {}
-
-  // 2. Synthesize last 15 trading days
-  const dates = [];
-  const prices = [];
-  let basePrice = 150 + ((ticker.charCodeAt(0) * 7) % 250);
-
-  const today = new Date();
-  for (let i = 14; i >= 0; i--) {
-    const d = new Date(today);
-    d.setDate(d.getDate() - i);
-    dates.push(d.toISOString().split('T')[0]);
-    basePrice = Number((basePrice * (1 + (Math.sin(i * 1.5) * 0.02 + 0.003))).toFixed(2));
-    prices.push(basePrice);
-  }
-
-  return { dates, prices };
+  const response = await axios.get(`${PYTHON_QUANT_URL}/api/prices?ticker=${encodeURIComponent(ticker)}`, { timeout: 10000 });
+  const data = response.data;
+  if (!Array.isArray(data?.dates) || !Array.isArray(data?.prices) || !data.prices.length || data.dates.length !== data.prices.length || data.prices.some(p => !Number.isFinite(p) || p <= 0) || data.dates.some(d => !/^\d{4}-\d{2}-\d{2}$/.test(d))) throw new Error('Invalid historical price data');
+  return { ...data, source: 'historical-close', as_of: data.dates.at(-1) };
 }

@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 import test from 'node:test';
 import axios from 'axios';
-import { runQuantOptimization } from '../src/services/quant.service.js';
+import { runQuantOptimization, fetchPriceHistory } from '../src/services/quant.service.js';
 import { solveMarkowitzSharpe } from '../src/services/quant.service.js';
 import { runAgentConversation } from '../src/services/agent.service.js';
 
@@ -44,4 +44,11 @@ test('unavailable quant engine never produces synthetic optimization success', a
   axios.post = async () => { throw new Error('Unavailable'); };
   try { await assert.rejects(runQuantOptimization(['AAPL', 'MSFT', 'NVDA']), /Unavailable/); }
   finally { axios.post = original; }
+});
+
+test('unavailable price source never produces synthetic history', async () => {
+  const original = axios.get;
+  axios.get = async () => { throw new Error('Unavailable'); };
+  try { await assert.rejects(fetchPriceHistory('AAPL'), /Unavailable/); }
+  finally { axios.get = original; }
 });
