@@ -36,6 +36,6 @@ export default function OptimalSignals({ isAuthenticated = false, holdings = [],
         {isAuthenticated && <button className={`btn-zerodha-${mode}`} disabled={item.price == null} onClick={() => setTrade({ ...item, mode })}>{mode.toUpperCase()} {item.ticker}</button>}
       </div>)}
     </div>)}</div>
-    {trade && <TradeModal isOpen stock={trade} initialMode={trade.mode} onClose={() => setTrade(null)} cashBalance={cashBalance} heldShares={trade.heldShares} avgBuyPrice={holdings.find(h => h.ticker === trade.ticker)?.avgBuyPrice ?? 0} onExecuteTrade={onExecuteTrade} />}
+    {trade && <TradeModal isOpen stock={trade} initialMode={trade.mode} onClose={() => setTrade(null)} cashBalance={cashBalance} heldShares={holdings.find(h => h.ticker === trade.ticker)?.shares ?? 0} avgBuyPrice={holdings.find(h => h.ticker === trade.ticker)?.avgBuyPrice ?? 0} onExecuteTrade={onExecuteTrade} />}
   </div></section>;
 }

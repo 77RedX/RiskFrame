@@ -423,3 +423,5 @@
   font-size: 0.68rem;
   color: var(--text-muted);
 }
+
+.trade-modal-container button:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }

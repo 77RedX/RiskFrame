@@ -1,6 +1,6 @@
 # Trading and Proposal UI Follow-up Implementation Plan
 
-> **For agentic workers:** Use superpowers:executing-plans task by task. This is a verified plan only; the user has not requested implementation in this turn. When implementation is requested, test and commit each individual issue before editing the next. Use Microsoft Edge for Playwright.
+> **For agentic workers:** Use superpowers:executing-plans task by task. The user authorized implementation on 2026-11-13. When implementation is requested, test and commit each individual issue before editing the next. Use Microsoft Edge for Playwright.
 
 **Goal:** Make invalid trades visibly unavailable, make the proposal section readable, expose its sizing inputs, and prevent optimization feedback colliding with the copilot.
 
@@ -68,3 +68,7 @@ The successful oversell claim remains unconfirmed. If the user reproduces an act
 ## Follow-on feature phase - Groq Copilot
 
 After Tasks 1-4 are tested and committed, implement the separately scoped [Groq Copilot plan](2026-11-13-groq-copilot.md). The user has an API key; place it in server/.env as GROQ_API_KEY. The current application does not yet consume it, and Docker forwarding is part of that future phase. This turn records the plan/template only and does not start integration.
+
+## Execution ledger
+
+- Task 1 complete: four regressions failed before the fix (unbounded sale, truncated fractions, unowned sale, pending edits). Quantity drafts now validate against current holdings/cash, controls clamp and freeze, invalid submission is disabled, and unsupported broker/order modes are removed. Edge trade/market/layout 10/10 and backend ledger/account 6/6 passed; local and Docker builds passed. Atlas oversell/concurrent liquidation passed and deleted one isolated account. Layout verification now polls the same overflow assertion while existing stock-card resize animations settle.
