@@ -1,6 +1,6 @@
 # Groq Copilot Implementation Plan
 
-> **For agentic workers:** Use superpowers:executing-plans. This records requested future work; it does not authorize starting implementation in this turn. Complete the four trading/proposal UI issues first. Test and commit each independently reviewable step on fix/ui-account-corrections before moving on. Use Microsoft Edge for browser checks.
+> **For agentic workers:** Use superpowers:executing-plans. The user authorized inline implementation on 2026-11-13. Complete the four trading/proposal UI issues first. Test and commit each independently reviewable step on fix/ui-account-corrections before moving on. Use Microsoft Edge for browser checks.
 
 **Goal:** Replace the current keyword router with a conversational Groq copilot grounded in existing verified application tools, without giving the model account mutation powers.
 
@@ -67,3 +67,7 @@ References: https://console.groq.com/docs/tool-use/local-tool-calling and https:
 The copilot understands follow-up requests, obtains its figures from validated tools, keeps histories owned/bounded, handles provider failures, and cannot mutate account state. Groq receives only the authorized conversation/tool context; keys remain server-only. The existing application continues working if Groq is absent.
 
 Excluded from this initial phase: autonomous trading, strategy writes, browser automation, web search, remote MCP, streaming, model training, multi-agent orchestration, Render provisioning and external credential rotation. Costs/rate limits/model choice must be checked with the user's current Groq account before a live run; no availability or free-tier guarantee is implied.
+
+## Execution ledger
+
+- Step 1 complete: added bounded Axios provider requests, parsed assistant responses, safe unavailable/rate-limit/incomplete errors, and backend-only Compose forwarding. New provider regression failed before implementation; backend 23/23 passed afterward. Fixture configuration checks proved key ownership. Groq account model listing confirmed openai/gpt-oss-20b; filled the blank local GROQ_MODEL only, preserving the private key. No inference call yet. No new dependency.
