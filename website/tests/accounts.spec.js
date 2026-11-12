@@ -39,3 +39,16 @@ test('existing authenticated holdings are preserved', async ({ page }) => {
   await expect(page.locator('.portfolio-table tbody tr')).toHaveCount(1);
   await expect(page.locator('#my-portfolio')).toContainText('Cash: $123.00');
 });
+
+test('preferences opened after login show saved account values', async ({ page }) => {
+  await page.route('**/api/auth/login', r => r.fulfill({ json: { token: 'test-token', user: { ...user, preferences: { riskTolerance: 'aggressive', maxAssetWeight: 0.2 } } } }));
+  await page.goto(url);
+  await page.locator('#navbar').getByRole('button', { name: 'Sign In', exact: true }).click();
+  await page.locator('.auth-modal-form input[type=email]').fill(user.email);
+  await page.locator('.auth-modal-form input[type=password]').fill('test-password');
+  await page.locator('.auth-submit-btn').click();
+  await page.locator('button[title="Account Details"]').click();
+  await page.getByRole('button', { name: /Risk Preferences/ }).click();
+  await expect(page.locator('.auth-modal-form select')).toHaveValue('aggressive');
+  await expect(page.locator('.auth-modal-form input[type=range]')).toHaveValue('0.2');
+});

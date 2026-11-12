@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { login, register, updatePreferences } from '../../api';
 import './AuthModal.css';
 
@@ -12,6 +12,17 @@ export default function AuthModal({ isOpen, onClose, user, onAuthSuccess, onLogo
   const [maxWeight, setMaxWeight] = useState(user?.preferences?.maxAssetWeight || 0.35);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setRiskTolerance(user?.preferences?.riskTolerance ?? 'moderate');
+      setMaxWeight(user?.preferences?.maxAssetWeight ?? 0.35);
+      setError('');
+    } else {
+      setPassword('');
+      setIsPreferences(false);
+    }
+  }, [isOpen, user?._id]);
 
   if (!isOpen) return null;
 
@@ -221,9 +232,9 @@ export default function AuthModal({ isOpen, onClose, user, onAuthSuccess, onLogo
                 <label>Max Single-Asset Exposure Limit: {(maxWeight * 100).toFixed(0)}%</label>
                 <input
                   type="range"
-                  min="0.10"
-                  max="0.50"
-                  step="0.05"
+                  min="0.05"
+                  max="1"
+                  step="0.01"
                   value={maxWeight}
                   onChange={(e) => setMaxWeight(parseFloat(e.target.value))}
                 />
