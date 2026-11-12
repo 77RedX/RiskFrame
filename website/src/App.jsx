@@ -151,7 +151,7 @@ export default function App() {
 
   const handleCalculate = useCallback(async (customTickers = null) => {
     const listToOptimize = customTickers || Array.from(selected);
-    if (listToOptimize.length < 2 || isCalculating) return;
+    if (listToOptimize.length < 2 || isCalculating) return false;
 
     setIsCalculating(true);
     setResults(null);
@@ -172,14 +172,16 @@ export default function App() {
       const data = await optimizePortfolio(listToOptimize);
       setLoadingProgress(100);
       setResults(data);
+      return true;
     } catch (error) {
       console.error(error);
       setErrorMessage(
         `Could not connect to the backend API. Error: ${error.message}`
       );
+      return false;
+    } finally {
+      setIsCalculating(false);
     }
-
-    setIsCalculating(false);
   }, [selected, isCalculating]);
 
   // Execute Buy / Sell Trade (Zerodha & Groww settlement model)
@@ -289,12 +291,12 @@ export default function App() {
 
   const handleTriggerOptimizationFromSignals = useCallback(() => {
     if (selected.size >= 2) {
-      handleCalculate();
+      return handleCalculate();
     } else {
       // Select high-conviction core basket
       const defaultBasket = ['NVDA', 'AAPL', 'MSFT', 'AVGO', 'AMZN', 'LLY', 'GOOGL', 'META'];
       setSelected(new Set(defaultBasket));
-      handleCalculate(defaultBasket);
+      return handleCalculate(defaultBasket);
     }
   }, [selected, handleCalculate]);
 

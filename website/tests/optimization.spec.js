@@ -73,3 +73,11 @@ test('pending request disables button and failure allows retry', async ({ page }
   await expect(page.locator('#results')).toContainText('Test optimization failure');
   await expect(page.locator('#calculate-btn')).toBeEnabled();
 });
+
+test('signals never announce success after a failed optimization', async ({ page }) => {
+  await page.route('**/api/optimize', r => r.fulfill({ status: 500, json: { error: 'Solver unavailable' } }));
+  await page.getByRole('button', { name: /Optimize According to Stocks/ }).click();
+  await expect(page.locator('#results')).toContainText('Solver unavailable');
+  await page.waitForTimeout(1500);
+  await expect(page.locator('.signals-toast').filter({ hasText: 'Optimization Complete' })).toHaveCount(0);
+});

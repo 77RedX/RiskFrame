@@ -41,16 +41,14 @@ export default function OptimalSignals({
     setTimeout(() => setToastMessage(''), 4500);
   };
 
-  const handleRunOptimization = () => {
+  const handleRunOptimization = async () => {
+    setToastMessage('');
     setOptimizingLocal(true);
-    if (onTriggerOptimization) {
-      onTriggerOptimization();
-    }
-    setTimeout(() => {
-      setOptimizingLocal(false);
-      setToastMessage('Algorithmic Optimization Complete: Signals updated to latest market frontier!');
-      setTimeout(() => setToastMessage(''), 4000);
-    }, 1200);
+    try {
+      if (await onTriggerOptimization?.()) {
+        setToastMessage('Optimization Complete: Signals updated from the calculation results.');
+      }
+    } finally { setOptimizingLocal(false); }
   };
 
   return (
