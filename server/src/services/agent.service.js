@@ -11,8 +11,7 @@ export const agentTools = {
     execute: async ({ tickers, maxWeight = 0.35, riskFreeRate = 0.04 }) => {
       const result = await runQuantOptimization(tickers, maxWeight, riskFreeRate);
       return {
-        allocation: result.allocation,
-        metrics: result.metrics,
+        ...result,
         topHolding: Object.entries(result.allocation).sort((a, b) => b[1] - a[1])[0],
       };
     },
@@ -38,7 +37,11 @@ export const agentTools = {
         name: name || 'Agent Generated Strategy',
         tickers,
         allocations,
-        metrics,
+        metrics: {
+          expectedReturn: metrics.expected_return,
+          volatility: metrics.volatility,
+          sharpeRatio: metrics.sharpe_ratio,
+        },
       });
       await doc.save();
       return { success: true, portfolioId: doc._id, name: doc.name };
