@@ -8,7 +8,6 @@ export default function MyPortfolio({
   cashBalance = 25000,
   optimizationResults = null,
   onExecuteTrade,
-  onResetHoldings,
   onAddCash,
 }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -230,13 +229,6 @@ export default function MyPortfolio({
               + Deposit Cash
             </button>
 
-            <button
-              className="btn-toolbar-reset"
-              onClick={onResetHoldings}
-              title="Restore initial 5-stock demo portfolio"
-            >
-              ↺ Reset Portfolio
-            </button>
           </div>
         </div>
 

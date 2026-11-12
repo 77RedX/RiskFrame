@@ -268,7 +268,7 @@ export default function Navbar({ currentUser, onOpenAuth, onLogout, holdingsCoun
               onClick={(e) => smoothScroll(e, '#my-portfolio')}
               style={{ color: '#D4AF37', fontSize: '0.92rem', fontWeight: 600, padding: '6px 0' }}
             >
-              My Portfolio ({holdingsCount})
+              My Portfolio{currentUser && ` (${holdingsCount})`}
             </a>
             <a
               href="#price-history"

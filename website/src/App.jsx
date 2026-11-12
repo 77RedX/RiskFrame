@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { optimizePortfolio, getProfile, clearAuthToken, updateUserPortfolio } from './api';
+import { optimizePortfolio, getProfile, getAuthToken, clearAuthToken, updateUserPortfolio } from './api';
 import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -12,12 +12,8 @@ import Footer from './components/Footer';
 import AgentCopilot from './components/AgentCopilot/AgentCopilot';
 import AuthModal from './components/UserAuth/AuthModal';
 import {
-  loadUserHoldings,
   saveUserHoldings,
-  loadCashBalance,
   saveCashBalance,
-  DEFAULT_DEMO_HOLDINGS,
-  DEFAULT_CASH_BALANCE,
   recordTrade,
 } from './data/marketSignals';
 import { SP500_STOCKS } from './data/stocks';
@@ -34,36 +30,33 @@ export default function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   // User Portfolio & Trading State
-  const [holdings, setHoldings] = useState(() => loadUserHoldings('guest'));
-  const [cashBalance, setCashBalance] = useState(() => loadCashBalance('guest'));
+  const [holdings, setHoldings] = useState([]);
+  const [cashBalance, setCashBalance] = useState(0);
+  const [accountStatus, setAccountStatus] = useState(getAuthToken() ? 'loading' : 'signed-out');
 
-  // Restore authenticated user profile on load
+  // Restore only this token's account; late replies must not undo logout.
   useEffect(() => {
-    getProfile()
-      .then((data) => setCurrentUser(data.user))
-      .catch(() => setCurrentUser(null));
+    const token = getAuthToken();
+    if (!token) return;
+    let cancelled = false;
+    getProfile().then(data => {
+      if (!cancelled && getAuthToken() === token) {
+        setCurrentUser(data.user);
+        setAccountStatus('ready');
+      }
+    }).catch(error => {
+      if (cancelled || getAuthToken() !== token) return;
+      if (error.status === 401) {
+        clearAuthToken();
+        setAccountStatus('signed-out');
+      } else setAccountStatus('error');
+    });
+    return () => { cancelled = true; };
   }, []);
 
-  // Synchronize user holdings & cash whenever authenticated user changes (login, logout, account switch)
   useEffect(() => {
-    if (currentUser) {
-      const userHoldings =
-        currentUser.holdings && currentUser.holdings.length > 0
-          ? currentUser.holdings
-          : loadUserHoldings(currentUser._id);
-      const userCash =
-        currentUser.cashBalance !== undefined && currentUser.cashBalance !== null
-          ? currentUser.cashBalance
-          : loadCashBalance(currentUser._id);
-
-      setHoldings(userHoldings);
-      setCashBalance(userCash);
-      saveUserHoldings(userHoldings, currentUser._id);
-      saveCashBalance(userCash, currentUser._id);
-    } else {
-      setHoldings(loadUserHoldings('guest'));
-      setCashBalance(loadCashBalance('guest'));
-    }
+    setHoldings(currentUser?.holdings ?? []);
+    setCashBalance(currentUser?.cashBalance ?? 0);
   }, [currentUser?._id]);
 
   // Fix scroll position on mount
@@ -190,7 +183,8 @@ export default function App() {
 
   // Execute Buy / Sell Trade (Zerodha & Groww settlement model)
   const handleExecuteTrade = useCallback((order) => {
-    const userId = currentUser?._id;
+    if (!currentUser) throw new Error("Sign in to change your portfolio.");
+    const userId = currentUser._id;
     const { type, ticker, name, shares, price, total } = order;
 
     if (type === 'BUY') {
@@ -269,19 +263,9 @@ export default function App() {
     }
   }, [currentUser]);
 
-  const handleResetHoldings = useCallback(() => {
-    const userId = currentUser?._id;
-    setHoldings(DEFAULT_DEMO_HOLDINGS);
-    saveUserHoldings(DEFAULT_DEMO_HOLDINGS, userId);
-    setCashBalance(DEFAULT_CASH_BALANCE);
-    saveCashBalance(DEFAULT_CASH_BALANCE, userId);
-    if (userId) {
-      updateUserPortfolio({ holdings: DEFAULT_DEMO_HOLDINGS, cashBalance: DEFAULT_CASH_BALANCE });
-    }
-  }, [currentUser]);
-
   const handleAddCash = useCallback((amount) => {
-    const userId = currentUser?._id;
+    if (!currentUser) throw new Error("Sign in to change your portfolio.");
+    const userId = currentUser._id;
     setCashBalance((prev) => {
       const next = Number((prev + amount).toFixed(2));
       saveCashBalance(next, userId);
@@ -297,8 +281,9 @@ export default function App() {
     setCurrentUser(null);
     setSelected(new Set());
     setResults(null);
-    setHoldings(loadUserHoldings('guest'));
-    setCashBalance(loadCashBalance('guest'));
+    setHoldings([]);
+    setCashBalance(0);
+    setAccountStatus('signed-out');
   }, []);
 
   const handleTriggerOptimizationFromSignals = useCallback(() => {
@@ -348,19 +333,26 @@ export default function App() {
         holdings={holdings}
         cashBalance={cashBalance}
         optimizationResults={results}
+        isAuthenticated={Boolean(currentUser)}
         onExecuteTrade={handleExecuteTrade}
         onTriggerOptimization={handleTriggerOptimizationFromSignals}
         isOptimizing={isCalculating}
       />
       {/* My Portfolio Ledger Section */}
-      <MyPortfolio
+      {currentUser ? <MyPortfolio
         holdings={holdings}
         cashBalance={cashBalance}
         optimizationResults={results}
         onExecuteTrade={handleExecuteTrade}
-        onResetHoldings={handleResetHoldings}
         onAddCash={handleAddCash}
-      />
+      /> : <section id="my-portfolio" aria-labelledby="portfolio-heading">
+        <div className="container">
+          <h2 id="portfolio-heading">My Portfolio</h2>
+          <p role="status">{accountStatus === 'loading' ? 'Loading your account...' : accountStatus === 'error' ? 'Your account is temporarily unavailable. Retry to load your portfolio.' : 'Sign in to view your portfolio'}</p>
+          {accountStatus === 'signed-out' && <button className="nav-cta-pill" onClick={() => setIsAuthModalOpen(true)}>Sign In</button>}
+          {accountStatus === 'error' && <button onClick={() => window.location.reload()}>Retry Account</button>}
+        </div>
+      </section>}
       <PriceHistory />
       <Footer />
 
@@ -370,7 +362,7 @@ export default function App() {
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}
         user={currentUser}
-        onAuthSuccess={(user) => setCurrentUser(user)}
+        onAuthSuccess={(user) => { setCurrentUser(user); setAccountStatus('ready'); }}
         onLogout={handleLogout}
       />
     </>

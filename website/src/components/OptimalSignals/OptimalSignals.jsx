@@ -4,6 +4,7 @@ import TradeModal from '../Trading/TradeModal';
 import './OptimalSignals.css';
 
 export default function OptimalSignals({
+  isAuthenticated = false,
   holdings = [],
   cashBalance = 25000,
   optimizationResults = null,
@@ -25,6 +26,7 @@ export default function OptimalSignals({
   }, [holdings, optimizationResults, targetCapital]);
 
   const handleOpenTrade = (stock, mode) => {
+    if (!isAuthenticated) return;
     setSelectedStockForTrade(stock);
     setTradeMode(mode);
     setIsTradeModalOpen(true);
@@ -216,7 +218,7 @@ export default function OptimalSignals({
                           </span>
                         </div>
 
-                        <button
+                        {isAuthenticated && <button
                           className="btn-zerodha-buy"
                           onClick={() => handleOpenTrade(item, 'buy')}
                         >
@@ -224,7 +226,7 @@ export default function OptimalSignals({
                             <path d="M12 4V20M4 12H20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
                           </svg>
                           <span>BUY {item.ticker}</span>
-                        </button>
+                        </button>}
                       </div>
 
                       {isOwned && (
@@ -240,7 +242,7 @@ export default function OptimalSignals({
           )}
 
           {/* OPTIMAL SELL SECTION */}
-          {(activeTab === 'all' || activeTab === 'sell') && (
+          {isAuthenticated && (activeTab === 'all' || activeTab === 'sell') && (
             <div className="signals-column sell-col fade-up">
               <div className="column-header sell-header">
                 <div className="header-badge red">

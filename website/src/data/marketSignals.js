@@ -90,69 +90,10 @@ export function getStockPrice(ticker) {
   };
 }
 
-// Initial demo portfolio holdings (stored in localStorage)
-export const DEFAULT_DEMO_HOLDINGS = [
-  {
-    ticker: 'NVDA',
-    name: 'NVIDIA Corp.',
-    sector: 'Technology',
-    shares: 35,
-    avgBuyPrice: 112.50,
-    buyDate: '2026-01-15',
-  },
-  {
-    ticker: 'AAPL',
-    name: 'Apple Inc.',
-    sector: 'Technology',
-    shares: 25,
-    avgBuyPrice: 195.40,
-    buyDate: '2026-02-02',
-  },
-  {
-    ticker: 'MSFT',
-    name: 'Microsoft Corp.',
-    sector: 'Technology',
-    shares: 18,
-    avgBuyPrice: 402.00,
-    buyDate: '2026-02-18',
-  },
-  {
-    ticker: 'AMZN',
-    name: 'Amazon.com Inc.',
-    sector: 'Consumer Disc.',
-    shares: 30,
-    avgBuyPrice: 172.80,
-    buyDate: '2026-03-05',
-  },
-  {
-    ticker: 'LLY',
-    name: 'Eli Lilly & Co.',
-    sector: 'Healthcare',
-    shares: 10,
-    avgBuyPrice: 840.00,
-    buyDate: '2026-03-20',
-  },
-];
-
-export const DEFAULT_CASH_BALANCE = 24500.00;
-
 // LocalStorage Key Helpers (scoped per user so accounts don't leak or collide)
 const getHoldingsKey = (userId) => `rf_portfolio_holdings_${userId || 'guest'}`;
 const getCashKey = (userId) => `rf_portfolio_cash_${userId || 'guest'}`;
 const getTradesKey = (userId) => `rf_trade_history_${userId || 'guest'}`;
-
-export function loadUserHoldings(userId = 'guest') {
-  try {
-    const raw = localStorage.getItem(getHoldingsKey(userId));
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-    }
-  } catch (e) {
-    console.warn('Error reading holdings from localStorage', e);
-  }
-  return DEFAULT_DEMO_HOLDINGS;
-}
 
 export function saveUserHoldings(holdings, userId = 'guest') {
   try {
@@ -160,17 +101,6 @@ export function saveUserHoldings(holdings, userId = 'guest') {
   } catch (e) {
     console.warn('Error saving holdings to localStorage', e);
   }
-}
-
-export function loadCashBalance(userId = 'guest') {
-  try {
-    const raw = localStorage.getItem(getCashKey(userId));
-    if (raw !== null) {
-      const num = parseFloat(raw);
-      if (!isNaN(num)) return num;
-    }
-  } catch (e) {}
-  return DEFAULT_CASH_BALANCE;
 }
 
 export function saveCashBalance(cash, userId = 'guest') {

@@ -82,7 +82,7 @@ export const register = async (name, email, password, preferences = {}) => {
 
 export const getProfile = async () => {
   const res = await fetch(`${API}/api/auth/me`, { headers: getHeaders() });
-  if (!res.ok) throw new Error('Unauthorized');
+  if (!res.ok) { const error = new Error('Could not load account'); error.status = res.status; throw error; }
   return res.json();
 };
 
