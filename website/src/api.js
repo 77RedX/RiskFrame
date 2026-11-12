@@ -146,14 +146,14 @@ export const deletePortfolio = async (id) => {
   return res.json();
 };
 
-// Agentic Co-Pilot API
+// Server-only provider integration: this request never carries a Groq key.
 export const sendAgentMessage = async (message, sessionId = null, { history = [], includePortfolioContext = false } = {}) => {
   const res = await fetch(`${API}/api/agent/chat`, {
-    method: 'POST',
-    headers: getHeaders(),
+    method: 'POST', headers: getHeaders(), signal: AbortSignal.timeout(60000),
     body: JSON.stringify({ message, sessionId, history, includePortfolioContext }),
   });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error || 'Agent request failed');
+  const data = await res.json().catch(() => null);
+  if (!res.ok) throw new Error(data?.error || 'Copilot unavailable. Please retry.');
+  if (typeof data?.reply !== 'string' || (data.toolCalls != null && !Array.isArray(data.toolCalls))) throw new Error('Invalid copilot response. Please retry.');
   return data;
 };

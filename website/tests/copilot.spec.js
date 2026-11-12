@@ -74,3 +74,43 @@ test('portfolio permission starts a fresh owned conversation and resets on logou
   await expect(permission).toHaveCount(0);
   await expect(page.locator('.agent-messages-container')).not.toContainText('Previous context marker');
 });
+
+test('Groq errors offer explicit retry and verified sources remain inspectable', async ({ page }) => {
+  await page.route('**/api/live', r => r.fulfill({ json: { status: 'ok' } }));
+  const requests = [];
+  await page.route('**/api/agent/chat', r => {
+    requests.push(r.request().postDataJSON());
+    return requests.length === 1
+      ? r.fulfill({ status: 429, json: { error: 'AI copilot rate limit reached. Please retry later.' } })
+      : r.fulfill({ json: { reply: 'Verified calculation explanation', toolCalls: [{ tool: 'optimizePortfolio', result: { engine: 'python-pytorch-slsqp', market_data_as_of: '2026-11-12', metrics: { sharpe_ratio: 0 }, applied_settings: { max_weight: 0.5, risk_free_rate: 0 } } }] } });
+  });
+  await page.goto('http://localhost:3000');
+  await page.locator('.agent-toggle-btn').click();
+  await expect(page.locator('.agent-status')).toContainText('Groq');
+  await page.getByRole('textbox', { name: 'Message the copilot' }).fill('Compare my basket');
+  await page.locator('.agent-input-form button').click();
+  await expect(page.getByRole('alert')).toContainText('rate limit');
+  await page.getByRole('button', { name: 'Retry message' }).click();
+  await expect(page.locator('.agent-text').last()).toContainText('Verified calculation explanation');
+  expect(requests[1].message).toBe('Compare my basket');
+  await page.getByText('Portfolio optimization', { exact: true }).click();
+  await expect(page.locator('.agent-tools-executed')).toContainText('2026-11-12');
+  await expect(page.locator('.agent-tools-executed')).toContainText('Sharpe: 0.00');
+  await expect(page.locator('.agent-tools-executed')).toContainText('Risk-free rate: 0%');
+  await page.getByRole('button', { name: 'Start new conversation' }).click();
+  await expect(page.locator('.agent-messages-container')).not.toContainText('Verified calculation explanation');
+});
+
+test('guest follow-ups send bounded text history without client tool authority', async ({ page }) => {
+  await page.route('**/api/live', r => r.fulfill({ json: { status: 'ok' } }));
+  const requests = [];
+  await page.route('**/api/agent/chat', r => { requests.push(r.request().postDataJSON()); return r.fulfill({ json: { reply: 'A public explanation', toolCalls: [] } }); });
+  await page.goto('http://localhost:3000'); await page.locator('.agent-toggle-btn').click();
+  for (const text of ['Explain diversification', 'How about concentration?']) {
+    await page.getByRole('textbox', { name: 'Message the copilot' }).fill(text);
+    await page.locator('.agent-input-form button').click();
+    await expect(page.getByRole('textbox', { name: 'Message the copilot' })).toBeEnabled();
+  }
+  expect(requests[1].history).toEqual([{ role: 'user', content: 'Explain diversification' }, { role: 'assistant', content: 'A public explanation' }]);
+  expect(requests[1].includePortfolioContext).toBe(false);
+});
