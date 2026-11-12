@@ -22,9 +22,9 @@ export const agentTools = {
   getUserPortfolios: {
     name: 'getUserPortfolios',
     description: "Fetches user's active portfolios saved in MongoDB.",
-    execute: async ({ userId }) => {
+    execute: async ({ userId, signal }) => {
       if (!userId) return { error: 'Sign in to view your saved portfolios.' };
-      const portfolios = await Portfolio.find({ userId }).select('name tickers metrics allocations -_id').limit(10).lean();
+      const portfolios = await Portfolio.find({ userId }).select('name tickers metrics allocations -_id').limit(10).maxTimeMS(5000).setOptions({ signal }).lean();
       return { portfolios };
     },
   },
@@ -173,7 +173,7 @@ export async function runAgentConversation({ message, userId, userPreferences, a
           if (!latestOptimization) throw new Error('No verified optimization');
           result = await agentTools.analyzeRisk.execute({ allocations: latestOptimization.allocation, metrics: latestOptimization.metrics });
         }
-        if (name === 'getUserPortfolios') result = await agentTools.getUserPortfolios.execute({ userId });
+        if (name === 'getUserPortfolios') result = await agentTools.getUserPortfolios.execute({ userId, signal });
         if (JSON.stringify(result).length > 16000) result = { error: 'Tool result is too large. Request fewer assets.' };
       } catch {
         result = { error: 'Tool request unavailable or invalid. Check symbols, constraints, permissions and required prior calculations. No account data was changed.' };
