@@ -15,8 +15,8 @@ const getHeaders = (extra = {}) => {
 };
 
 // Health Check
-export const checkHealth = () =>
-  fetch(`${API}/api/health`)
+export const checkHealth = (signal) =>
+  fetch(`${API}/api/health`, { signal })
     .then((r) => r.json())
     .then((d) => d.status === 'ok')
     .catch(() => false);

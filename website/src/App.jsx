@@ -20,6 +20,7 @@ import { SP500_STOCKS } from './data/stocks';
 
 export default function App() {
   const [backendReady, setBackendReady] = useState(false);
+  const markBackendReady = useCallback(() => setBackendReady(true), []);
   const [selected, setSelected] = useState(new Set());
   const [isCalculating, setIsCalculating] = useState(false);
   const [results, setResults] = useState(null);
@@ -300,7 +301,7 @@ export default function App() {
   const tickers = Array.from(selected);
 
   if (!backendReady) {
-    return <LoadingScreen onReady={() => setBackendReady(true)} />;
+    return <LoadingScreen onReady={markBackendReady} />;
   }
 
   return (
