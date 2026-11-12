@@ -1,6 +1,6 @@
 # RiskFrame UI and Account Corrections Implementation Plan
 
-> **For agentic workers:** Execute task by task with superpowers:executing-plans. This document is a proposed plan, not implementation authorization. Use Microsoft Edge for all Playwright checks.
+> **For agentic workers:** Execute task by task with superpowers:executing-plans. The user authorized inline implementation, testing and separate commits for each fix. Use Microsoft Edge for all Playwright checks.
 
 **Goal:** Make ownership, calculations, persistence, and UI feedback truthful; remove implicit demo accounts; correct the audited interaction and accessibility failures.
 
@@ -8,7 +8,7 @@
 
 **Spec:** User request on 2026-11-12; `docs/audits/2026-11-11-ui-audit.md`; findings and working behavior from `2026-11-11-optimization-button.md`.
 
-**Status:** Planning only. No product changes, Docker startup, data migration, or database operations are included in this planning pass. Product decisions below are recommendations for review.
+**Status (2026-11-13):** Approved application corrections implemented and tested on `fix/ui-account-corrections`. The chronological ledger and final status below supersede the original planning checkboxes and paused-work notes. Groq/provider integration, Render deployment preparation, and external credential retirement remain separate work. No branch push or production deployment was performed.
 
 ## Exact diagnosis of the signed-out portfolio
 
@@ -227,3 +227,16 @@ Verification performed: inspected both Compose files, README startup instruction
 - 2026-11-13 Redis log credentials: mocked credential-bearing URL reproduced leakage in success/error logs. Removed URLs and raw error text from cache connection logs. Backend 21/21 passed; optional in-memory fallback behavior retained.
 - 2026-11-13 environment/image boundary: env variants excluded in all contexts; temporary nested env fixtures absent from backend/Python and frontend builder images. Compose HF forwarding and variable ownership checked with fixtures; running Redis/Mongo have no host bindings. Development Mongo binds only localhost. Added secret-free templates and service ownership/setup docs. Backend 21/21 passed; images rebuilt. Frontend Docker custom API build arguments and Render service topology remain explicitly deferred deployment work.
 - 2026-11-13 final precedence check: saved-strategy rebalance regression reproduced zero being changed to 4%. Switched the remaining preference defaults to nullish checks; full backend suite 22/22 passed, including zero metric storage. This completes the previously approved end-to-end preference precedence requirement.
+
+
+## Final status - 2026-11-13
+
+- Original issues 1-15: resolved; issue 15 was committed as 3a31810 after live Atlas recovery verification. Later readiness/private-JWT corrections were committed separately.
+- Review follow-up: undocumented startup (ac13268), obsolete fallback configuration (8520b87), future quotes (5a04347), and malformed ranges (e7d3663) resolved. The old signing secret is absent from current source; external deployments still require verification and rotation if they used it.
+- Remaining command copilot defects resolved in f1f601f, 910da1c, a5c26ed, 233b7b9, 9f17a3f and 8a43efa. Rebalance zero-rate precedence completed in a0e4ca0. History storage is owned/bounded; interpreting conversation history belongs to the deferred provider integration. No new keyword reasoning system was built.
+- Environment boundaries/documentation completed in b541598 and bbbd1e4. Credentials were not changed or committed. Existing Docker volumes and real accounts were preserved.
+- Final gates: Edge 29/29, backend 22/22, Python 6/6; Docker builds and image env-exclusion probes passed. Live Atlas account/ledger/concurrency/session checks passed and cleaned up. Independent final reviewer found no important defects. Final backend image includes the rebalance correction.
+- Ruling: keep deterministic copilot commands independent until provider integration; the UI/help disclose that limitation. Cost: natural-language follow-ups do not reuse earlier context.
+- Deferred by scope: Groq model/credentials/tool loop; Render multi-service topology, CORS and frontend Docker API build arguments; actual external signing-key retirement. These are not represented as completed or production-tested.
+- Verification limits: browser regressions use controlled service replies; Atlas persistence and public engine checks were also tested separately live. No real broker orders, model quality review, exhaustive screen-reader/zoom audit, or Render rollout was performed.
+- Graphify code refresh and coverage check follow this source/documentation commit. Semantic document labels remain cached; no external LLM was invoked for relabeling.
