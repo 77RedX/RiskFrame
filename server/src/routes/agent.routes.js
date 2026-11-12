@@ -7,8 +7,8 @@ import { runAgentConversation } from '../services/agent.service.js';
 const router = express.Router();
 
 const AgentChatSchema = z.object({
-  message: z.string().min(1, 'Message cannot be empty'),
-  sessionId: z.string().nullish(),
+  message: z.string().trim().min(1, 'Message cannot be empty').max(4000),
+  sessionId: z.string().regex(/^[a-f\d]{24}$/i, 'Invalid session ID').nullish(),
 });
 
 // POST /api/agent/chat
@@ -22,6 +22,13 @@ router.post('/chat', optionalAuthenticate, async (req, res) => {
     const { message, sessionId } = parsed.data;
     const userId = req.user?._id || null;
 
+    let session = null;
+    if (sessionId) {
+      if (!userId) return res.status(401).json({ error: 'Sign in to resume a conversation.' });
+      session = await AgentSession.findOne({ _id: sessionId, userId });
+      if (!session) return res.status(404).json({ error: 'Conversation not found.' });
+    }
+
     // Run the Quantitative Agent reasoning & tool calls
     const agentOutput = await runAgentConversation({
       message,
@@ -30,11 +37,7 @@ router.post('/chat', optionalAuthenticate, async (req, res) => {
     });
 
     // If user is authenticated, persist multi-turn memory to MongoDB
-    let session = null;
     if (userId) {
-      if (sessionId) {
-        session = await AgentSession.findOne({ _id: sessionId, userId });
-      }
       if (!session) {
         session = new AgentSession({
           userId,
@@ -49,6 +52,7 @@ router.post('/chat', optionalAuthenticate, async (req, res) => {
         content: agentOutput.reply,
         toolCalls: agentOutput.toolCalls,
       });
+      session.messages = session.messages.slice(-40);
       await session.save();
     }
 
