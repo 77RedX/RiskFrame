@@ -312,9 +312,9 @@
     "semantic_hash": ""
   },
   "server/src/routes/portfolio.routes.js": {
-    "mtime": 1791612610.7920263,
-    "seen": 1794402156.5096285,
-    "ast_hash": "11b151c69f13ddac09c6efd397b20e70",
+    "mtime": 1794512782.84311,
+    "seen": 1794512910.617461,
+    "ast_hash": "0df680d5c7758197b5a3b08fb74a035f",
     "semantic_hash": ""
   },
   "server/src/services/agent.service.js": {
@@ -540,9 +540,9 @@
     "semantic_hash": ""
   },
   "docs/audits/2026-11-11-ui-audit.md": {
-    "mtime": 1794413971.7078452,
-    "seen": 1794512725.891619,
-    "ast_hash": "5bec090d8a8137e84715e816ad2aa6e9",
+    "mtime": 1794512884.1087072,
+    "seen": 1794512910.6175265,
+    "ast_hash": "6a407bc52f94c25d99e119decc844910",
     "semantic_hash": ""
   },
   "docs/superpowers/plans/2026-11-11-optimization-button.md": {
@@ -552,9 +552,15 @@
     "semantic_hash": ""
   },
   "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md": {
-    "mtime": 1794512615.1078038,
-    "seen": 1794512725.8916209,
-    "ast_hash": "c4b96418d4610219e712fd3181daaa8a",
+    "mtime": 1794512884.1097038,
+    "seen": 1794512910.6175287,
+    "ast_hash": "766dca4806ee711eff9394a224a0dbe2",
+    "semantic_hash": ""
+  },
+  "server/test/rebalance.test.js": {
+    "mtime": 1794512770.6116028,
+    "seen": 1794512910.6174765,
+    "ast_hash": "6cfd44e61a37b3578b88be428f4bedb6",
     "semantic_hash": ""
   }
 }

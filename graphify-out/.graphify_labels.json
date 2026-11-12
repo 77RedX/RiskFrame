@@ -16,6 +16,7 @@
   "14": "dependencies",
   "15": "RiskFrame UI audit — 2026-11-11",
   "16": "Dataset",
+  "17": "agent.service.js",
   "18": "Optimization Button Fix Plan",
   "19": "optimization.spec.js",
   "20": "accounts.spec.js",
@@ -26,5 +27,10 @@
   "25": "layout.spec.js",
   "26": "loading.spec.js",
   "27": "market-data.spec.js",
-  "28": "portfolio.spec.js"
+  "28": "portfolio.spec.js",
+  "29": "Groq Copilot Implementation Plan",
+  "30": "Trading and proposal UI follow-up - 2026-11-13",
+  "31": "Groq integration verification - 2026-11-13",
+  "32": "proposals.spec.js",
+  "33": "trade-quantity.spec.js"
 }

@@ -4,19 +4,6 @@
   "graph": {},
   "nodes": [
     {
-      "id": "dataset_portfoliodataset",
-      "label": "PortfolioDataset",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "portfoliodataset",
-      "source_file": "dataset.py",
-      "source_location": "L93"
-    },
-    {
       "id": "model_residualblock",
       "label": "ResidualBlock",
       "_callable": true,
@@ -48,12 +35,25 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 17,
-      "community_name": "OptimizationTests",
+      "community": 1,
+      "community_name": "app.py",
       "file_type": "code",
       "norm_label": "optimizationtests",
       "source_file": "tests/test_optimization.py",
       "source_location": "L12"
+    },
+    {
+      "id": "dataset_portfoliodataset",
+      "label": "PortfolioDataset",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "Dataset",
+      "file_type": "code",
+      "norm_label": "portfoliodataset",
+      "source_file": "dataset.py",
+      "source_location": "L93"
     },
     {
       "id": "server_src_config_auth_getjwtsecret",
@@ -104,6 +104,18 @@
       "source_location": "L14"
     },
     {
+      "id": "server_src_services_agent_service_runagentconversation",
+      "label": "runAgentConversation()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "runagentconversation()",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L79"
+    },
+    {
       "id": "server_src_services_ledger_service_applyportfoliooperation",
       "label": "applyPortfolioOperation()",
       "_callable": true,
@@ -138,6 +150,54 @@
       "norm_label": "invalid()",
       "source_file": "server/src/services/ledger.service.js",
       "source_location": "L8"
+    },
+    {
+      "id": "server_src_services_quant_service_fetchpricehistory",
+      "label": "fetchPriceHistory()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "fetchpricehistory()",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L96"
+    },
+    {
+      "id": "server_src_services_quant_service_fetchsupportedtickers",
+      "label": "fetchSupportedTickers()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "fetchsupportedtickers()",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L103"
+    },
+    {
+      "id": "server_src_services_quant_service_runquantoptimization",
+      "label": "runQuantOptimization()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "runquantoptimization()",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L83"
+    },
+    {
+      "id": "server_src_services_quant_service_solvemarkowitzsharpe",
+      "label": "solveMarkowitzSharpe()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "solvemarkowitzsharpe()",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L9"
     },
     {
       "id": "server_test_auth_test_json",
@@ -258,138 +318,6 @@
       "norm_label": "supported_tickers()",
       "source_file": "app.py",
       "source_location": "L129"
-    },
-    {
-      "id": "data_loader_get_sp500_tickers",
-      "label": "get_sp500_tickers()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "get_sp500_tickers()",
-      "source_file": "data_loader.py",
-      "source_location": "L6"
-    },
-    {
-      "id": "data_loader_load_portfolio_data",
-      "label": "load_portfolio_data()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "load_portfolio_data()",
-      "source_file": "data_loader.py",
-      "source_location": "L26"
-    },
-    {
-      "id": "dataset_download_and_prepare_data",
-      "label": "download_and_prepare_data()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "download_and_prepare_data()",
-      "source_file": "dataset.py",
-      "source_location": "L63"
-    },
-    {
-      "id": "dataset_get_tickers",
-      "label": "get_tickers()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "get_tickers()",
-      "source_file": "dataset.py",
-      "source_location": "L39"
-    },
-    {
-      "id": "dataset_portfoliodataset_getitem",
-      "label": ".__getitem__()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": ".__getitem__()",
-      "source_file": "dataset.py",
-      "source_location": "L166"
-    },
-    {
-      "id": "dataset_portfoliodataset_init",
-      "label": ".__init__()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": ".__init__()",
-      "source_file": "dataset.py",
-      "source_location": "L111"
-    },
-    {
-      "id": "dataset_portfoliodataset_len",
-      "label": ".__len__()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": ".__len__()",
-      "source_file": "dataset.py",
-      "source_location": "L163"
-    },
-    {
-      "id": "feature_eng_compute_macd",
-      "label": "compute_macd()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "compute_macd()",
-      "source_file": "feature_eng.py",
-      "source_location": "L42"
-    },
-    {
-      "id": "feature_eng_compute_rsi",
-      "label": "compute_rsi()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "compute_rsi()",
-      "source_file": "feature_eng.py",
-      "source_location": "L22"
-    },
-    {
-      "id": "feature_eng_engineer_features",
-      "label": "engineer_features()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "engineer_features()",
-      "source_file": "feature_eng.py",
-      "source_location": "L60"
-    },
-    {
-      "id": "feature_eng_save_engineered_features",
-      "label": "save_engineered_features()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "save_engineered_features()",
-      "source_file": "feature_eng.py",
-      "source_location": "L189"
     },
     {
       "id": "main_main",
@@ -536,16 +464,100 @@
       "source_location": "L83"
     },
     {
-      "id": "train_train",
-      "label": "train()",
+      "id": "tests_test_optimization_optimizationtests_request",
+      "label": ".request()",
       "_callable": true,
       "_origin": "ast",
       "community": 1,
       "community_name": "app.py",
       "file_type": "code",
-      "norm_label": "train()",
-      "source_file": "train.py",
-      "source_location": "L15"
+      "norm_label": ".request()",
+      "source_file": "tests/test_optimization.py",
+      "source_location": "L27"
+    },
+    {
+      "id": "tests_test_optimization_optimizationtests_setupclass",
+      "label": ".setUpClass()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": ".setupclass()",
+      "source_file": "tests/test_optimization.py",
+      "source_location": "L14"
+    },
+    {
+      "id": "tests_test_optimization_optimizationtests_test_applies_requested_exposure_limit",
+      "label": ".test_applies_requested_exposure_limit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": ".test_applies_requested_exposure_limit()",
+      "source_file": "tests/test_optimization.py",
+      "source_location": "L30"
+    },
+    {
+      "id": "tests_test_optimization_optimizationtests_test_applies_zero_risk_free_rate",
+      "label": ".test_applies_zero_risk_free_rate()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": ".test_applies_zero_risk_free_rate()",
+      "source_file": "tests/test_optimization.py",
+      "source_location": "L41"
+    },
+    {
+      "id": "tests_test_optimization_optimizationtests_test_invalid_inputs_are_rejected",
+      "label": ".test_invalid_inputs_are_rejected()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": ".test_invalid_inputs_are_rejected()",
+      "source_file": "tests/test_optimization.py",
+      "source_location": "L47"
+    },
+    {
+      "id": "tests_test_optimization_optimizationtests_test_solver_failure_is_not_returned_as_success",
+      "label": ".test_solver_failure_is_not_returned_as_success()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": ".test_solver_failure_is_not_returned_as_success()",
+      "source_file": "tests/test_optimization.py",
+      "source_location": "L57"
+    },
+    {
+      "id": "tests_test_optimization_optimizationtests_test_solver_rejects_infeasible_constraints",
+      "label": ".test_solver_rejects_infeasible_constraints()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": ".test_solver_rejects_infeasible_constraints()",
+      "source_file": "tests/test_optimization.py",
+      "source_location": "L53"
+    },
+    {
+      "id": "tests_test_optimization_optimizationtests_test_supported_tickers_match_initialized_engine_universe",
+      "label": ".test_supported_tickers_match_initialized_engine_universe()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": ".test_supported_tickers_match_initialized_engine_universe()",
+      "source_file": "tests/test_optimization.py",
+      "source_location": "L36"
     },
     {
       "id": "website_src_hooks_useintersectionobserver_useintersectionobserver",
@@ -572,160 +584,148 @@
       "source_location": "L44"
     },
     {
-      "id": "server_src_services_agent_service_runagentconversation",
-      "label": "runAgentConversation()",
+      "id": "data_loader_get_sp500_tickers",
+      "label": "get_sp500_tickers()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
-      "community_name": "agent.service.js",
+      "community_name": "Dataset",
       "file_type": "code",
-      "norm_label": "runagentconversation()",
-      "source_file": "server/src/services/agent.service.js",
-      "source_location": "L79"
+      "norm_label": "get_sp500_tickers()",
+      "source_file": "data_loader.py",
+      "source_location": "L6"
     },
     {
-      "id": "server_src_services_quant_service_fetchpricehistory",
-      "label": "fetchPriceHistory()",
+      "id": "data_loader_load_portfolio_data",
+      "label": "load_portfolio_data()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
-      "community_name": "agent.service.js",
+      "community_name": "Dataset",
       "file_type": "code",
-      "norm_label": "fetchpricehistory()",
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L96"
+      "norm_label": "load_portfolio_data()",
+      "source_file": "data_loader.py",
+      "source_location": "L26"
     },
     {
-      "id": "server_src_services_quant_service_fetchsupportedtickers",
-      "label": "fetchSupportedTickers()",
+      "id": "dataset_download_and_prepare_data",
+      "label": "download_and_prepare_data()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
-      "community_name": "agent.service.js",
+      "community_name": "Dataset",
       "file_type": "code",
-      "norm_label": "fetchsupportedtickers()",
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L103"
+      "norm_label": "download_and_prepare_data()",
+      "source_file": "dataset.py",
+      "source_location": "L63"
     },
     {
-      "id": "server_src_services_quant_service_runquantoptimization",
-      "label": "runQuantOptimization()",
+      "id": "dataset_get_tickers",
+      "label": "get_tickers()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
-      "community_name": "agent.service.js",
+      "community_name": "Dataset",
       "file_type": "code",
-      "norm_label": "runquantoptimization()",
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L83"
+      "norm_label": "get_tickers()",
+      "source_file": "dataset.py",
+      "source_location": "L39"
     },
     {
-      "id": "server_src_services_quant_service_solvemarkowitzsharpe",
-      "label": "solveMarkowitzSharpe()",
+      "id": "dataset_portfoliodataset_getitem",
+      "label": ".__getitem__()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
-      "community_name": "agent.service.js",
+      "community_name": "Dataset",
       "file_type": "code",
-      "norm_label": "solvemarkowitzsharpe()",
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L9"
+      "norm_label": ".__getitem__()",
+      "source_file": "dataset.py",
+      "source_location": "L166"
     },
     {
-      "id": "tests_test_optimization_optimizationtests_request",
-      "label": ".request()",
+      "id": "dataset_portfoliodataset_init",
+      "label": ".__init__()",
       "_callable": true,
       "_origin": "ast",
-      "community": 17,
-      "community_name": "OptimizationTests",
+      "community": 16,
+      "community_name": "Dataset",
       "file_type": "code",
-      "norm_label": ".request()",
-      "source_file": "tests/test_optimization.py",
-      "source_location": "L27"
+      "norm_label": ".__init__()",
+      "source_file": "dataset.py",
+      "source_location": "L111"
     },
     {
-      "id": "tests_test_optimization_optimizationtests_setupclass",
-      "label": ".setUpClass()",
+      "id": "dataset_portfoliodataset_len",
+      "label": ".__len__()",
       "_callable": true,
       "_origin": "ast",
-      "community": 17,
-      "community_name": "OptimizationTests",
+      "community": 16,
+      "community_name": "Dataset",
       "file_type": "code",
-      "norm_label": ".setupclass()",
-      "source_file": "tests/test_optimization.py",
-      "source_location": "L14"
+      "norm_label": ".__len__()",
+      "source_file": "dataset.py",
+      "source_location": "L163"
     },
     {
-      "id": "tests_test_optimization_optimizationtests_test_applies_requested_exposure_limit",
-      "label": ".test_applies_requested_exposure_limit()",
+      "id": "feature_eng_compute_macd",
+      "label": "compute_macd()",
       "_callable": true,
       "_origin": "ast",
-      "community": 17,
-      "community_name": "OptimizationTests",
+      "community": 16,
+      "community_name": "Dataset",
       "file_type": "code",
-      "norm_label": ".test_applies_requested_exposure_limit()",
-      "source_file": "tests/test_optimization.py",
-      "source_location": "L30"
+      "norm_label": "compute_macd()",
+      "source_file": "feature_eng.py",
+      "source_location": "L42"
     },
     {
-      "id": "tests_test_optimization_optimizationtests_test_applies_zero_risk_free_rate",
-      "label": ".test_applies_zero_risk_free_rate()",
+      "id": "feature_eng_compute_rsi",
+      "label": "compute_rsi()",
       "_callable": true,
       "_origin": "ast",
-      "community": 17,
-      "community_name": "OptimizationTests",
+      "community": 16,
+      "community_name": "Dataset",
       "file_type": "code",
-      "norm_label": ".test_applies_zero_risk_free_rate()",
-      "source_file": "tests/test_optimization.py",
-      "source_location": "L41"
+      "norm_label": "compute_rsi()",
+      "source_file": "feature_eng.py",
+      "source_location": "L22"
     },
     {
-      "id": "tests_test_optimization_optimizationtests_test_invalid_inputs_are_rejected",
-      "label": ".test_invalid_inputs_are_rejected()",
+      "id": "feature_eng_engineer_features",
+      "label": "engineer_features()",
       "_callable": true,
       "_origin": "ast",
-      "community": 17,
-      "community_name": "OptimizationTests",
+      "community": 16,
+      "community_name": "Dataset",
       "file_type": "code",
-      "norm_label": ".test_invalid_inputs_are_rejected()",
-      "source_file": "tests/test_optimization.py",
-      "source_location": "L47"
+      "norm_label": "engineer_features()",
+      "source_file": "feature_eng.py",
+      "source_location": "L60"
     },
     {
-      "id": "tests_test_optimization_optimizationtests_test_solver_failure_is_not_returned_as_success",
-      "label": ".test_solver_failure_is_not_returned_as_success()",
+      "id": "feature_eng_save_engineered_features",
+      "label": "save_engineered_features()",
       "_callable": true,
       "_origin": "ast",
-      "community": 17,
-      "community_name": "OptimizationTests",
+      "community": 16,
+      "community_name": "Dataset",
       "file_type": "code",
-      "norm_label": ".test_solver_failure_is_not_returned_as_success()",
-      "source_file": "tests/test_optimization.py",
-      "source_location": "L57"
+      "norm_label": "save_engineered_features()",
+      "source_file": "feature_eng.py",
+      "source_location": "L189"
     },
     {
-      "id": "tests_test_optimization_optimizationtests_test_solver_rejects_infeasible_constraints",
-      "label": ".test_solver_rejects_infeasible_constraints()",
+      "id": "train_train",
+      "label": "train()",
       "_callable": true,
       "_origin": "ast",
-      "community": 17,
-      "community_name": "OptimizationTests",
+      "community": 16,
+      "community_name": "Dataset",
       "file_type": "code",
-      "norm_label": ".test_solver_rejects_infeasible_constraints()",
-      "source_file": "tests/test_optimization.py",
-      "source_location": "L53"
-    },
-    {
-      "id": "tests_test_optimization_optimizationtests_test_supported_tickers_match_initialized_engine_universe",
-      "label": ".test_supported_tickers_match_initialized_engine_universe()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "OptimizationTests",
-      "file_type": "code",
-      "norm_label": ".test_supported_tickers_match_initialized_engine_universe()",
-      "source_file": "tests/test_optimization.py",
-      "source_location": "L36"
+      "norm_label": "train()",
+      "source_file": "train.py",
+      "source_location": "L15"
     },
     {
       "id": "website_tests_optimization_spec_intercept",
@@ -1052,18 +1052,6 @@
       "source_location": "L3"
     },
     {
-      "id": "website_src_components_pricehistory_pricechart_pricechart",
-      "label": "PriceChart()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "App.jsx",
-      "file_type": "code",
-      "norm_label": "pricechart()",
-      "source_file": "website/src/components/PriceHistory/PriceChart.jsx",
-      "source_location": "L26"
-    },
-    {
       "id": "website_src_components_pricehistory_pricehistory_pricehistory",
       "label": "PriceHistory()",
       "_callable": true,
@@ -1122,6 +1110,18 @@
       "norm_label": ".connect()",
       "source_file": "server/test/redis.test.js",
       "source_location": "L10"
+    },
+    {
+      "id": "website_src_components_pricehistory_pricechart_pricechart",
+      "label": "PriceChart()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "stocks.js",
+      "file_type": "code",
+      "norm_label": "pricechart()",
+      "source_file": "website/src/components/PriceHistory/PriceChart.jsx",
+      "source_location": "L26"
     },
     {
       "id": "website_src_components_stockselector_filtertabs_filtertabs",
@@ -1586,6 +1586,50 @@
       "source_location": "L3"
     },
     {
+      "id": "server_src_models_portfolio",
+      "label": "Portfolio.js",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "portfolio.js",
+      "source_file": "server/src/models/Portfolio.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_src_models_portfolio_portfolio",
+      "label": "Portfolio",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "portfolio",
+      "source_file": "server/src/models/Portfolio.js",
+      "source_location": "L95"
+    },
+    {
+      "id": "server_src_models_portfolio_portfolioschema",
+      "label": "PortfolioSchema",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "portfolioschema",
+      "source_file": "server/src/models/Portfolio.js",
+      "source_location": "L25"
+    },
+    {
+      "id": "server_src_models_portfolio_rebalanceentryschema",
+      "label": "RebalanceEntrySchema",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "rebalanceentryschema",
+      "source_file": "server/src/models/Portfolio.js",
+      "source_location": "L3"
+    },
+    {
       "id": "server_src_models_user",
       "label": "User.js",
       "_origin": "ast",
@@ -1696,6 +1740,61 @@
       "source_location": "L11"
     },
     {
+      "id": "server_src_routes_portfolio_routes",
+      "label": "portfolio.routes.js",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "portfolio.routes.js",
+      "source_file": "server/src/routes/portfolio.routes.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_src_routes_portfolio_routes_router",
+      "label": "router",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "router",
+      "source_file": "server/src/routes/portfolio.routes.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "server_src_routes_portfolio_routes_saveportfolioschema",
+      "label": "SavePortfolioSchema",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "saveportfolioschema",
+      "source_file": "server/src/routes/portfolio.routes.js",
+      "source_location": "L9"
+    },
+    {
+      "id": "server_src_services_agent_service",
+      "label": "agent.service.js",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "agent.service.js",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_src_services_agent_service_agenttools",
+      "label": "agentTools",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "agenttools",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L7"
+    },
+    {
       "id": "server_src_services_ledger_service",
       "label": "ledger.service.js",
       "_origin": "ast",
@@ -1718,6 +1817,17 @@
       "source_location": "L3"
     },
     {
+      "id": "server_src_services_quant_service",
+      "label": "quant.service.js",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "quant.service.js",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L1"
+    },
+    {
       "id": "server_test_accounts_test",
       "label": "accounts.test.js",
       "_origin": "ast",
@@ -1737,6 +1847,28 @@
       "file_type": "code",
       "norm_label": "agent-sessions.test.js",
       "source_file": "server/test/agent-sessions.test.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_test_agent_test",
+      "label": "agent.test.js",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "agent.test.js",
+      "source_file": "server/test/agent.test.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_test_api_test",
+      "label": "api.test.js",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "api.test.js",
+      "source_file": "server/test/api.test.js",
       "source_location": "L1"
     },
     {
@@ -1762,6 +1894,17 @@
       "source_location": "L1"
     },
     {
+      "id": "server_test_rebalance_test",
+      "label": "rebalance.test.js",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "rebalance.test.js",
+      "source_file": "server/test/rebalance.test.js",
+      "source_location": "L1"
+    },
+    {
       "id": "app",
       "label": "app.py",
       "_origin": "ast",
@@ -1770,39 +1913,6 @@
       "file_type": "code",
       "norm_label": "app.py",
       "source_file": "app.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "data_loader",
-      "label": "data_loader.py",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "data_loader.py",
-      "source_file": "data_loader.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "dataset",
-      "label": "Dataset",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "dataset",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "feature_eng",
-      "label": "feature_eng.py",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "feature_eng.py",
-      "source_file": "feature_eng.py",
       "source_location": "L1"
     },
     {
@@ -1850,17 +1960,6 @@
       "source_location": ""
     },
     {
-      "id": "scripts_update_data",
-      "label": "update_data.py",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "update_data.py",
-      "source_file": "scripts/update_data.py",
-      "source_location": "L1"
-    },
-    {
       "id": "tests_test_optimization",
       "label": "test_optimization.py",
       "_origin": "ast",
@@ -1870,127 +1969,6 @@
       "norm_label": "test_optimization.py",
       "source_file": "tests/test_optimization.py",
       "source_location": "L1"
-    },
-    {
-      "id": "train",
-      "label": "train.py",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "train.py",
-      "source_file": "train.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "dotenv",
-      "label": "dotenv",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "concept",
-      "norm_label": "dotenv",
-      "source_file": "server/package.json",
-      "source_location": "L16"
-    },
-    {
-      "id": "data_loader_rationale_27",
-      "label": "Loads historical adjusted close data. If data exists in the database, it loads\u2026",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "rationale",
-      "norm_label": "loads historical adjusted close data. if data exists in the database, it loads...",
-      "source_file": "data_loader.py",
-      "source_location": "L27"
-    },
-    {
-      "id": "data_loader_rationale_7",
-      "label": "Scrapes the current S&P 500 ticker list from Wikipedia.",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "rationale",
-      "norm_label": "scrapes the current s&p 500 ticker list from wikipedia.",
-      "source_file": "data_loader.py",
-      "source_location": "L7"
-    },
-    {
-      "id": "dataset_rationale_40",
-      "label": "Returns the list of tickers configured in CONFIG. If CONFIG[\"TICKERS\"] is None,\u2026",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "rationale",
-      "norm_label": "returns the list of tickers configured in config. if config[\"tickers\"] is none,...",
-      "source_file": "dataset.py",
-      "source_location": "L40"
-    },
-    {
-      "id": "dataset_rationale_64",
-      "label": "Downloads historical price data and engineers features based on CONFIG.\u2026",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "rationale",
-      "norm_label": "downloads historical price data and engineers features based on config....",
-      "source_file": "dataset.py",
-      "source_location": "L64"
-    },
-    {
-      "id": "dataset_rationale_94",
-      "label": "Dataset for portfolio return prediction. Input ----- Previous `window_size`\u2026",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "rationale",
-      "norm_label": "dataset for portfolio return prediction. input ----- previous `window_size`...",
-      "source_file": "dataset.py",
-      "source_location": "L94"
-    },
-    {
-      "id": "feature_eng_rationale_193",
-      "label": "Generate engineered features and save them to the database.",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "rationale",
-      "norm_label": "generate engineered features and save them to the database.",
-      "source_file": "feature_eng.py",
-      "source_location": "L193"
-    },
-    {
-      "id": "feature_eng_rationale_23",
-      "label": "Compute Relative Strength Index (RSI).",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "rationale",
-      "norm_label": "compute relative strength index (rsi).",
-      "source_file": "feature_eng.py",
-      "source_location": "L23"
-    },
-    {
-      "id": "feature_eng_rationale_43",
-      "label": "Compute MACD and Signal Line.",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "rationale",
-      "norm_label": "compute macd and signal line.",
-      "source_file": "feature_eng.py",
-      "source_location": "L43"
-    },
-    {
-      "id": "feature_eng_rationale_61",
-      "label": "Generate technical indicators for every stock. Returns ------- pd.DataFrame\u2026",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "rationale",
-      "norm_label": "generate technical indicators for every stock. returns ------- pd.dataframe...",
-      "source_file": "feature_eng.py",
-      "source_location": "L61"
     },
     {
       "id": "model_rationale_164",
@@ -2513,6 +2491,18 @@
       "source_location": "L13"
     },
     {
+      "id": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_final_status_2026_11_13",
+      "label": "Final status - 2026-11-13",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "RiskFrame UI and Account Corrections Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "final status - 2026-11-13",
+      "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
+      "source_location": "L232"
+    },
+    {
       "id": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_implementation_ledger",
       "label": "Implementation ledger",
       "_origin": "ast",
@@ -2816,7 +2806,7 @@
       "node_kind": "heading",
       "norm_label": "completed in this pass",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L141"
+      "source_location": "L143"
     },
     {
       "id": "docs_audits_2026_11_11_ui_audit_limits",
@@ -2828,7 +2818,7 @@
       "node_kind": "heading",
       "norm_label": "limits",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L153"
+      "source_location": "L155"
     },
     {
       "id": "docs_audits_2026_11_11_ui_audit_p1_copilot_messages_execute_raw_html",
@@ -2840,7 +2830,7 @@
       "node_kind": "heading",
       "norm_label": "p1 \u2014 copilot messages execute raw html",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L11"
+      "source_location": "L13"
     },
     {
       "id": "docs_audits_2026_11_11_ui_audit_p1_empty_portfolios_are_replaced_by_demo_holdings",
@@ -2852,7 +2842,7 @@
       "node_kind": "heading",
       "norm_label": "p1 \u2014 empty portfolios are replaced by demo holdings",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L51"
+      "source_location": "L53"
     },
     {
       "id": "docs_audits_2026_11_11_ui_audit_p1_every_deposit_preset_fails_browser_validation",
@@ -2864,7 +2854,7 @@
       "node_kind": "heading",
       "norm_label": "p1 \u2014 every deposit preset fails browser validation",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L41"
+      "source_location": "L43"
     },
     {
       "id": "docs_audits_2026_11_11_ui_audit_p1_failed_portfolio_saves_are_silently_treated_as_local_success",
@@ -2876,7 +2866,7 @@
       "node_kind": "heading",
       "norm_label": "p1 \u2014 failed portfolio saves are silently treated as local success",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L31"
+      "source_location": "L33"
     },
     {
       "id": "docs_audits_2026_11_11_ui_audit_p1_python_optimization_ignores_the_user_s_exposure_limit_and_risk_free_rate",
@@ -2888,7 +2878,7 @@
       "node_kind": "heading",
       "norm_label": "p1 \u2014 python optimization ignores the user's exposure limit and risk-free rate",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L21"
+      "source_location": "L23"
     },
     {
       "id": "docs_audits_2026_11_11_ui_audit_p1_reference_prices_and_seeded_recommendations_are_presented_as_live_model_output",
@@ -2900,7 +2890,7 @@
       "node_kind": "heading",
       "norm_label": "p1 \u2014 reference prices and seeded recommendations are presented as live model output",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L61"
+      "source_location": "L63"
     },
     {
       "id": "docs_audits_2026_11_11_ui_audit_p1_zero_model_allocations_are_treated_as_missing",
@@ -2912,7 +2902,7 @@
       "node_kind": "heading",
       "norm_label": "p1 \u2014 zero model allocations are treated as missing",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L71"
+      "source_location": "L73"
     },
     {
       "id": "docs_audits_2026_11_11_ui_audit_p2_dialog_and_form_keyboard_screen_reader_support_is_incomplete",
@@ -2924,7 +2914,7 @@
       "node_kind": "heading",
       "norm_label": "p2 \u2014 dialog and form keyboard/screen-reader support is incomplete",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L125"
+      "source_location": "L127"
     },
     {
       "id": "docs_audits_2026_11_11_ui_audit_p2_editing_the_selection_leaves_old_results_displayed",
@@ -2936,7 +2926,7 @@
       "node_kind": "heading",
       "norm_label": "p2 \u2014 editing the selection leaves old results displayed",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L91"
+      "source_location": "L93"
     },
     {
       "id": "docs_audits_2026_11_11_ui_audit_p2_mobile_page_overflows_horizontally",
@@ -2948,7 +2938,7 @@
       "node_kind": "heading",
       "norm_label": "p2 \u2014 mobile page overflows horizontally",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L117"
+      "source_location": "L119"
     },
     {
       "id": "docs_audits_2026_11_11_ui_audit_p2_mobile_trade_dialog_is_clipped_and_overlapped",
@@ -2960,7 +2950,7 @@
       "node_kind": "heading",
       "norm_label": "p2 \u2014 mobile trade dialog is clipped and overlapped",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L109"
+      "source_location": "L111"
     },
     {
       "id": "docs_audits_2026_11_11_ui_audit_p2_optimization_success_toast_appears_after_failed_requests",
@@ -2972,7 +2962,7 @@
       "node_kind": "heading",
       "norm_label": "p2 \u2014 optimization success toast appears after failed requests",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L81"
+      "source_location": "L83"
     },
     {
       "id": "docs_audits_2026_11_11_ui_audit_p2_risk_preferences_display_defaults_after_login",
@@ -2984,7 +2974,7 @@
       "node_kind": "heading",
       "norm_label": "p2 \u2014 risk preferences display defaults after login",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L99"
+      "source_location": "L101"
     },
     {
       "id": "docs_audits_2026_11_11_ui_audit_p3_healthy_startup_is_artificially_delayed",
@@ -2996,7 +2986,7 @@
       "node_kind": "heading",
       "norm_label": "p3 \u2014 healthy startup is artificially delayed",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L133"
+      "source_location": "L135"
     },
     {
       "id": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
@@ -3008,7 +2998,7 @@
       "node_kind": "heading",
       "norm_label": "riskframe ui audit \u2014 2026-11-11",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L1"
+      "source_location": "L3"
     },
     {
       "id": "docs_audits_2026_11_11_ui_audit_scope_and_verification",
@@ -3020,7 +3010,19 @@
       "node_kind": "heading",
       "norm_label": "scope and verification",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L3"
+      "source_location": "L5"
+    },
+    {
+      "id": "docs_audits_2026_11_11_ui_audit_verified_resolution_status_2026_11_13",
+      "label": "Verified resolution status - 2026-11-13",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "RiskFrame UI audit \u2014 2026-11-11",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "verified resolution status - 2026-11-13",
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L160"
     },
     {
       "id": "docs_audits_2026_11_11_ui_audit_working_behaviors_checked",
@@ -3032,128 +3034,172 @@
       "node_kind": "heading",
       "norm_label": "working behaviors checked",
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L149"
+      "source_location": "L151"
     },
     {
-      "id": "server_src_models_portfolio",
-      "label": "Portfolio.js",
+      "id": "data_loader",
+      "label": "data_loader.py",
       "_origin": "ast",
       "community": 16,
-      "community_name": "agent.service.js",
+      "community_name": "Dataset",
       "file_type": "code",
-      "norm_label": "portfolio.js",
-      "source_file": "server/src/models/Portfolio.js",
+      "norm_label": "data_loader.py",
+      "source_file": "data_loader.py",
       "source_location": "L1"
     },
     {
-      "id": "server_src_models_portfolio_portfolio",
-      "label": "Portfolio",
+      "id": "dataset",
+      "label": "Dataset",
       "_origin": "ast",
       "community": 16,
-      "community_name": "agent.service.js",
+      "community_name": "Dataset",
       "file_type": "code",
-      "norm_label": "portfolio",
-      "source_file": "server/src/models/Portfolio.js",
-      "source_location": "L95"
+      "norm_label": "dataset",
+      "source_file": "",
+      "source_location": ""
     },
     {
-      "id": "server_src_models_portfolio_portfolioschema",
-      "label": "PortfolioSchema",
+      "id": "feature_eng",
+      "label": "feature_eng.py",
       "_origin": "ast",
       "community": 16,
-      "community_name": "agent.service.js",
+      "community_name": "Dataset",
       "file_type": "code",
-      "norm_label": "portfolioschema",
-      "source_file": "server/src/models/Portfolio.js",
-      "source_location": "L25"
-    },
-    {
-      "id": "server_src_models_portfolio_rebalanceentryschema",
-      "label": "RebalanceEntrySchema",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "agent.service.js",
-      "file_type": "code",
-      "norm_label": "rebalanceentryschema",
-      "source_file": "server/src/models/Portfolio.js",
-      "source_location": "L3"
-    },
-    {
-      "id": "server_src_routes_portfolio_routes",
-      "label": "portfolio.routes.js",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "agent.service.js",
-      "file_type": "code",
-      "norm_label": "portfolio.routes.js",
-      "source_file": "server/src/routes/portfolio.routes.js",
+      "norm_label": "feature_eng.py",
+      "source_file": "feature_eng.py",
       "source_location": "L1"
     },
     {
-      "id": "server_src_routes_portfolio_routes_saveportfolioschema",
-      "label": "SavePortfolioSchema",
+      "id": "scripts_update_data",
+      "label": "update_data.py",
       "_origin": "ast",
       "community": 16,
-      "community_name": "agent.service.js",
+      "community_name": "Dataset",
       "file_type": "code",
-      "norm_label": "saveportfolioschema",
-      "source_file": "server/src/routes/portfolio.routes.js",
-      "source_location": "L9"
-    },
-    {
-      "id": "server_src_services_agent_service",
-      "label": "agent.service.js",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "agent.service.js",
-      "file_type": "code",
-      "norm_label": "agent.service.js",
-      "source_file": "server/src/services/agent.service.js",
+      "norm_label": "update_data.py",
+      "source_file": "scripts/update_data.py",
       "source_location": "L1"
     },
     {
-      "id": "server_src_services_agent_service_agenttools",
-      "label": "agentTools",
+      "id": "train",
+      "label": "train.py",
       "_origin": "ast",
       "community": 16,
-      "community_name": "agent.service.js",
+      "community_name": "Dataset",
       "file_type": "code",
-      "norm_label": "agenttools",
-      "source_file": "server/src/services/agent.service.js",
+      "norm_label": "train.py",
+      "source_file": "train.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "dotenv",
+      "label": "dotenv",
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "Dataset",
+      "file_type": "concept",
+      "norm_label": "dotenv",
+      "source_file": "server/package.json",
+      "source_location": "L16"
+    },
+    {
+      "id": "data_loader_rationale_27",
+      "label": "Loads historical adjusted close data. If data exists in the database, it loads\u2026",
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "Dataset",
+      "file_type": "rationale",
+      "norm_label": "loads historical adjusted close data. if data exists in the database, it loads...",
+      "source_file": "data_loader.py",
+      "source_location": "L27"
+    },
+    {
+      "id": "data_loader_rationale_7",
+      "label": "Scrapes the current S&P 500 ticker list from Wikipedia.",
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "Dataset",
+      "file_type": "rationale",
+      "norm_label": "scrapes the current s&p 500 ticker list from wikipedia.",
+      "source_file": "data_loader.py",
       "source_location": "L7"
     },
     {
-      "id": "server_src_services_quant_service",
-      "label": "quant.service.js",
+      "id": "dataset_rationale_40",
+      "label": "Returns the list of tickers configured in CONFIG. If CONFIG[\"TICKERS\"] is None,\u2026",
       "_origin": "ast",
       "community": 16,
-      "community_name": "agent.service.js",
-      "file_type": "code",
-      "norm_label": "quant.service.js",
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L1"
+      "community_name": "Dataset",
+      "file_type": "rationale",
+      "norm_label": "returns the list of tickers configured in config. if config[\"tickers\"] is none,...",
+      "source_file": "dataset.py",
+      "source_location": "L40"
     },
     {
-      "id": "server_test_agent_test",
-      "label": "agent.test.js",
+      "id": "dataset_rationale_64",
+      "label": "Downloads historical price data and engineers features based on CONFIG.\u2026",
       "_origin": "ast",
       "community": 16,
-      "community_name": "agent.service.js",
-      "file_type": "code",
-      "norm_label": "agent.test.js",
-      "source_file": "server/test/agent.test.js",
-      "source_location": "L1"
+      "community_name": "Dataset",
+      "file_type": "rationale",
+      "norm_label": "downloads historical price data and engineers features based on config....",
+      "source_file": "dataset.py",
+      "source_location": "L64"
     },
     {
-      "id": "server_test_api_test",
-      "label": "api.test.js",
+      "id": "dataset_rationale_94",
+      "label": "Dataset for portfolio return prediction. Input ----- Previous `window_size`\u2026",
       "_origin": "ast",
       "community": 16,
-      "community_name": "agent.service.js",
-      "file_type": "code",
-      "norm_label": "api.test.js",
-      "source_file": "server/test/api.test.js",
-      "source_location": "L1"
+      "community_name": "Dataset",
+      "file_type": "rationale",
+      "norm_label": "dataset for portfolio return prediction. input ----- previous `window_size`...",
+      "source_file": "dataset.py",
+      "source_location": "L94"
+    },
+    {
+      "id": "feature_eng_rationale_193",
+      "label": "Generate engineered features and save them to the database.",
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "Dataset",
+      "file_type": "rationale",
+      "norm_label": "generate engineered features and save them to the database.",
+      "source_file": "feature_eng.py",
+      "source_location": "L193"
+    },
+    {
+      "id": "feature_eng_rationale_23",
+      "label": "Compute Relative Strength Index (RSI).",
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "Dataset",
+      "file_type": "rationale",
+      "norm_label": "compute relative strength index (rsi).",
+      "source_file": "feature_eng.py",
+      "source_location": "L23"
+    },
+    {
+      "id": "feature_eng_rationale_43",
+      "label": "Compute MACD and Signal Line.",
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "Dataset",
+      "file_type": "rationale",
+      "norm_label": "compute macd and signal line.",
+      "source_file": "feature_eng.py",
+      "source_location": "L43"
+    },
+    {
+      "id": "feature_eng_rationale_61",
+      "label": "Generate technical indicators for every stock. Returns ------- pd.DataFrame\u2026",
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "Dataset",
+      "file_type": "rationale",
+      "norm_label": "generate technical indicators for every stock. returns ------- pd.dataframe...",
+      "source_file": "feature_eng.py",
+      "source_location": "L61"
     },
     {
       "id": "docs_superpowers_plans_2026_11_11_optimization_button",
@@ -3323,28 +3369,6 @@
       "file_type": "code",
       "norm_label": "navbar.jsx",
       "source_file": "website/src/components/Navbar.jsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "website_src_components_pricehistory_pricechart",
-      "label": "PriceChart.jsx",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "App.jsx",
-      "file_type": "code",
-      "norm_label": "pricechart.jsx",
-      "source_file": "website/src/components/PriceHistory/PriceChart.jsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "website_src_components_pricehistory_pricehistory",
-      "label": "PriceHistory.jsx",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "App.jsx",
-      "file_type": "code",
-      "norm_label": "pricehistory.jsx",
-      "source_file": "website/src/components/PriceHistory/PriceHistory.jsx",
       "source_location": "L1"
     },
     {
@@ -4160,6 +4184,28 @@
       "source_location": "L28"
     },
     {
+      "id": "website_src_components_pricehistory_pricechart",
+      "label": "PriceChart.jsx",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "stocks.js",
+      "file_type": "code",
+      "norm_label": "pricechart.jsx",
+      "source_file": "website/src/components/PriceHistory/PriceChart.jsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "website_src_components_pricehistory_pricehistory",
+      "label": "PriceHistory.jsx",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "stocks.js",
+      "file_type": "code",
+      "norm_label": "pricehistory.jsx",
+      "source_file": "website/src/components/PriceHistory/PriceHistory.jsx",
+      "source_location": "L1"
+    },
+    {
       "id": "website_src_components_stockselector_filtertabs",
       "label": "FilterTabs.jsx",
       "_origin": "ast",
@@ -4235,6 +4281,17 @@
       "norm_label": "stocks.js",
       "source_file": "website/src/data/stocks.js",
       "source_location": "L1"
+    },
+    {
+      "id": "website_src_data_stocks_company_map",
+      "label": "COMPANY_MAP",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "stocks.js",
+      "file_type": "code",
+      "norm_label": "company_map",
+      "source_file": "website/src/data/stocks.js",
+      "source_location": "L209"
     },
     {
       "id": "website_src_data_stocks_max_stocks",
@@ -4369,17 +4426,6 @@
       "source_location": "L1"
     },
     {
-      "id": "website_src_data_stocks_company_map",
-      "label": "COMPANY_MAP",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "Results.jsx",
-      "file_type": "code",
-      "norm_label": "company_map",
-      "source_file": "website/src/data/stocks.js",
-      "source_location": "L209"
-    },
-    {
       "id": "server_src_config_db",
       "label": "db.js",
       "_origin": "ast",
@@ -4488,17 +4534,6 @@
       "norm_label": "router",
       "source_file": "server/src/routes/optimize.routes.js",
       "source_location": "L13"
-    },
-    {
-      "id": "server_src_routes_portfolio_routes_router",
-      "label": "router",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "index.js",
-      "file_type": "code",
-      "norm_label": "router",
-      "source_file": "server/src/routes/portfolio.routes.js",
-      "source_location": "L7"
     },
     {
       "id": "server_src_services_cache_service",
@@ -6921,6 +6956,42 @@
       "weight": 1.0
     },
     {
+      "source": "server_test_rebalance_test",
+      "target": "server_src_models_user_user",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/rebalance.test.js",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_rebalance_test",
+      "target": "server_src_models_portfolio_portfolio",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/rebalance.test.js",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_rebalance_test",
+      "target": "server_src_routes_portfolio_routes_router",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/rebalance.test.js",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
       "source": "server_test_redis_test",
       "target": "server_src_config_redis_initredis",
       "relation": "imports",
@@ -8373,6 +8444,42 @@
       "weight": 1.0
     },
     {
+      "source": "server_test_rebalance_test",
+      "target": "server_src_models_user",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/rebalance.test.js",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_rebalance_test",
+      "target": "server_src_models_portfolio",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/rebalance.test.js",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_rebalance_test",
+      "target": "server_src_routes_portfolio_routes",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/rebalance.test.js",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
       "source": "server_test_redis_test",
       "target": "server_src_config_redis",
       "relation": "imports_from",
@@ -9089,194 +9196,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L1",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
-      "target": "docs_audits_2026_11_11_ui_audit_p2_mobile_trade_dialog_is_clipped_and_overlapped",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L109",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
-      "target": "docs_audits_2026_11_11_ui_audit_p1_copilot_messages_execute_raw_html",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L11",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
-      "target": "docs_audits_2026_11_11_ui_audit_p2_mobile_page_overflows_horizontally",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L117",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
-      "target": "docs_audits_2026_11_11_ui_audit_p2_dialog_and_form_keyboard_screen_reader_support_is_incomplete",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L125",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
-      "target": "docs_audits_2026_11_11_ui_audit_p3_healthy_startup_is_artificially_delayed",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L133",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
-      "target": "docs_audits_2026_11_11_ui_audit_completed_in_this_pass",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L141",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
-      "target": "docs_audits_2026_11_11_ui_audit_working_behaviors_checked",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L149",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
-      "target": "docs_audits_2026_11_11_ui_audit_limits",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L153",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
-      "target": "docs_audits_2026_11_11_ui_audit_p1_python_optimization_ignores_the_user_s_exposure_limit_and_risk_free_rate",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L21",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
-      "target": "docs_audits_2026_11_11_ui_audit_scope_and_verification",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/audits/2026-11-11-ui-audit.md",
       "source_location": "L3",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
-      "target": "docs_audits_2026_11_11_ui_audit_p1_failed_portfolio_saves_are_silently_treated_as_local_success",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L31",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
-      "target": "docs_audits_2026_11_11_ui_audit_p1_every_deposit_preset_fails_browser_validation",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L41",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
-      "target": "docs_audits_2026_11_11_ui_audit_p1_empty_portfolios_are_replaced_by_demo_holdings",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L51",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
-      "target": "docs_audits_2026_11_11_ui_audit_p1_reference_prices_and_seeded_recommendations_are_presented_as_live_model_output",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L61",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
-      "target": "docs_audits_2026_11_11_ui_audit_p1_zero_model_allocations_are_treated_as_missing",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L71",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
-      "target": "docs_audits_2026_11_11_ui_audit_p2_optimization_success_toast_appears_after_failed_requests",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L81",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
-      "target": "docs_audits_2026_11_11_ui_audit_p2_editing_the_selection_leaves_old_results_displayed",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L91",
       "weight": 1.0
     },
     {
@@ -9287,7 +9207,205 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/audits/2026-11-11-ui-audit.md",
-      "source_location": "L99",
+      "source_location": "L101",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
+      "target": "docs_audits_2026_11_11_ui_audit_p2_mobile_trade_dialog_is_clipped_and_overlapped",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L111",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
+      "target": "docs_audits_2026_11_11_ui_audit_p2_mobile_page_overflows_horizontally",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L119",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
+      "target": "docs_audits_2026_11_11_ui_audit_p2_dialog_and_form_keyboard_screen_reader_support_is_incomplete",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L127",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
+      "target": "docs_audits_2026_11_11_ui_audit_p1_copilot_messages_execute_raw_html",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
+      "target": "docs_audits_2026_11_11_ui_audit_p3_healthy_startup_is_artificially_delayed",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L135",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
+      "target": "docs_audits_2026_11_11_ui_audit_completed_in_this_pass",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L143",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
+      "target": "docs_audits_2026_11_11_ui_audit_working_behaviors_checked",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L151",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
+      "target": "docs_audits_2026_11_11_ui_audit_limits",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
+      "target": "docs_audits_2026_11_11_ui_audit_verified_resolution_status_2026_11_13",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L160",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
+      "target": "docs_audits_2026_11_11_ui_audit_p1_python_optimization_ignores_the_user_s_exposure_limit_and_risk_free_rate",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
+      "target": "docs_audits_2026_11_11_ui_audit_p1_failed_portfolio_saves_are_silently_treated_as_local_success",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
+      "target": "docs_audits_2026_11_11_ui_audit_p1_every_deposit_preset_fails_browser_validation",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
+      "target": "docs_audits_2026_11_11_ui_audit_scope_and_verification",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
+      "target": "docs_audits_2026_11_11_ui_audit_p1_empty_portfolios_are_replaced_by_demo_holdings",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
+      "target": "docs_audits_2026_11_11_ui_audit_p1_reference_prices_and_seeded_recommendations_are_presented_as_live_model_output",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
+      "target": "docs_audits_2026_11_11_ui_audit_p1_zero_model_allocations_are_treated_as_missing",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
+      "target": "docs_audits_2026_11_11_ui_audit_p2_optimization_success_toast_appears_after_failed_requests",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_11_ui_audit_riskframe_ui_audit_2026_11_11",
+      "target": "docs_audits_2026_11_11_ui_audit_p2_editing_the_selection_leaves_old_results_displayed",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-11-ui-audit.md",
+      "source_location": "L93",
       "weight": 1.0
     },
     {
@@ -9464,6 +9582,17 @@
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
       "source_location": "L204",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_riskframe_ui_and_account_corrections_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_final_status_2026_11_13",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
+      "source_location": "L232",
       "weight": 1.0
     },
     {
@@ -12312,5 +12441,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "bbbd1e4a3df950fa638acf186055eb32e42f44a5"
+  "built_at_commit": "9cd86418efb43ea80741996fbe44434d715da848"
 }
