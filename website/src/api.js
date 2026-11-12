@@ -147,11 +147,11 @@ export const deletePortfolio = async (id) => {
 };
 
 // Agentic Co-Pilot API
-export const sendAgentMessage = async (message, sessionId = null) => {
+export const sendAgentMessage = async (message, sessionId = null, { history = [], includePortfolioContext = false } = {}) => {
   const res = await fetch(`${API}/api/agent/chat`, {
     method: 'POST',
     headers: getHeaders(),
-    body: JSON.stringify({ message, sessionId }),
+    body: JSON.stringify({ message, sessionId, history, includePortfolioContext }),
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || 'Agent request failed');

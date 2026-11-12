@@ -44,3 +44,33 @@ test('logout clears private conversation and discards a pending account reply', 
   await expect(page.locator('.agent-messages-container')).not.toContainText('LATE_PRIVATE_REPLY');
   await expect(page.getByRole('textbox', { name: 'Message the copilot' })).toBeEnabled();
 });
+
+test('portfolio permission starts a fresh owned conversation and resets on logout', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('rf_auth_token', 'test-token'));
+  await page.route('**/api/live', r => r.fulfill({ json: { status: 'ok' } }));
+  await page.route('**/api/auth/me', r => r.fulfill({ json: { user: { _id: 'privacy-owner', name: 'Privacy account', holdings: [], cashBalance: 0 } } }));
+  const requests = [];
+  await page.route('**/api/agent/chat', r => {
+    requests.push(r.request().postDataJSON());
+    return r.fulfill({ json: { reply: 'Previous context marker', sessionId: '000000000000000000000002', toolCalls: [] } });
+  });
+  await page.goto('http://localhost:3000');
+  await expect(page.locator('#nav-signout-btn')).toBeVisible();
+  await page.locator('.agent-toggle-btn').click();
+  const permission = page.getByRole('checkbox', { name: 'Allow saved portfolio context with Groq' });
+  await expect(permission).not.toBeChecked();
+  await page.getByRole('textbox', { name: 'Message the copilot' }).fill('Hello');
+  await page.locator('.agent-input-form button').click();
+  await expect(page.locator('.agent-messages-container')).toContainText('Previous context marker');
+  expect(requests[0].includePortfolioContext).toBe(false);
+  await permission.check();
+  await expect(page.locator('.agent-messages-container')).not.toContainText('Previous context marker');
+  await page.getByRole('textbox', { name: 'Message the copilot' }).fill('Show my saved strategies');
+  await page.locator('.agent-input-form button').click();
+  await expect(page.locator('.agent-messages-container')).toContainText('Previous context marker');
+  expect(requests[1].sessionId).toBeNull(); expect(requests[1].includePortfolioContext).toBe(true);
+  await page.locator('#nav-signout-btn').click();
+  await page.locator('.agent-toggle-btn').click();
+  await expect(permission).toHaveCount(0);
+  await expect(page.locator('.agent-messages-container')).not.toContainText('Previous context marker');
+});

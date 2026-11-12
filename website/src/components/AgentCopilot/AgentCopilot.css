@@ -274,3 +274,9 @@
   font-size: 11px;
   color: #a0aab2;
 }
+
+.agent-privacy { flex-shrink: 0; padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a0aab2; font-size: 11px; line-height: 1.5; }
+.agent-privacy p { margin: 0 0 6px; }
+.agent-privacy label { display: flex; align-items: flex-start; gap: 8px; }
+.agent-privacy input { width: auto; margin-top: 2px; accent-color: #d4af37; }
+.agent-messages-container { min-height: 0; }

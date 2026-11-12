@@ -2,9 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { sendAgentMessage } from '../../api';
 import './AgentCopilot.css';
 
-export default function AgentCopilot({ currentUser }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
+const initialMessages = () => ([
     {
       role: 'assistant',
       content:
@@ -12,9 +10,14 @@ export default function AgentCopilot({ currentUser }) {
       toolCalls: [],
     },
   ]);
+
+export default function AgentCopilot({ currentUser }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [sessionId, setSessionId] = useState(null);
+  const [includePortfolioContext, setIncludePortfolioContext] = useState(false);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -35,7 +38,7 @@ export default function AgentCopilot({ currentUser }) {
     setLoading(true);
 
     try {
-      const res = await sendAgentMessage(text, sessionId);
+      const res = await sendAgentMessage(text, sessionId, { includePortfolioContext, history: currentUser ? [] : messages.slice(1).slice(-12).map(m => ({ role: m.role, content: m.content.slice(0, 4000) })) });
       if (res.sessionId) setSessionId(res.sessionId);
 
       const assistantMsg = {
@@ -92,6 +95,13 @@ export default function AgentCopilot({ currentUser }) {
             <button aria-label="Close copilot" className="agent-close-btn" onClick={() => setIsOpen(false)}>
               ✕
             </button>
+          </div>
+
+          <div className="agent-privacy">
+            <p>Messages and permitted tool results are sent to Groq. Do not include credentials.</p>
+            {currentUser && <label><input type="checkbox" checked={includePortfolioContext} disabled={loading} onChange={e => {
+              setIncludePortfolioContext(e.target.checked); setSessionId(null); setMessages(initialMessages()); setInput('');
+            }} />Allow saved portfolio context with Groq</label>}
           </div>
 
           <div className="agent-messages-container">

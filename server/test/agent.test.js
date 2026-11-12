@@ -30,5 +30,3 @@ test('copilot preserves result provenance and adapts canonical metrics for saved
     assert.equal(stored.metrics.volatility, 0.2);
   } finally { axios.post = post; Portfolio.prototype.save = save; }
 });
-
-

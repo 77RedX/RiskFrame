@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import axios from 'axios';
-import { runAgentConversation } from '../src/services/agent.service.js';
+import { runAgentConversation, agentTools } from '../src/services/agent.service.js';
 
 const call = (name, args = {}, id = 'call-1') => ({ role: 'assistant', content: null, tool_calls: [{ id, type: 'function', function: { name, arguments: typeof args === 'string' ? args : JSON.stringify(args) } }] });
 const finish = content => ({ role: 'assistant', content });
@@ -65,4 +65,36 @@ test('provider tool loops stop instead of making unbounded requests', async () =
     await assert.rejects(runAgentConversation({ message: 'Keep going forever' }), /limit/i);
     assert.equal(requests.length, 3);
   });
+});
+
+test('owned bounded history supports follow-ups without trusting guest tool results', async () => {
+  const history = [{ role: 'user', content: 'Earlier basket question' }, { role: 'assistant', content: 'Earlier answer', toolCalls: [{ tool: 'optimizePortfolio', params: { tickers: ['AAPL', 'MSFT'] }, result: { allocation: { AAPL: 0.5, MSFT: 0.5 }, metrics: { expected_return: 0.1, volatility: 0.2, sharpe_ratio: 0.5 }, market_data_as_of: '2026-11-12', engine: 'python' } }] }];
+  await fixture([call('analyzeRisk'), finish('Follow-up explanation')], async ({ requests }) => {
+    const output = await runAgentConversation({ message: 'And its risk?', history, trustedHistory: true });
+    assert.ok(requests[0].messages.some(m => m.content === 'Earlier basket question'));
+    assert.ok(!output.toolCalls[0].result.error);
+  });
+  await fixture([call('analyzeRisk'), finish('No verified result')], async () => {
+    const output = await runAgentConversation({ message: 'And its risk?', history });
+    assert.ok(output.toolCalls[0].result.error);
+  });
+  await fixture([finish('Bounded answer')], async ({ requests }) => {
+    await runAgentConversation({ message: 'Latest question', history: Array.from({ length: 40 }, (_, i) => ({ role: 'user', content: String(i).padStart(3, '0') + 'x'.repeat(3997) })) });
+    assert.ok(JSON.stringify(requests[0].messages).length < 22000);
+    assert.ok(requests[0].messages.some(m => m.content.startsWith('039')));
+  });
+});
+
+test('private strategy reads require permission and use only the server-selected owner', async () => {
+  const original = agentTools.getUserPortfolios.execute;
+  let selectedOwner;
+  agentTools.getUserPortfolios.execute = async ({ userId }) => { selectedOwner = userId; return { portfolios: [{ name: 'Owned strategy' }] }; };
+  try {
+    await fixture([call('getUserPortfolios'), finish('Owned strategies')], async ({ requests }) => {
+      const output = await runAgentConversation({ message: 'Read my strategies', userId: 'actual-owner', allowPrivateContext: true });
+      assert.equal(selectedOwner, 'actual-owner');
+      assert.equal(output.toolCalls[0].result.portfolios[0].name, 'Owned strategy');
+      assert.ok(requests[0].tools.some(t => t.function.name === 'getUserPortfolios'));
+    });
+  } finally { agentTools.getUserPortfolios.execute = original; }
 });
