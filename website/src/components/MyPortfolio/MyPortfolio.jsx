@@ -1,3 +1,4 @@
+import useDialog from '../../hooks/useDialog';
 import { createPortal } from 'react-dom';
 import { useState, useMemo } from 'react';
 import { getStockPrice } from '../../data/marketSignals';
@@ -18,6 +19,7 @@ export default function MyPortfolio({
   const [isTradeModalOpen, setIsTradeModalOpen] = useState(false);
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
   const [depositAmount, setDepositAmount] = useState(10000);
+  const depositRef = useDialog(isDepositModalOpen, () => setIsDepositModalOpen(false));
 
   // Compute live valuation and P&L for every holding
   const evaluatedHoldings = useMemo(() => {
@@ -202,7 +204,7 @@ export default function MyPortfolio({
             </svg>
             <input
               type="text"
-              className="toolbar-search-input"
+              className="toolbar-search-input" aria-label="Search portfolio"
               placeholder="Search bought stocks in portfolio…"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -213,7 +215,7 @@ export default function MyPortfolio({
             <div className="sort-group">
               <span className="sort-label">Sort By:</span>
               <select
-                className="sort-select"
+                className="sort-select" aria-label="Sort portfolio"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
               >
@@ -375,10 +377,10 @@ export default function MyPortfolio({
         {/* Deposit Cash Modal */}
         {isDepositModalOpen && createPortal(
           <div className="trade-modal-backdrop" onClick={() => setIsDepositModalOpen(false)}>
-            <div className="trade-modal-container deposit-container" onClick={(e) => e.stopPropagation()}>
+            <div ref={depositRef} role="dialog" aria-modal="true" aria-label="Deposit simulated cash" className="trade-modal-container deposit-container" onClick={(e) => e.stopPropagation()}>
               <div className="trade-modal-header">
                 <h3>Deposit Simulated Cash</h3>
-                <button className="trade-modal-close" onClick={() => setIsDepositModalOpen(false)}>✕</button>
+                <button aria-label="Close deposit dialog" className="trade-modal-close" onClick={() => setIsDepositModalOpen(false)}>✕</button>
               </div>
               <form onSubmit={handleDepositSubmit} className="deposit-form">
                 <p className="deposit-desc">Add virtual trading capital to simulate large institutional rebalancing or test buy orders.</p>
@@ -395,9 +397,9 @@ export default function MyPortfolio({
                   ))}
                 </div>
                 <div className="deposit-input-row">
-                  <label>Custom Amount ($)</label>
+                  <label htmlFor="deposit-amount">Custom Amount ($)</label>
                   <input
-                    type="number"
+                    id="deposit-amount" type="number"
                     min="100"
                     step="0.01"
                     className="trade-qty-input custom-dep"

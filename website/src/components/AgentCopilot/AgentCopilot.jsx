@@ -89,7 +89,7 @@ export default function AgentCopilot({ currentUser, onSelectTickers }) {
                 </span>
               </div>
             </div>
-            <button className="agent-close-btn" onClick={() => setIsOpen(false)}>
+            <button aria-label="Close copilot" className="agent-close-btn" onClick={() => setIsOpen(false)}>
               ✕
             </button>
           </div>
@@ -149,7 +149,7 @@ export default function AgentCopilot({ currentUser, onSelectTickers }) {
           >
             <input
               type="text"
-              placeholder="Ask anything or request portfolio allocation..."
+              aria-label="Message the copilot" placeholder="Ask anything or request portfolio allocation..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               disabled={loading}

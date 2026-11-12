@@ -16,17 +16,11 @@ export default function StockCard({ stock, isSelected, isDisabled, onToggle }) {
     onToggle(stock.ticker);
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      handleClick();
-    }
-  };
-
   return (
-    <div
+    <button
+      type="button"
+      disabled={isDisabled && !isSelected}
       className={className}
-      role="listitem"
       data-ticker={stock.ticker}
       data-sector={stock.sector}
       data-name={stock.name.toLowerCase()}
@@ -34,7 +28,6 @@ export default function StockCard({ stock, isSelected, isDisabled, onToggle }) {
       aria-label={`${stock.ticker} – ${stock.name}`}
       aria-pressed={isSelected}
       onClick={handleClick}
-      onKeyDown={handleKeyDown}
     >
       <div className="stock-check" aria-hidden="true">
         {isSelected && (
@@ -52,6 +45,6 @@ export default function StockCard({ stock, isSelected, isDisabled, onToggle }) {
       <div className="stock-ticker">{stock.ticker}</div>
       <div className="stock-name">{stock.name}</div>
       <span className={`stock-sector-badge ${badgeClass}`}>{stock.sector}</span>
-    </div>
+    </button>
   );
 }

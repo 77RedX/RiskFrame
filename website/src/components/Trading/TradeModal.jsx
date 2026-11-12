@@ -1,3 +1,4 @@
+import useDialog from '../../hooks/useDialog';
 import { createPortal } from 'react-dom';
 import { useState, useEffect } from 'react';
 import './TradeModal.css';
@@ -25,6 +26,7 @@ export default function TradeModal({
     }
   }, [isOpen, initialMode, heldShares]);
 
+  const dialogRef = useDialog(isOpen && Boolean(stock), onClose);
   if (!isOpen || !stock) return null;
 
   const price = stock.price || 100;
@@ -106,7 +108,7 @@ export default function TradeModal({
 
   return createPortal(
     <div className="trade-modal-backdrop" onClick={onClose}>
-      <div className="trade-modal-container" onClick={(e) => e.stopPropagation()}>
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-label="Simulated trade" className="trade-modal-container" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="trade-modal-header">
           <div className="trade-modal-stock-info">
@@ -205,7 +207,7 @@ export default function TradeModal({
                 −
               </button>
               <input
-                type="number"
+                id="trade-quantity" aria-label="Number of shares" type="number"
                 min="1"
                 step="1"
                 className="trade-qty-input"

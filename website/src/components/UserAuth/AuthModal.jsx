@@ -1,3 +1,4 @@
+import useDialog from '../../hooks/useDialog';
 import { createPortal } from 'react-dom';
 import { useState, useEffect } from 'react';
 import { login, register, updatePreferences } from '../../api';
@@ -25,6 +26,7 @@ export default function AuthModal({ isOpen, onClose, user, onAuthSuccess, onLogo
     }
   }, [isOpen, user?._id]);
 
+  const dialogRef = useDialog(isOpen, onClose);
   if (!isOpen) return null;
 
   const handleSignOut = () => {
@@ -69,8 +71,8 @@ export default function AuthModal({ isOpen, onClose, user, onAuthSuccess, onLogo
   if (user && !isPreferences) {
     return createPortal(
       <div className="auth-modal-backdrop" onClick={onClose}>
-        <div className="auth-modal-content" onClick={(e) => e.stopPropagation()}>
-          <button className="auth-modal-close" onClick={onClose}>
+        <div ref={dialogRef} role="dialog" aria-modal="true" aria-label="RiskFrame account" className="auth-modal-content" onClick={(e) => e.stopPropagation()}>
+          <button aria-label="Close account dialog" className="auth-modal-close" onClick={onClose}>
             ✕
           </button>
 
@@ -192,8 +194,8 @@ export default function AuthModal({ isOpen, onClose, user, onAuthSuccess, onLogo
   // 2. Preferences Form or Guest Sign In / Register View
   return createPortal(
     <div className="auth-modal-backdrop" onClick={onClose}>
-      <div className="auth-modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="auth-modal-close" onClick={onClose}>
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-label="RiskFrame account" className="auth-modal-content" onClick={(e) => e.stopPropagation()}>
+        <button aria-label="Close account dialog" className="auth-modal-close" onClick={onClose}>
           ✕
         </button>
 
@@ -221,8 +223,8 @@ export default function AuthModal({ isOpen, onClose, user, onAuthSuccess, onLogo
           {isPreferences ? (
             <>
               <div className="form-group">
-                <label>Risk Tolerance Profile</label>
-                <select value={riskTolerance} onChange={(e) => setRiskTolerance(e.target.value)}>
+                <label htmlFor="auth-risk">Risk Tolerance Profile (profile label)</label>
+                <select id="auth-risk" value={riskTolerance} onChange={(e) => setRiskTolerance(e.target.value)}>
                   <option value="conservative">Conservative (Low Volatility, Defensive)</option>
                   <option value="moderate">Moderate (Balanced Sharpe Maximization)</option>
                   <option value="aggressive">Aggressive (High Alpha Conviction)</option>
@@ -230,9 +232,9 @@ export default function AuthModal({ isOpen, onClose, user, onAuthSuccess, onLogo
               </div>
 
               <div className="form-group">
-                <label>Max Single-Asset Exposure Limit: {(maxWeight * 100).toFixed(0)}%</label>
+                <label htmlFor="auth-max-weight">Max Single-Asset Exposure Limit: {(maxWeight * 100).toFixed(0)}%</label>
                 <input
-                  type="range"
+                  id="auth-max-weight" type="range"
                   min="0.05"
                   max="1"
                   step="0.01"
@@ -267,9 +269,9 @@ export default function AuthModal({ isOpen, onClose, user, onAuthSuccess, onLogo
             <>
               {isRegister && (
                 <div className="form-group">
-                  <label>Full Name</label>
+                  <label htmlFor="auth-name">Full Name</label>
                   <input
-                    type="text"
+                    id="auth-name" type="text"
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -279,9 +281,9 @@ export default function AuthModal({ isOpen, onClose, user, onAuthSuccess, onLogo
               )}
 
               <div className="form-group">
-                <label>Email Address</label>
+                <label htmlFor="auth-email">Email Address</label>
                 <input
-                  type="email"
+                  id="auth-email" type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -290,9 +292,9 @@ export default function AuthModal({ isOpen, onClose, user, onAuthSuccess, onLogo
               </div>
 
               <div className="form-group">
-                <label>Password</label>
+                <label htmlFor="auth-password">Password</label>
                 <input
-                  type="password"
+                  id="auth-password" type="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
