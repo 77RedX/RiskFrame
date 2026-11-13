@@ -104,18 +104,6 @@
       "source_location": "L14"
     },
     {
-      "id": "server_src_services_agent_service_runagentconversation",
-      "label": "runAgentConversation()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "auth.routes.js",
-      "file_type": "code",
-      "norm_label": "runagentconversation()",
-      "source_file": "server/src/services/agent.service.js",
-      "source_location": "L79"
-    },
-    {
       "id": "server_src_services_ledger_service_applyportfoliooperation",
       "label": "applyPortfolioOperation()",
       "_callable": true,
@@ -150,54 +138,6 @@
       "norm_label": "invalid()",
       "source_file": "server/src/services/ledger.service.js",
       "source_location": "L8"
-    },
-    {
-      "id": "server_src_services_quant_service_fetchpricehistory",
-      "label": "fetchPriceHistory()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "auth.routes.js",
-      "file_type": "code",
-      "norm_label": "fetchpricehistory()",
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L96"
-    },
-    {
-      "id": "server_src_services_quant_service_fetchsupportedtickers",
-      "label": "fetchSupportedTickers()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "auth.routes.js",
-      "file_type": "code",
-      "norm_label": "fetchsupportedtickers()",
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L103"
-    },
-    {
-      "id": "server_src_services_quant_service_runquantoptimization",
-      "label": "runQuantOptimization()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "auth.routes.js",
-      "file_type": "code",
-      "norm_label": "runquantoptimization()",
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L83"
-    },
-    {
-      "id": "server_src_services_quant_service_solvemarkowitzsharpe",
-      "label": "solveMarkowitzSharpe()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "auth.routes.js",
-      "file_type": "code",
-      "norm_label": "solvemarkowitzsharpe()",
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L9"
     },
     {
       "id": "server_test_auth_test_json",
@@ -728,6 +668,114 @@
       "source_location": "L15"
     },
     {
+      "id": "server_src_services_agent_service_conversationcontext",
+      "label": "conversationContext()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "conversationcontext()",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L100"
+    },
+    {
+      "id": "server_src_services_agent_service_definition",
+      "label": "definition()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "definition()",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L88"
+    },
+    {
+      "id": "server_src_services_agent_service_runagentconversation",
+      "label": "runAgentConversation()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "runagentconversation()",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L129"
+    },
+    {
+      "id": "server_src_services_groq_service_copiloterror",
+      "label": "copilotError()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "copiloterror()",
+      "source_file": "server/src/services/groq.service.js",
+      "source_location": "L4"
+    },
+    {
+      "id": "server_src_services_groq_service_requestgroq",
+      "label": "requestGroq()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "requestgroq()",
+      "source_file": "server/src/services/groq.service.js",
+      "source_location": "L16"
+    },
+    {
+      "id": "server_src_services_quant_service_fetchsupportedtickers",
+      "label": "fetchSupportedTickers()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "fetchsupportedtickers()",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L103"
+    },
+    {
+      "id": "server_test_agent_loop_test_call",
+      "label": "call()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "call()",
+      "source_file": "server/test/agent-loop.test.js",
+      "source_location": "L6"
+    },
+    {
+      "id": "server_test_agent_loop_test_finish",
+      "label": "finish()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "finish()",
+      "source_file": "server/test/agent-loop.test.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "server_test_agent_loop_test_fixture",
+      "label": "fixture()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "fixture()",
+      "source_file": "server/test/agent-loop.test.js",
+      "source_location": "L9"
+    },
+    {
       "id": "website_tests_optimization_spec_intercept",
       "label": "intercept()",
       "_callable": true,
@@ -989,7 +1037,7 @@
       "file_type": "code",
       "norm_label": "agentcopilot()",
       "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
-      "source_location": "L5"
+      "source_location": "L24"
     },
     {
       "id": "website_src_components_agentcopilot_agentcopilot_formatmarkdown",
@@ -1001,7 +1049,43 @@
       "file_type": "code",
       "norm_label": "formatmarkdown()",
       "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
-      "source_location": "L167"
+      "source_location": "L75"
+    },
+    {
+      "id": "website_src_components_agentcopilot_agentcopilot_initialmessages",
+      "label": "initialMessages()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "App.jsx",
+      "file_type": "code",
+      "norm_label": "initialmessages()",
+      "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
+      "source_location": "L5"
+    },
+    {
+      "id": "website_src_components_agentcopilot_agentcopilot_percent",
+      "label": "percent()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "App.jsx",
+      "file_type": "code",
+      "norm_label": "percent()",
+      "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
+      "source_location": "L7"
+    },
+    {
+      "id": "website_src_components_agentcopilot_agentcopilot_toolresult",
+      "label": "ToolResult()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "App.jsx",
+      "file_type": "code",
+      "norm_label": "toolresult()",
+      "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
+      "source_location": "L9"
     },
     {
       "id": "website_src_components_footer_footer",
@@ -1097,7 +1181,7 @@
       "file_type": "code",
       "norm_label": ".save()",
       "source_file": "server/test/agent.test.js",
-      "source_location": "L50"
+      "source_location": "L21"
     },
     {
       "id": "server_test_redis_test_redis_connect",
@@ -1436,6 +1520,42 @@
       "source_location": "L102"
     },
     {
+      "id": "server_src_services_quant_service_fetchpricehistory",
+      "label": "fetchPriceHistory()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "index.js",
+      "file_type": "code",
+      "norm_label": "fetchpricehistory()",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L96"
+    },
+    {
+      "id": "server_src_services_quant_service_runquantoptimization",
+      "label": "runQuantOptimization()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "index.js",
+      "file_type": "code",
+      "norm_label": "runquantoptimization()",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L83"
+    },
+    {
+      "id": "server_src_services_quant_service_solvemarkowitzsharpe",
+      "label": "solveMarkowitzSharpe()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "index.js",
+      "file_type": "code",
+      "norm_label": "solvemarkowitzsharpe()",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L9"
+    },
+    {
       "id": "website_src_components_myportfolio_myportfolio_money",
       "label": "money()",
       "_callable": true,
@@ -1561,7 +1681,7 @@
       "file_type": "code",
       "norm_label": "agentsession",
       "source_file": "server/src/models/AgentSession.js",
-      "source_location": "L55"
+      "source_location": "L58"
     },
     {
       "id": "server_src_models_agentsession_agentsessionschema",
@@ -1583,50 +1703,6 @@
       "file_type": "code",
       "norm_label": "messageschema",
       "source_file": "server/src/models/AgentSession.js",
-      "source_location": "L3"
-    },
-    {
-      "id": "server_src_models_portfolio",
-      "label": "Portfolio.js",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "auth.routes.js",
-      "file_type": "code",
-      "norm_label": "portfolio.js",
-      "source_file": "server/src/models/Portfolio.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_src_models_portfolio_portfolio",
-      "label": "Portfolio",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "auth.routes.js",
-      "file_type": "code",
-      "norm_label": "portfolio",
-      "source_file": "server/src/models/Portfolio.js",
-      "source_location": "L95"
-    },
-    {
-      "id": "server_src_models_portfolio_portfolioschema",
-      "label": "PortfolioSchema",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "auth.routes.js",
-      "file_type": "code",
-      "norm_label": "portfolioschema",
-      "source_file": "server/src/models/Portfolio.js",
-      "source_location": "L25"
-    },
-    {
-      "id": "server_src_models_portfolio_rebalanceentryschema",
-      "label": "RebalanceEntrySchema",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "auth.routes.js",
-      "file_type": "code",
-      "norm_label": "rebalanceentryschema",
-      "source_file": "server/src/models/Portfolio.js",
       "source_location": "L3"
     },
     {
@@ -1682,6 +1758,17 @@
       "file_type": "code",
       "norm_label": "agentchatschema",
       "source_file": "server/src/routes/agent.routes.js",
+      "source_location": "L11"
+    },
+    {
+      "id": "server_src_routes_agent_routes_pending",
+      "label": "pending",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "pending",
+      "source_file": "server/src/routes/agent.routes.js",
       "source_location": "L9"
     },
     {
@@ -1694,6 +1781,17 @@
       "norm_label": "router",
       "source_file": "server/src/routes/agent.routes.js",
       "source_location": "L7"
+    },
+    {
+      "id": "server_src_routes_agent_routes_windows",
+      "label": "windows",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "auth.routes.js",
+      "file_type": "code",
+      "norm_label": "windows",
+      "source_file": "server/src/routes/agent.routes.js",
+      "source_location": "L9"
     },
     {
       "id": "server_src_routes_auth_routes",
@@ -1740,61 +1838,6 @@
       "source_location": "L11"
     },
     {
-      "id": "server_src_routes_portfolio_routes",
-      "label": "portfolio.routes.js",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "auth.routes.js",
-      "file_type": "code",
-      "norm_label": "portfolio.routes.js",
-      "source_file": "server/src/routes/portfolio.routes.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_src_routes_portfolio_routes_router",
-      "label": "router",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "auth.routes.js",
-      "file_type": "code",
-      "norm_label": "router",
-      "source_file": "server/src/routes/portfolio.routes.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "server_src_routes_portfolio_routes_saveportfolioschema",
-      "label": "SavePortfolioSchema",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "auth.routes.js",
-      "file_type": "code",
-      "norm_label": "saveportfolioschema",
-      "source_file": "server/src/routes/portfolio.routes.js",
-      "source_location": "L9"
-    },
-    {
-      "id": "server_src_services_agent_service",
-      "label": "agent.service.js",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "auth.routes.js",
-      "file_type": "code",
-      "norm_label": "agent.service.js",
-      "source_file": "server/src/services/agent.service.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_src_services_agent_service_agenttools",
-      "label": "agentTools",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "auth.routes.js",
-      "file_type": "code",
-      "norm_label": "agenttools",
-      "source_file": "server/src/services/agent.service.js",
-      "source_location": "L7"
-    },
-    {
       "id": "server_src_services_ledger_service",
       "label": "ledger.service.js",
       "_origin": "ast",
@@ -1815,17 +1858,6 @@
       "norm_label": "portfoliooperationschema",
       "source_file": "server/src/services/ledger.service.js",
       "source_location": "L3"
-    },
-    {
-      "id": "server_src_services_quant_service",
-      "label": "quant.service.js",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "auth.routes.js",
-      "file_type": "code",
-      "norm_label": "quant.service.js",
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L1"
     },
     {
       "id": "server_test_accounts_test",
@@ -1850,28 +1882,6 @@
       "source_location": "L1"
     },
     {
-      "id": "server_test_agent_test",
-      "label": "agent.test.js",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "auth.routes.js",
-      "file_type": "code",
-      "norm_label": "agent.test.js",
-      "source_file": "server/test/agent.test.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_test_api_test",
-      "label": "api.test.js",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "auth.routes.js",
-      "file_type": "code",
-      "norm_label": "api.test.js",
-      "source_file": "server/test/api.test.js",
-      "source_location": "L1"
-    },
-    {
       "id": "server_test_auth_test",
       "label": "auth.test.js",
       "_origin": "ast",
@@ -1891,17 +1901,6 @@
       "file_type": "code",
       "norm_label": "ledger.test.js",
       "source_file": "server/test/ledger.test.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_test_rebalance_test",
-      "label": "rebalance.test.js",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "auth.routes.js",
-      "file_type": "code",
-      "norm_label": "rebalance.test.js",
-      "source_file": "server/test/rebalance.test.js",
       "source_location": "L1"
     },
     {
@@ -2455,18 +2454,6 @@
       "source_location": "L22"
     },
     {
-      "id": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections",
-      "label": "2026-11-12-ui-and-account-corrections.md",
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "RiskFrame UI and Account Corrections Implementation Plan",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "2026-11-12-ui-and-account-corrections.md",
-      "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
-      "source_location": "L1"
-    },
-    {
       "id": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_completion_criteria",
       "label": "Completion criteria",
       "_origin": "ast",
@@ -2503,6 +2490,30 @@
       "source_location": "L232"
     },
     {
+      "id": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_groq_and_ui_follow_up_completed_2026_11_13",
+      "label": "Groq and UI follow-up completed - 2026-11-13",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "RiskFrame UI and Account Corrections Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "groq and ui follow-up completed - 2026-11-13",
+      "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
+      "source_location": "L252"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_groq_feature_queued_2026_11_13",
+      "label": "Groq feature queued - 2026-11-13",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "RiskFrame UI and Account Corrections Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "groq feature queued - 2026-11-13",
+      "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
+      "source_location": "L248"
+    },
+    {
       "id": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_implementation_ledger",
       "label": "Implementation ledger",
       "_origin": "ast",
@@ -2513,6 +2524,18 @@
       "norm_label": "implementation ledger",
       "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
       "source_location": "L172"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_new_issues_reported_after_completion_2026_11_13",
+      "label": "New issues reported after completion - 2026-11-13",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "RiskFrame UI and Account Corrections Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "new issues reported after completion - 2026-11-13",
+      "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
+      "source_location": "L244"
     },
     {
       "id": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_paused_work_resume_after_quota_reset",
@@ -3202,6 +3225,237 @@
       "source_location": "L61"
     },
     {
+      "id": "server_src_models_portfolio",
+      "label": "Portfolio.js",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "portfolio.js",
+      "source_file": "server/src/models/Portfolio.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_src_models_portfolio_portfolio",
+      "label": "Portfolio",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "portfolio",
+      "source_file": "server/src/models/Portfolio.js",
+      "source_location": "L95"
+    },
+    {
+      "id": "server_src_models_portfolio_portfolioschema",
+      "label": "PortfolioSchema",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "portfolioschema",
+      "source_file": "server/src/models/Portfolio.js",
+      "source_location": "L25"
+    },
+    {
+      "id": "server_src_models_portfolio_rebalanceentryschema",
+      "label": "RebalanceEntrySchema",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "rebalanceentryschema",
+      "source_file": "server/src/models/Portfolio.js",
+      "source_location": "L3"
+    },
+    {
+      "id": "server_src_routes_portfolio_routes",
+      "label": "portfolio.routes.js",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "portfolio.routes.js",
+      "source_file": "server/src/routes/portfolio.routes.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_src_routes_portfolio_routes_router",
+      "label": "router",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "router",
+      "source_file": "server/src/routes/portfolio.routes.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "server_src_routes_portfolio_routes_saveportfolioschema",
+      "label": "SavePortfolioSchema",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "saveportfolioschema",
+      "source_file": "server/src/routes/portfolio.routes.js",
+      "source_location": "L9"
+    },
+    {
+      "id": "server_src_services_agent_service",
+      "label": "agent.service.js",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "agent.service.js",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_src_services_agent_service_agenttools",
+      "label": "agentTools",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "agenttools",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L9"
+    },
+    {
+      "id": "server_src_services_agent_service_basket",
+      "label": "basket",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "basket",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L79"
+    },
+    {
+      "id": "server_src_services_agent_service_publictools",
+      "label": "publicTools",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "publictools",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L89"
+    },
+    {
+      "id": "server_src_services_agent_service_schemas",
+      "label": "schemas",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "schemas",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L80"
+    },
+    {
+      "id": "server_src_services_agent_service_symbolschema",
+      "label": "symbolSchema",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "symbolschema",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L87"
+    },
+    {
+      "id": "server_src_services_agent_service_ticker",
+      "label": "ticker",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "ticker",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L78"
+    },
+    {
+      "id": "server_src_services_groq_service",
+      "label": "groq.service.js",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "groq.service.js",
+      "source_file": "server/src/services/groq.service.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_src_services_groq_service_assistantmessage",
+      "label": "AssistantMessage",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "assistantmessage",
+      "source_file": "server/src/services/groq.service.js",
+      "source_location": "L6"
+    },
+    {
+      "id": "server_test_agent_deadline_test",
+      "label": "agent-deadline.test.js",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "agent-deadline.test.js",
+      "source_file": "server/test/agent-deadline.test.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_test_agent_loop_test",
+      "label": "agent-loop.test.js",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "agent-loop.test.js",
+      "source_file": "server/test/agent-loop.test.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_test_agent_test",
+      "label": "agent.test.js",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "agent.test.js",
+      "source_file": "server/test/agent.test.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_test_groq_test",
+      "label": "groq.test.js",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "groq.test.js",
+      "source_file": "server/test/groq.test.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_test_rebalance_test",
+      "label": "rebalance.test.js",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "rebalance.test.js",
+      "source_file": "server/test/rebalance.test.js",
+      "source_location": "L1"
+    },
+    {
       "id": "docs_superpowers_plans_2026_11_11_optimization_button",
       "label": "2026-11-11-optimization-button.md",
       "_origin": "ast",
@@ -3315,6 +3569,17 @@
       "norm_label": "agentcopilot.jsx",
       "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
       "source_location": "L1"
+    },
+    {
+      "id": "website_src_components_agentcopilot_agentcopilot_toollabels",
+      "label": "toolLabels",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "App.jsx",
+      "file_type": "code",
+      "norm_label": "toollabels",
+      "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
+      "source_location": "L6"
     },
     {
       "id": "website_src_components_footer",
@@ -3490,6 +3755,270 @@
       "file_type": "code",
       "norm_label": "portfolio.spec.js",
       "source_file": "website/tests/portfolio.spec.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections",
+      "label": "2026-11-12-ui-and-account-corrections.md",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "2026-11-12-ui-and-account-corrections.md",
+      "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_groq_copilot",
+      "label": "2026-11-13-groq-copilot.md",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "2026-11-13-groq-copilot.md",
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_groq_copilot_completion_criteria_and_exclusions",
+      "label": "Completion criteria and exclusions",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "completion criteria and exclusions",
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L65"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_groq_copilot_completion_status",
+      "label": "Completion status",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "completion status",
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L82"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_groq_copilot_configuration",
+      "label": "Configuration",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "configuration",
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L11"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_groq_copilot_execution_ledger",
+      "label": "Execution ledger",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "execution ledger",
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L71"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_groq_copilot_groq_copilot_implementation_plan",
+      "label": "Groq Copilot Implementation Plan",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "groq copilot implementation plan",
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_groq_copilot_step_1_backend_provider_configuration_and_failure_behavior",
+      "label": "Step 1 - Backend provider configuration and failure behavior",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "step 1 - backend provider configuration and failure behavior",
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L19"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_groq_copilot_step_2_restricted_validated_tool_calling",
+      "label": "Step 2 - Restricted validated tool calling",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "step 2 - restricted validated tool calling",
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L29"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_groq_copilot_step_3_owned_multi_turn_context_and_privacy_boundary",
+      "label": "Step 3 - Owned multi-turn context and privacy boundary",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "step 3 - owned multi-turn context and privacy boundary",
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L39"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_groq_copilot_step_4_copilot_ux_and_grounded_explanations",
+      "label": "Step 4 - Copilot UX and grounded explanations",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "step 4 - copilot ux and grounded explanations",
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L49"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_groq_copilot_step_5_final_integration_gate_and_documentation",
+      "label": "Step 5 - Final integration gate and documentation",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "step 5 - final integration gate and documentation",
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L58"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup",
+      "label": "2026-11-13-trading-and-proposal-ui-followup.md",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_chosen_approach",
+      "label": "Chosen approach",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "chosen approach",
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L11"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_completion_criteria_and_boundaries",
+      "label": "Completion criteria and boundaries",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "completion criteria and boundaries",
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L62"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_execution_ledger",
+      "label": "Execution ledger",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "execution ledger",
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L72"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_follow_on_feature_phase_groq_copilot",
+      "label": "Follow-on feature phase - Groq Copilot",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "follow-on feature phase - groq copilot",
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L68"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_task_1_trade_quantity_bounds_and_honest_order_controls",
+      "label": "Task 1 - Trade quantity bounds and honest order controls",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 1 - trade quantity bounds and honest order controls",
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L17"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_task_2_optimization_feedback_without_copilot_collisions",
+      "label": "Task 2 - Optimization feedback without copilot collisions",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 2 - optimization feedback without copilot collisions",
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L30"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_task_3_visible_hypothetical_capital_and_reliable_selected_state",
+      "label": "Task 3 - Visible hypothetical capital and reliable selected state",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 3 - visible hypothetical capital and reliable selected state",
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L40"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_task_4_finish_the_buy_sell_proposal_presentation",
+      "label": "Task 4 - Finish the buy/sell proposal presentation",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "task 4 - finish the buy/sell proposal presentation",
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L50"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_trading_and_proposal_ui_follow_up_implementation_plan",
+      "label": "Trading and Proposal UI Follow-up Implementation Plan",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "trading and proposal ui follow-up implementation plan",
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
       "source_location": "L1"
     },
     {
@@ -3812,6 +4341,208 @@
       "source_location": "L21"
     },
     {
+      "id": "docs_audits_2026_11_13_trading_and_proposals_followup",
+      "label": "2026-11-13-trading-and-proposals-followup.md",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "Trading and proposal UI follow-up - 2026-11-13",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "2026-11-13-trading-and-proposals-followup.md",
+      "source_file": "docs/audits/2026-11-13-trading-and-proposals-followup.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_audits_2026_11_13_trading_and_proposals_followup_evidence_and_verification_limits",
+      "label": "Evidence and verification limits",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "Trading and proposal UI follow-up - 2026-11-13",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "evidence and verification limits",
+      "source_file": "docs/audits/2026-11-13-trading-and-proposals-followup.md",
+      "source_location": "L37"
+    },
+    {
+      "id": "docs_audits_2026_11_13_trading_and_proposals_followup_groq_follow_on_verification",
+      "label": "Groq follow-on verification",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "Trading and proposal UI follow-up - 2026-11-13",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "groq follow-on verification",
+      "source_file": "docs/audits/2026-11-13-trading-and-proposals-followup.md",
+      "source_location": "L50"
+    },
+    {
+      "id": "docs_audits_2026_11_13_trading_and_proposals_followup_p2_buy_sell_proposal_layout_is_unfinished",
+      "label": "P2 - Buy/sell proposal layout is unfinished",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "Trading and proposal UI follow-up - 2026-11-13",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "p2 - buy/sell proposal layout is unfinished",
+      "source_file": "docs/audits/2026-11-13-trading-and-proposals-followup.md",
+      "source_location": "L25"
+    },
+    {
+      "id": "docs_audits_2026_11_13_trading_and_proposals_followup_p2_hidden_hypothetical_capital_and_missing_selection_feedback",
+      "label": "P2 - Hidden hypothetical capital and missing selection feedback",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "Trading and proposal UI follow-up - 2026-11-13",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "p2 - hidden hypothetical capital and missing selection feedback",
+      "source_file": "docs/audits/2026-11-13-trading-and-proposals-followup.md",
+      "source_location": "L31"
+    },
+    {
+      "id": "docs_audits_2026_11_13_trading_and_proposals_followup_p2_optimization_status_overlaps_quant_copilot",
+      "label": "P2 - Optimization status overlaps Quant Copilot",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "Trading and proposal UI follow-up - 2026-11-13",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "p2 - optimization status overlaps quant copilot",
+      "source_file": "docs/audits/2026-11-13-trading-and-proposals-followup.md",
+      "source_location": "L19"
+    },
+    {
+      "id": "docs_audits_2026_11_13_trading_and_proposals_followup_p2_trade_quantity_controls_allow_invalid_oversell_attempts",
+      "label": "P2 - Trade quantity controls allow invalid oversell attempts",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "Trading and proposal UI follow-up - 2026-11-13",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "p2 - trade quantity controls allow invalid oversell attempts",
+      "source_file": "docs/audits/2026-11-13-trading-and-proposals-followup.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "docs_audits_2026_11_13_trading_and_proposals_followup_resolution_update",
+      "label": "Resolution update",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "Trading and proposal UI follow-up - 2026-11-13",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "resolution update",
+      "source_file": "docs/audits/2026-11-13-trading-and-proposals-followup.md",
+      "source_location": "L46"
+    },
+    {
+      "id": "docs_audits_2026_11_13_trading_and_proposals_followup_trading_and_proposal_ui_follow_up_2026_11_13",
+      "label": "Trading and proposal UI follow-up - 2026-11-13",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "Trading and proposal UI follow-up - 2026-11-13",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "trading and proposal ui follow-up - 2026-11-13",
+      "source_file": "docs/audits/2026-11-13-trading-and-proposals-followup.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_audits_2026_11_13_groq_integration",
+      "label": "2026-11-13-groq-integration.md",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "Groq integration verification - 2026-11-13",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "2026-11-13-groq-integration.md",
+      "source_file": "docs/audits/2026-11-13-groq-integration.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_audits_2026_11_13_groq_integration_groq_integration_verification_2026_11_13",
+      "label": "Groq integration verification - 2026-11-13",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "Groq integration verification - 2026-11-13",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "groq integration verification - 2026-11-13",
+      "source_file": "docs/audits/2026-11-13-groq-integration.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_audits_2026_11_13_groq_integration_implemented_behavior",
+      "label": "Implemented behavior",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "Groq integration verification - 2026-11-13",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "implemented behavior",
+      "source_file": "docs/audits/2026-11-13-groq-integration.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "docs_audits_2026_11_13_groq_integration_limited_live_checks",
+      "label": "Limited live checks",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "Groq integration verification - 2026-11-13",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "limited live checks",
+      "source_file": "docs/audits/2026-11-13-groq-integration.md",
+      "source_location": "L20"
+    },
+    {
+      "id": "docs_audits_2026_11_13_groq_integration_remaining_boundaries",
+      "label": "Remaining boundaries",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "Groq integration verification - 2026-11-13",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "remaining boundaries",
+      "source_file": "docs/audits/2026-11-13-groq-integration.md",
+      "source_location": "L30"
+    },
+    {
+      "id": "docs_audits_2026_11_13_groq_integration_verified_gates",
+      "label": "Verified gates",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "Groq integration verification - 2026-11-13",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "verified gates",
+      "source_file": "docs/audits/2026-11-13-groq-integration.md",
+      "source_location": "L12"
+    },
+    {
+      "id": "website_tests_proposals_spec",
+      "label": "proposals.spec.js",
+      "_origin": "ast",
+      "community": 32,
+      "community_name": "proposals.spec.js",
+      "file_type": "code",
+      "norm_label": "proposals.spec.js",
+      "source_file": "website/tests/proposals.spec.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "website_tests_trade_quantity_spec",
+      "label": "trade-quantity.spec.js",
+      "_origin": "ast",
+      "community": 33,
+      "community_name": "trade-quantity.spec.js",
+      "file_type": "code",
+      "norm_label": "trade-quantity.spec.js",
+      "source_file": "website/tests/trade-quantity.spec.js",
+      "source_location": "L1"
+    },
+    {
       "id": "readme",
       "label": "README.md",
       "_origin": "ast",
@@ -4001,7 +4732,7 @@
       "node_kind": "heading",
       "norm_label": "automated ci/cd workflows",
       "source_file": "README.md",
-      "source_location": "L416"
+      "source_location": "L437"
     },
     {
       "id": "readme_configuration_environment_variables",
@@ -4064,6 +4795,18 @@
       "source_location": "L263"
     },
     {
+      "id": "readme_groq_quant_copilot",
+      "label": "Groq Quant Copilot",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "RiskFrame",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "groq quant copilot",
+      "source_file": "README.md",
+      "source_location": "L416"
+    },
+    {
       "id": "readme_installation_quick_start",
       "label": "Installation & Quick Start",
       "_origin": "ast",
@@ -4121,7 +4864,7 @@
       "node_kind": "heading",
       "norm_label": "quantitative disclaimer",
       "source_file": "README.md",
-      "source_location": "L426"
+      "source_location": "L447"
     },
     {
       "id": "readme_quantitative_methodology",
@@ -4203,6 +4946,17 @@
       "file_type": "code",
       "norm_label": "pricehistory.jsx",
       "source_file": "website/src/components/PriceHistory/PriceHistory.jsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "website_src_components_results_breakdowntable",
+      "label": "BreakdownTable.jsx",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "stocks.js",
+      "file_type": "code",
+      "norm_label": "breakdowntable.jsx",
+      "source_file": "website/src/components/Results/BreakdownTable.jsx",
       "source_location": "L1"
     },
     {
@@ -4358,17 +5112,6 @@
       "norm_label": "trading_days",
       "source_file": "website/src/data/stocks.js",
       "source_location": "L214"
-    },
-    {
-      "id": "website_src_components_results_breakdowntable",
-      "label": "BreakdownTable.jsx",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "Results.jsx",
-      "file_type": "code",
-      "norm_label": "breakdowntable.jsx",
-      "source_file": "website/src/components/Results/BreakdownTable.jsx",
-      "source_location": "L1"
     },
     {
       "id": "website_src_components_results_emptystate",
@@ -4578,6 +5321,28 @@
       "norm_label": "inmemoryexpiry",
       "source_file": "server/src/services/cache.service.js",
       "source_location": "L6"
+    },
+    {
+      "id": "server_src_services_quant_service",
+      "label": "quant.service.js",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "index.js",
+      "file_type": "code",
+      "norm_label": "quant.service.js",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_test_api_test",
+      "label": "api.test.js",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "index.js",
+      "file_type": "code",
+      "norm_label": "api.test.js",
+      "source_file": "server/test/api.test.js",
+      "source_location": "L1"
     },
     {
       "id": "server_test_cache_test",
@@ -5181,6 +5946,54 @@
     },
     {
       "source": "server_src_services_agent_service_runagentconversation",
+      "target": "server_src_services_agent_service_definition",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L132",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_agent_service_runagentconversation",
+      "target": "server_src_services_agent_service_conversationcontext",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L134",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_agent_service_runagentconversation",
+      "target": "server_src_services_groq_service_copiloterror",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L139",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_agent_service_runagentconversation",
+      "target": "server_src_services_groq_service_requestgroq",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L141",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_agent_service_runagentconversation",
       "target": "server_src_services_quant_service_fetchsupportedtickers",
       "relation": "calls",
       "_origin": "ast",
@@ -5188,7 +6001,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/src/services/agent.service.js",
-      "source_location": "L91",
+      "source_location": "L158",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_agent_service_runagentconversation",
+      "target": "server_src_services_quant_service_fetchpricehistory",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L161",
       "weight": 1.0
     },
     {
@@ -5309,6 +6134,18 @@
       "context": "call",
       "source_file": "server/src/services/cache.service.js",
       "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_groq_service_requestgroq",
+      "target": "server_src_services_groq_service_copiloterror",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/src/services/groq.service.js",
+      "source_location": "L19",
       "weight": 1.0
     },
     {
@@ -5572,7 +6409,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "website/src/api.js",
-      "source_location": "L153",
+      "source_location": "L152",
       "weight": 1.0
     },
     {
@@ -5685,18 +6522,6 @@
     },
     {
       "source": "website_src_components_agentcopilot_agentcopilot_agentcopilot",
-      "target": "website_src_components_agentcopilot_agentcopilot_formatmarkdown",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
-      "source_location": "L101",
-      "weight": 1.0
-    },
-    {
-      "source": "website_src_components_agentcopilot_agentcopilot_agentcopilot",
       "target": "website_src_api_sendagentmessage",
       "relation": "calls",
       "_origin": "ast",
@@ -5704,7 +6529,31 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
-      "source_location": "L38",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "website_src_components_agentcopilot_agentcopilot_agentcopilot",
+      "target": "website_src_components_agentcopilot_agentcopilot_formatmarkdown",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "website_src_components_agentcopilot_agentcopilot_toolresult",
+      "target": "website_src_components_agentcopilot_agentcopilot_percent",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -6645,6 +7494,42 @@
     },
     {
       "source": "server_src_services_agent_service",
+      "target": "server_src_services_groq_service_copiloterror",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_agent_service",
+      "target": "server_src_services_groq_service_requestgroq",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_agent_service",
+      "target": "server_src_services_quant_service_fetchpricehistory",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_agent_service",
       "target": "server_src_services_quant_service_fetchsupportedtickers",
       "relation": "imports",
       "_origin": "ast",
@@ -6652,7 +7537,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "server/src/services/agent.service.js",
-      "source_location": "L1",
+      "source_location": "L3",
       "weight": 1.0
     },
     {
@@ -6664,7 +7549,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "server/src/services/agent.service.js",
-      "source_location": "L1",
+      "source_location": "L3",
       "weight": 1.0
     },
     {
@@ -6676,7 +7561,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "server/src/services/agent.service.js",
-      "source_location": "L2",
+      "source_location": "L4",
       "weight": 1.0
     },
     {
@@ -6728,20 +7613,68 @@
       "weight": 1.0
     },
     {
+      "source": "server_test_agent_deadline_test",
+      "target": "server_src_models_portfolio_portfolio",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/agent-deadline.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_agent_deadline_test",
+      "target": "server_src_services_agent_service_runagentconversation",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/agent-deadline.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_agent_loop_test",
+      "target": "server_src_services_agent_service_agenttools",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/agent-loop.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_agent_loop_test",
+      "target": "server_src_services_agent_service_runagentconversation",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/agent-loop.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
       "source": "server_test_agent_sessions_test",
-      "target": "server_src_models_user_user",
+      "target": "server_src_routes_agent_routes_router",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "server/test/agent-sessions.test.js",
-      "source_location": "L6",
+      "source_location": "L10",
       "weight": 1.0
     },
     {
       "source": "server_test_agent_sessions_test",
-      "target": "server_src_models_agentsession_agentsession",
+      "target": "server_src_models_user_user",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -6753,7 +7686,7 @@
     },
     {
       "source": "server_test_agent_sessions_test",
-      "target": "server_src_services_agent_service_agenttools",
+      "target": "server_src_models_agentsession_agentsession",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -6765,7 +7698,7 @@
     },
     {
       "source": "server_test_agent_sessions_test",
-      "target": "server_src_routes_agent_routes_router",
+      "target": "server_src_services_agent_service_agenttools",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -6790,18 +7723,6 @@
     {
       "source": "server_test_agent_test",
       "target": "server_src_services_agent_service_agenttools",
-      "relation": "imports",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "server/test/agent.test.js",
-      "source_location": "L5",
-      "weight": 1.0
-    },
-    {
-      "source": "server_test_agent_test",
-      "target": "server_src_services_agent_service_runagentconversation",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -6845,18 +7766,6 @@
       "context": "import",
       "source_file": "server/test/api.test.js",
       "source_location": "L5",
-      "weight": 1.0
-    },
-    {
-      "source": "server_test_api_test",
-      "target": "server_src_services_agent_service_runagentconversation",
-      "relation": "imports",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "server/test/api.test.js",
-      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -6916,6 +7825,18 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "server/test/database.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_groq_test",
+      "target": "server_src_services_groq_service_requestgroq",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/groq.test.js",
       "source_location": "L4",
       "weight": 1.0
     },
@@ -8205,6 +9126,18 @@
     },
     {
       "source": "server_src_services_agent_service",
+      "target": "server_src_services_groq_service",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_agent_service",
       "target": "server_src_services_quant_service",
       "relation": "imports_from",
       "_origin": "ast",
@@ -8212,7 +9145,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "server/src/services/agent.service.js",
-      "source_location": "L1",
+      "source_location": "L3",
       "weight": 1.0
     },
     {
@@ -8224,7 +9157,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "server/src/services/agent.service.js",
-      "source_location": "L2",
+      "source_location": "L4",
       "weight": 1.0
     },
     {
@@ -8264,20 +9197,56 @@
       "weight": 1.0
     },
     {
+      "source": "server_test_agent_deadline_test",
+      "target": "server_src_models_portfolio",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/agent-deadline.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_agent_deadline_test",
+      "target": "server_src_services_agent_service",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/agent-deadline.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_agent_loop_test",
+      "target": "server_src_services_agent_service",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/agent-loop.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
       "source": "server_test_agent_sessions_test",
-      "target": "server_src_models_user",
+      "target": "server_src_routes_agent_routes",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "server/test/agent-sessions.test.js",
-      "source_location": "L6",
+      "source_location": "L10",
       "weight": 1.0
     },
     {
       "source": "server_test_agent_sessions_test",
-      "target": "server_src_models_agentsession",
+      "target": "server_src_models_user",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -8289,7 +9258,7 @@
     },
     {
       "source": "server_test_agent_sessions_test",
-      "target": "server_src_services_agent_service",
+      "target": "server_src_models_agentsession",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -8301,7 +9270,7 @@
     },
     {
       "source": "server_test_agent_sessions_test",
-      "target": "server_src_routes_agent_routes",
+      "target": "server_src_services_agent_service",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -8345,18 +9314,6 @@
       "context": "import",
       "source_file": "server/test/api.test.js",
       "source_location": "L5",
-      "weight": 1.0
-    },
-    {
-      "source": "server_test_api_test",
-      "target": "server_src_services_agent_service",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "server/test/api.test.js",
-      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -8404,6 +9361,18 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "server/test/database.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_groq_test",
+      "target": "server_src_services_groq_service",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/groq.test.js",
       "source_location": "L4",
       "weight": 1.0
     },
@@ -9409,6 +10378,149 @@
       "weight": 1.0
     },
     {
+      "source": "docs_audits_2026_11_13_groq_integration",
+      "target": "docs_audits_2026_11_13_groq_integration_groq_integration_verification_2026_11_13",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-groq-integration.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_13_groq_integration_groq_integration_verification_2026_11_13",
+      "target": "docs_audits_2026_11_13_groq_integration_verified_gates",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-groq-integration.md",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_13_groq_integration_groq_integration_verification_2026_11_13",
+      "target": "docs_audits_2026_11_13_groq_integration_limited_live_checks",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-groq-integration.md",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_13_groq_integration_groq_integration_verification_2026_11_13",
+      "target": "docs_audits_2026_11_13_groq_integration_implemented_behavior",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-groq-integration.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_13_groq_integration_groq_integration_verification_2026_11_13",
+      "target": "docs_audits_2026_11_13_groq_integration_remaining_boundaries",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-groq-integration.md",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_13_trading_and_proposals_followup",
+      "target": "docs_audits_2026_11_13_trading_and_proposals_followup_trading_and_proposal_ui_follow_up_2026_11_13",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-trading-and-proposals-followup.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_13_trading_and_proposals_followup_trading_and_proposal_ui_follow_up_2026_11_13",
+      "target": "docs_audits_2026_11_13_trading_and_proposals_followup_p2_optimization_status_overlaps_quant_copilot",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-trading-and-proposals-followup.md",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_13_trading_and_proposals_followup_trading_and_proposal_ui_follow_up_2026_11_13",
+      "target": "docs_audits_2026_11_13_trading_and_proposals_followup_p2_buy_sell_proposal_layout_is_unfinished",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-trading-and-proposals-followup.md",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_13_trading_and_proposals_followup_trading_and_proposal_ui_follow_up_2026_11_13",
+      "target": "docs_audits_2026_11_13_trading_and_proposals_followup_p2_hidden_hypothetical_capital_and_missing_selection_feedback",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-trading-and-proposals-followup.md",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_13_trading_and_proposals_followup_trading_and_proposal_ui_follow_up_2026_11_13",
+      "target": "docs_audits_2026_11_13_trading_and_proposals_followup_evidence_and_verification_limits",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-trading-and-proposals-followup.md",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_13_trading_and_proposals_followup_trading_and_proposal_ui_follow_up_2026_11_13",
+      "target": "docs_audits_2026_11_13_trading_and_proposals_followup_resolution_update",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-trading-and-proposals-followup.md",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_13_trading_and_proposals_followup_trading_and_proposal_ui_follow_up_2026_11_13",
+      "target": "docs_audits_2026_11_13_trading_and_proposals_followup_p2_trade_quantity_controls_allow_invalid_oversell_attempts",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-trading-and-proposals-followup.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_13_trading_and_proposals_followup_trading_and_proposal_ui_follow_up_2026_11_13",
+      "target": "docs_audits_2026_11_13_trading_and_proposals_followup_groq_follow_on_verification",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-trading-and-proposals-followup.md",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
       "source": "docs_superpowers_plans_2026_11_11_optimization_button",
       "target": "docs_superpowers_plans_2026_11_11_optimization_button_optimization_button_fix_plan",
       "relation": "contains",
@@ -9597,6 +10709,39 @@
     },
     {
       "source": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_riskframe_ui_and_account_corrections_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_new_issues_reported_after_completion_2026_11_13",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
+      "source_location": "L244",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_riskframe_ui_and_account_corrections_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_groq_feature_queued_2026_11_13",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
+      "source_location": "L248",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_riskframe_ui_and_account_corrections_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_groq_and_ui_follow_up_completed_2026_11_13",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
+      "source_location": "L252",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_riskframe_ui_and_account_corrections_implementation_plan",
       "target": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_product_decisions_proposed_for_this_correction",
       "relation": "contains",
       "_origin": "ast",
@@ -9681,6 +10826,215 @@
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
       "source_location": "L138",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_groq_copilot",
+      "target": "docs_superpowers_plans_2026_11_13_groq_copilot_groq_copilot_implementation_plan",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_groq_copilot_groq_copilot_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_13_groq_copilot_configuration",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_groq_copilot_groq_copilot_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_13_groq_copilot_step_1_backend_provider_configuration_and_failure_behavior",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_groq_copilot_groq_copilot_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_13_groq_copilot_step_2_restricted_validated_tool_calling",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_groq_copilot_groq_copilot_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_13_groq_copilot_step_3_owned_multi_turn_context_and_privacy_boundary",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_groq_copilot_groq_copilot_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_13_groq_copilot_step_4_copilot_ux_and_grounded_explanations",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_groq_copilot_groq_copilot_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_13_groq_copilot_step_5_final_integration_gate_and_documentation",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_groq_copilot_groq_copilot_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_13_groq_copilot_completion_criteria_and_exclusions",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L65",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_groq_copilot_groq_copilot_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_13_groq_copilot_execution_ledger",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_groq_copilot_groq_copilot_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_13_groq_copilot_completion_status",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup",
+      "target": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_trading_and_proposal_ui_follow_up_implementation_plan",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_trading_and_proposal_ui_follow_up_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_chosen_approach",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_trading_and_proposal_ui_follow_up_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_task_1_trade_quantity_bounds_and_honest_order_controls",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_trading_and_proposal_ui_follow_up_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_task_2_optimization_feedback_without_copilot_collisions",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_trading_and_proposal_ui_follow_up_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_task_3_visible_hypothetical_capital_and_reliable_selected_state",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_trading_and_proposal_ui_follow_up_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_task_4_finish_the_buy_sell_proposal_presentation",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_trading_and_proposal_ui_follow_up_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_completion_criteria_and_boundaries",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_trading_and_proposal_ui_follow_up_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_follow_on_feature_phase_groq_copilot",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_trading_and_proposal_ui_follow_up_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup_execution_ledger",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L72",
       "weight": 1.0
     },
     {
@@ -10136,7 +11490,7 @@
     },
     {
       "source": "readme_riskframe",
-      "target": "readme_automated_ci_cd_workflows",
+      "target": "readme_groq_quant_copilot",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -10147,13 +11501,24 @@
     },
     {
       "source": "readme_riskframe",
+      "target": "readme_automated_ci_cd_workflows",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L437",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_riskframe",
       "target": "readme_quantitative_disclaimer",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L426",
+      "source_location": "L447",
       "weight": 1.0
     },
     {
@@ -10582,7 +11947,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/src/models/AgentSession.js",
-      "source_location": "L55",
+      "source_location": "L58",
       "weight": 1.0
     },
     {
@@ -10642,6 +12007,17 @@
     },
     {
       "source": "server_src_routes_agent_routes",
+      "target": "server_src_routes_agent_routes_agentchatschema",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/src/routes/agent.routes.js",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_routes_agent_routes",
       "target": "server_src_routes_agent_routes_router",
       "relation": "contains",
       "_origin": "ast",
@@ -10653,7 +12029,18 @@
     },
     {
       "source": "server_src_routes_agent_routes",
-      "target": "server_src_routes_agent_routes_agentchatschema",
+      "target": "server_src_routes_agent_routes_pending",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/src/routes/agent.routes.js",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_routes_agent_routes",
+      "target": "server_src_routes_agent_routes_windows",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -10763,13 +12150,13 @@
     },
     {
       "source": "server_src_services_agent_service",
-      "target": "server_src_services_agent_service_agenttools",
+      "target": "server_src_services_agent_service_conversationcontext",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/src/services/agent.service.js",
-      "source_location": "L7",
+      "source_location": "L100",
       "weight": 1.0
     },
     {
@@ -10780,7 +12167,84 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/src/services/agent.service.js",
+      "source_location": "L129",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_agent_service",
+      "target": "server_src_services_agent_service_ticker",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L78",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_agent_service",
+      "target": "server_src_services_agent_service_basket",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/src/services/agent.service.js",
       "source_location": "L79",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_agent_service",
+      "target": "server_src_services_agent_service_schemas",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L80",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_agent_service",
+      "target": "server_src_services_agent_service_symbolschema",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L87",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_agent_service",
+      "target": "server_src_services_agent_service_definition",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L88",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_agent_service",
+      "target": "server_src_services_agent_service_publictools",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L89",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_agent_service",
+      "target": "server_src_services_agent_service_agenttools",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/src/services/agent.service.js",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -10872,6 +12336,39 @@
       "weight": 1.0
     },
     {
+      "source": "server_src_services_groq_service",
+      "target": "server_src_services_groq_service_requestgroq",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/src/services/groq.service.js",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_groq_service",
+      "target": "server_src_services_groq_service_copiloterror",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/src/services/groq.service.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_groq_service",
+      "target": "server_src_services_groq_service_assistantmessage",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/src/services/groq.service.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
       "source": "server_src_services_ledger_service",
       "target": "server_src_services_ledger_service_applyportfoliooperation",
       "relation": "contains",
@@ -10957,6 +12454,39 @@
       "confidence_score": 1.0,
       "source_file": "server/src/services/quant.service.js",
       "source_location": "L96",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_agent_loop_test",
+      "target": "server_test_agent_loop_test_call",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/test/agent-loop.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_agent_loop_test",
+      "target": "server_test_agent_loop_test_finish",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/test/agent-loop.test.js",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_agent_loop_test",
+      "target": "server_test_agent_loop_test_fixture",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/test/agent-loop.test.js",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -11434,24 +12964,68 @@
     },
     {
       "source": "website_src_components_agentcopilot_agentcopilot",
-      "target": "website_src_components_agentcopilot_agentcopilot_formatmarkdown",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
-      "source_location": "L167",
-      "weight": 1.0
-    },
-    {
-      "source": "website_src_components_agentcopilot_agentcopilot",
       "target": "website_src_components_agentcopilot_agentcopilot_agentcopilot",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "website_src_components_agentcopilot_agentcopilot",
+      "target": "website_src_components_agentcopilot_agentcopilot_initialmessages",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "website_src_components_agentcopilot_agentcopilot",
+      "target": "website_src_components_agentcopilot_agentcopilot_toollabels",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "website_src_components_agentcopilot_agentcopilot",
+      "target": "website_src_components_agentcopilot_agentcopilot_percent",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "website_src_components_agentcopilot_agentcopilot",
+      "target": "website_src_components_agentcopilot_agentcopilot_formatmarkdown",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
+      "source_location": "L75",
+      "weight": 1.0
+    },
+    {
+      "source": "website_src_components_agentcopilot_agentcopilot",
+      "target": "website_src_components_agentcopilot_agentcopilot_toolresult",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -12368,6 +13942,39 @@
       "weight": 1.0
     },
     {
+      "source": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections",
+      "target": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
+      "source_location": "L246",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections",
+      "target": "docs_superpowers_plans_2026_11_13_groq_copilot",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
+      "source_location": "L250",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup",
+      "target": "docs_superpowers_plans_2026_11_13_groq_copilot",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
       "source": "optimizer_optimize_portfolio",
       "target": "optimizer_negative_sharpe",
       "relation": "indirect_call",
@@ -12388,7 +13995,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "server/src/routes/agent.routes.js",
-      "source_location": "L15",
+      "source_location": "L19",
       "weight": 1.0
     },
     {
@@ -12400,7 +14007,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "server/src/routes/agent.routes.js",
-      "source_location": "L71",
+      "source_location": "L92",
       "weight": 1.0
     },
     {
@@ -12438,8 +14045,20 @@
       "source_file": "server/src/routes/portfolio.routes.js",
       "source_location": "L25",
       "weight": 1.0
+    },
+    {
+      "source": "website_src_components_agentcopilot_agentcopilot_agentcopilot",
+      "target": "website_src_components_agentcopilot_agentcopilot_initialmessages",
+      "relation": "indirect_call",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "argument",
+      "source_file": "website/src/components/AgentCopilot/AgentCopilot.jsx",
+      "source_location": "L26",
+      "weight": 1.0
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "9cd86418efb43ea80741996fbe44434d715da848"
+  "built_at_commit": "250ae7f1e9e0a3458075f80c11d49fa244c513c8"
 }
