@@ -1,32 +1,28 @@
+# Compatible version ranges, not an exact environment lockfile.
+
 # Numerical Computing
-numpy>=2.0
-pandas>=2.2
-scipy>=1.14
+numpy>=2.0,<3
+pandas>=2.2,<4
+scipy>=1.14,<2
 
 # Machine Learning
-torch>=2.7
-torchvision>=0.22
-torchaudio>=2.7
-scikit-learn>=1.7
-joblib>=1.5
+torch>=2.7,<3
+scikit-learn>=1.7,<2
 
 # Data Collection
-yfinance>=0.2
-beautifulsoup4>=4.12
-lxml>=5.0
+requests>=2.32,<3
+yfinance>=0.2,<2
+# pandas.read_html uses these parsers.
+beautifulsoup4>=4.12,<5
+lxml>=5.0,<7
 
-# Visualization
-matplotlib>=3.10
-
-# Training Utilities
-tqdm>=4.67
-flask
-flask-cors
-gunicorn
+# Web Serving
+flask>=3.1,<4
+flask-cors>=6.0,<7
+gunicorn>=23,<28
 
 # Database and Cloud
-SQLAlchemy
-psycopg2-binary
-huggingface-hub
-python-dotenv
-
+SQLAlchemy>=2.0,<3
+psycopg2-binary>=2.9,<3
+huggingface-hub>=1.0,<2
+python-dotenv>=1.0,<2

@@ -16,7 +16,7 @@ test('saved strategy rebalance preserves zero risk-free preference and canonical
   User.findById = () => ({ select: async () => user });
   Portfolio.findOne = async query => { assert.equal(query.userId, user._id); return portfolio; };
   let submitted;
-  axios.post = async (_url, body) => { submitted = body; return { data: { allocation: portfolio.allocations, metrics: { expected_return: 0, volatility: 0.2, sharpe_ratio: 0 } } }; };
+  axios.post = async (_url, body) => { submitted = body; return { data: { allocation: portfolio.allocations, ai_predictions: { AAPL: 0.1, MSFT: 0.1 }, metrics: { expected_return: 0, volatility: 0.2, sharpe_ratio: 0 } } }; };
   const app = express(); app.use(express.json()); app.use('/portfolios', routes);
   const server = app.listen(0, '127.0.0.1');
   try {

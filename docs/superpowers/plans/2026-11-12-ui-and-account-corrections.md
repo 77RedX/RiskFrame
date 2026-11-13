@@ -252,3 +252,7 @@ The user requested adding the Groq implementation proposal to the roadmap and ha
 ## Groq and UI follow-up completed - 2026-11-13
 
 The four trading/proposal fixes and the separate Groq feature are now implemented, tested and committed independently. See the linked follow-up/Groq plans and docs/audits/2026-11-13-groq-integration.md for live checks and limitations. Model openai/gpt-oss-20b is configured locally; actual credentials remain ignored. Current outstanding deployment boundaries: Render multi-service/proxy/CORS/frontend build configuration, any external historical JWT-key retirement, and shared rate limiting before horizontal scaling.
+
+## New open high-priority issue - 2026-11-13
+
+- [x] Reject malformed optimization responses before return/cache, and prevent reuse of previously malformed cached entries. Confirmed with real shared helper + isolated route/cache reproduction (HTTP 200 then cached HTTP 200 despite sidecar failure) and Edge rendering NaN%, NaN%, blank Sharpe. Required coverage: finite metric fields; exact requested/supported basket; nonnegative finite, cap-compliant weights totaling approximately one; valid-zero cases; cache-hit/write protection and error UI. See [verification audit](../../audits/2026-11-13-quant-response-validation.md). Implemented with shared response validation, cache read/write checks and optimization namespace v3; verified with 30 backend tests, Edge error/retry coverage and a real Python result followed by a Redis hit. See the audit for details.

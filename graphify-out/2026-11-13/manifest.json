@@ -60,9 +60,9 @@
     "semantic_hash": "f18ba96f6119a8320c9b7522ed3344fb"
   },
   "website/src/App.jsx": {
-    "mtime": 1794511992.3655834,
-    "seen": 1794512725.8915665,
-    "ast_hash": "ad86adee48a1e362c6f092dfde7f7307",
+    "mtime": 1794515399.1447124,
+    "seen": 1794517572.125776,
+    "ast_hash": "bb8df58a46225129b5893dd9356b6e24",
     "semantic_hash": ""
   },
   "website/src/components/Footer.jsx": {
@@ -204,9 +204,9 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1794512603.2079716,
-    "seen": 1794512725.8916156,
-    "ast_hash": "6cf6373d691769ec1cf10130c9b0d54e",
+    "mtime": 1794517077.5217805,
+    "seen": 1794517572.125832,
+    "ast_hash": "fb1d55bcb09b0c7cb33fd820eeb1877b",
     "semantic_hash": ""
   },
   "requirements.txt": {
@@ -222,9 +222,9 @@
     "semantic_hash": ""
   },
   "website/src/api.js": {
-    "mtime": 1794486192.066621,
-    "seen": 1794512725.8915682,
-    "ast_hash": "7a7b9146efcbdc4955f38f89f85338e1",
+    "mtime": 1794516561.4147754,
+    "seen": 1794517572.1257775,
+    "ast_hash": "3feb254b992151b5e20140303e362862",
     "semantic_hash": ""
   },
   "website/src/components/LoadingScreen.jsx": {
@@ -276,9 +276,9 @@
     "semantic_hash": ""
   },
   "server/src/models/AgentSession.js": {
-    "mtime": 1791612610.7920263,
-    "seen": 1794402156.509624,
-    "ast_hash": "b32929c53222bd4537fe28ec38364677",
+    "mtime": 1794516187.2769518,
+    "seen": 1794517572.1257403,
+    "ast_hash": "02cd379128dd221391d071fc789125c6",
     "semantic_hash": ""
   },
   "server/src/models/Portfolio.js": {
@@ -294,9 +294,9 @@
     "semantic_hash": ""
   },
   "server/src/routes/agent.routes.js": {
-    "mtime": 1794512077.0243666,
-    "seen": 1794512725.8915424,
-    "ast_hash": "4f90ecd824c140cca3e4804c1de351be",
+    "mtime": 1794516187.2769518,
+    "seen": 1794517572.1257443,
+    "ast_hash": "1796605185e18906fb68355ec6bcddb9",
     "semantic_hash": ""
   },
   "server/src/routes/auth.routes.js": {
@@ -318,9 +318,9 @@
     "semantic_hash": ""
   },
   "server/src/services/agent.service.js": {
-    "mtime": 1794512355.0889876,
-    "seen": 1794512725.8915486,
-    "ast_hash": "c632f29f583d56bab0b4153c3b2d9124",
+    "mtime": 1794517247.269727,
+    "seen": 1794517572.1257508,
+    "ast_hash": "9f21ee51b5a6a0010c607a161f723692",
     "semantic_hash": ""
   },
   "server/src/services/cache.service.js": {
@@ -330,39 +330,39 @@
     "semantic_hash": ""
   },
   "server/src/services/quant.service.js": {
-    "mtime": 1794512161.6623602,
-    "seen": 1794512725.891552,
-    "ast_hash": "9e3d84dcc69f6132b3711e4384b311eb",
+    "mtime": 1794515921.1422164,
+    "seen": 1794517572.1257553,
+    "ast_hash": "b82a6d0614e04e6f5553e7052e3998bf",
     "semantic_hash": ""
   },
   "server/test/api.test.js": {
-    "mtime": 1794512162.341489,
-    "seen": 1794512725.8915565,
-    "ast_hash": "4f0ad37d4554c7555296b1a2e1a399cb",
+    "mtime": 1794515953.607847,
+    "seen": 1794517572.125762,
+    "ast_hash": "ac6aa19135c08b0a354150b89d518fc9",
     "semantic_hash": ""
   },
   "website/src/components/AgentCopilot/AgentCopilot.jsx": {
-    "mtime": 1794512355.0904925,
-    "seen": 1794512725.891569,
-    "ast_hash": "51e15bdddb508890c1cf1b2aaabde05a",
+    "mtime": 1794517247.2687242,
+    "seen": 1794517572.1257784,
+    "ast_hash": "f7854f080bdf65bffdf01d15666fb898",
     "semantic_hash": ""
   },
   "website/src/components/MyPortfolio/MyPortfolio.jsx": {
-    "mtime": 1794485205.7951498,
-    "seen": 1794512725.8915734,
-    "ast_hash": "ef552d49bd320c4af38bef9f48acd753",
+    "mtime": 1794514754.1110082,
+    "seen": 1794517572.1257832,
+    "ast_hash": "4f810a0f3fb725b7c72fa4a89771c620",
     "semantic_hash": ""
   },
   "website/src/components/OptimalSignals/OptimalSignals.jsx": {
-    "mtime": 1794484863.7853632,
-    "seen": 1794512725.8915758,
-    "ast_hash": "ad1916471d569bf7fac4ce312168912f",
+    "mtime": 1794517247.2687242,
+    "seen": 1794517572.1257858,
+    "ast_hash": "74b8ab62ff463cf8a85a4f8faa8b12d2",
     "semantic_hash": ""
   },
   "website/src/components/Trading/TradeModal.jsx": {
-    "mtime": 1794485205.7951498,
-    "seen": 1794512725.8915913,
-    "ast_hash": "ddd0dfbc06ee9f57cc42d964f7fd0f7b",
+    "mtime": 1794514837.0202014,
+    "seen": 1794517572.125804,
+    "ast_hash": "58fcecf3e6346c43c8f5422d1ca3d6e8",
     "semantic_hash": ""
   },
   "website/src/components/UserAuth/AuthModal.jsx": {
@@ -384,15 +384,15 @@
     "semantic_hash": ""
   },
   "docker-compose.dev.yml": {
-    "mtime": 1794512513.8370998,
-    "seen": 1794512725.891617,
-    "ast_hash": "34b8929065aef1fccb37f6e467021dc4",
+    "mtime": 1794515677.9402862,
+    "seen": 1794517572.1258333,
+    "ast_hash": "cd8a36b10302beb9a09911fd2818aa08",
     "semantic_hash": ""
   },
   "docker-compose.yml": {
-    "mtime": 1794512513.4794238,
-    "seen": 1794512725.891618,
-    "ast_hash": "9a046c31fab848a32caa3b4b5821cfa3",
+    "mtime": 1794515677.6014593,
+    "seen": 1794517572.1258345,
+    "ast_hash": "0a3c90679313ae1ad487b473ce3de240",
     "semantic_hash": ""
   },
   "render.yaml": {
@@ -426,15 +426,15 @@
     "semantic_hash": ""
   },
   "server/test/agent-sessions.test.js": {
-    "mtime": 1794512066.0890038,
-    "seen": 1794512725.891554,
-    "ast_hash": "bb6db81041ec4a144e7c1ae26ceb280f",
+    "mtime": 1794516323.3811772,
+    "seen": 1794517572.12576,
+    "ast_hash": "fcecb65f7c5e8034844ab13412e69af5",
     "semantic_hash": ""
   },
   "server/test/agent.test.js": {
-    "mtime": 1794512355.0889876,
-    "seen": 1794512725.891555,
-    "ast_hash": "cedc8572e62a03c75d4febe317fd626c",
+    "mtime": 1794516187.2932324,
+    "seen": 1794517572.125761,
+    "ast_hash": "9df1624f38ab0cc20d96f3faeaecf4de",
     "semantic_hash": ""
   },
   "server/test/auth.test.js": {
@@ -504,15 +504,15 @@
     "semantic_hash": ""
   },
   "website/tests/copilot.spec.js": {
-    "mtime": 1794511965.9657826,
-    "seen": 1794512725.8916023,
-    "ast_hash": "db563aa3f73094b10b3825b869be1104",
+    "mtime": 1794516475.0487669,
+    "seen": 1794517572.125816,
+    "ast_hash": "e0b6bf238d09a1b5fe2acf43cba0b8f2",
     "semantic_hash": ""
   },
   "website/tests/layout.spec.js": {
-    "mtime": 1794486192.099467,
-    "seen": 1794512725.8916032,
-    "ast_hash": "d858c0ade1cdb3aaa95150fdc32158df",
+    "mtime": 1794514988.7032876,
+    "seen": 1794517572.125817,
+    "ast_hash": "dd387e1fd067750b8a6b18eb77a3b308",
     "semantic_hash": ""
   },
   "website/tests/loading.spec.js": {
@@ -528,9 +528,9 @@
     "semantic_hash": ""
   },
   "website/tests/optimization.spec.js": {
-    "mtime": 1794511843.9126143,
-    "seen": 1794512725.891607,
-    "ast_hash": "c106719172cea6eb8688af47581d537d",
+    "mtime": 1794515082.3860784,
+    "seen": 1794517572.1258209,
+    "ast_hash": "91ad97712731b1b5406580e3cd5ce97a",
     "semantic_hash": ""
   },
   "website/tests/portfolio.spec.js": {
@@ -552,15 +552,135 @@
     "semantic_hash": ""
   },
   "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md": {
-    "mtime": 1794512884.1097038,
-    "seen": 1794512910.6175287,
-    "ast_hash": "766dca4806ee711eff9394a224a0dbe2",
+    "mtime": 1794517465.3981962,
+    "seen": 1794517572.12584,
+    "ast_hash": "7880a335b9a420e535c05ddb71c06d1b",
     "semantic_hash": ""
   },
   "server/test/rebalance.test.js": {
     "mtime": 1794512770.6116028,
     "seen": 1794512910.6174765,
     "ast_hash": "6cfd44e61a37b3578b88be428f4bedb6",
+    "semantic_hash": ""
+  },
+  "docs/audits/2026-11-13-followup-evidence.json": {
+    "mtime": 1794513615.9425452,
+    "seen": 1794517572.1257193,
+    "ast_hash": "db2b56fe76b5773433a67ff4304e889c",
+    "semantic_hash": ""
+  },
+  "server/src/services/groq.service.js": {
+    "mtime": 1794515921.1432197,
+    "seen": 1794517572.1257532,
+    "ast_hash": "5444514472cf7847b852c5f41a3a2f11",
+    "semantic_hash": ""
+  },
+  "server/test/agent-deadline.test.js": {
+    "mtime": 1794516950.539352,
+    "seen": 1794517572.1257577,
+    "ast_hash": "c9b685634f88086b7302272cec86ebcb",
+    "semantic_hash": ""
+  },
+  "server/test/agent-loop.test.js": {
+    "mtime": 1794516323.0574133,
+    "seen": 1794517572.1257586,
+    "ast_hash": "081e4ad5d04c73cdb16881029505863b",
+    "semantic_hash": ""
+  },
+  "server/test/groq.test.js": {
+    "mtime": 1794515638.456362,
+    "seen": 1794517572.1257668,
+    "ast_hash": "d2e5a222dd82aa91c1a9ecfc0ae6e6a9",
+    "semantic_hash": ""
+  },
+  "website/tests/proposals.spec.js": {
+    "mtime": 1794515316.195954,
+    "seen": 1794517572.1258228,
+    "ast_hash": "94593c0266286fd711dc07bfadb1e919",
+    "semantic_hash": ""
+  },
+  "website/tests/trade-quantity.spec.js": {
+    "mtime": 1794514659.4011126,
+    "seen": 1794517572.1258237,
+    "ast_hash": "c5c682825f845849a5139f453b844059",
+    "semantic_hash": ""
+  },
+  "docs/audits/2026-11-13-groq-integration.md": {
+    "mtime": 1794517465.3981962,
+    "seen": 1794517572.1258366,
+    "ast_hash": "1ff4189f55394d8714115955ab20a363",
+    "semantic_hash": ""
+  },
+  "docs/audits/2026-11-13-trading-and-proposals-followup.md": {
+    "mtime": 1794517077.5217805,
+    "seen": 1794517572.1258376,
+    "ast_hash": "05402ebcc55b16d1b5ed3bb47d8951f4",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-11-13-groq-copilot.md": {
+    "mtime": 1794517465.3981962,
+    "seen": 1794517572.1258407,
+    "ast_hash": "3e922cf29c53c3a960df3aca6d0aa4ca",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md": {
+    "mtime": 1794515581.5053473,
+    "seen": 1794517572.1258414,
+    "ast_hash": "32127b1631873fb96134623f4c0e176f",
+    "semantic_hash": ""
+  },
+  "docs/audits/2026-11-13-groq-copilot-live-390.png": {
+    "mtime": 1794517361.112622,
+    "seen": 1794517572.1258457,
+    "ast_hash": "2f2135f4c77fbd05af2d8b7042174266",
+    "semantic_hash": ""
+  },
+  "docs/audits/2026-11-13-oversell-dialog.png": {
+    "mtime": 1794513469.9421086,
+    "seen": 1794517572.1258466,
+    "ast_hash": "88334f95c79d38506a25d3d2536a16a6",
+    "semantic_hash": ""
+  },
+  "docs/audits/2026-11-13-proposal-cards-fixed-1440.png": {
+    "mtime": 1794515560.1238348,
+    "seen": 1794517572.1258478,
+    "ast_hash": "d048ee0eda4c19c8af2f15d07d743530",
+    "semantic_hash": ""
+  },
+  "docs/audits/2026-11-13-proposal-cards-fixed-390.png": {
+    "mtime": 1794515560.477947,
+    "seen": 1794517572.1258488,
+    "ast_hash": "969ec759730a915d642240560305ff47",
+    "semantic_hash": ""
+  },
+  "docs/audits/2026-11-13-proposals-1440.png": {
+    "mtime": 1794513468.1001132,
+    "seen": 1794517572.1258495,
+    "ast_hash": "46113a179e04da7f7ad65e57b4ab4712",
+    "semantic_hash": ""
+  },
+  "docs/audits/2026-11-13-proposals-390.png": {
+    "mtime": 1794513468.6394303,
+    "seen": 1794517572.125851,
+    "ast_hash": "cfcb9e6bb248b7e65a051c516b120b53",
+    "semantic_hash": ""
+  },
+  "docs/audits/2026-11-13-proposals-fixed-1440.png": {
+    "mtime": 1794515514.5733967,
+    "seen": 1794517572.1258519,
+    "ast_hash": "82d390a7fcf68cee61f8b7c50673dcab",
+    "semantic_hash": ""
+  },
+  "docs/audits/2026-11-13-proposals-fixed-390.png": {
+    "mtime": 1794515514.9786437,
+    "seen": 1794517572.1258528,
+    "ast_hash": "7c852f853809cf7534de1408f160844b",
+    "semantic_hash": ""
+  },
+  "docs/audits/Screenshot 2026-11-13 012407.png": {
+    "mtime": 1794513248.0861633,
+    "seen": 1794517572.1258538,
+    "ast_hash": "0aee8c841349d9527bd49a6049c2c336",
     "semantic_hash": ""
   }
 }

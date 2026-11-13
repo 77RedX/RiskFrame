@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { validateQuantResponse } from './quant-response.js';
 
 const PYTHON_QUANT_URL = process.env.PYTHON_QUANT_URL || 'http://127.0.0.1:5001';
 
@@ -78,7 +79,7 @@ export function solveMarkowitzSharpe(returns, covMatrix, maxWeight = 0.35, riskF
 }
 
 /**
- * Execute optimization via Python Quant Microservice or JS Quant Fallback
+ * Execute optimization via Python Quant Microservice.
  */
 export async function runQuantOptimization(tickers, maxWeight = 0.35, riskFreeRate = 0.04, { signal } = {}) {
   const response = await axios.post(
@@ -86,7 +87,7 @@ export async function runQuantOptimization(tickers, maxWeight = 0.35, riskFreeRa
     { tickers, max_weight: maxWeight, risk_free_rate: riskFreeRate },
     { timeout: 15000, signal }
   );
-  if (!response.data?.allocation || !response.data?.metrics) throw new Error('Invalid quant response');
+  validateQuantResponse(response.data, tickers, maxWeight);
   return { ...response.data, engine: 'python-pytorch-slsqp' };
 }
 

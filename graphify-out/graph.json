@@ -4,6 +4,19 @@
   "graph": {},
   "nodes": [
     {
+      "id": "dataset_portfoliodataset",
+      "label": "PortfolioDataset",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "portfoliodataset",
+      "source_file": "dataset.py",
+      "source_location": "L93"
+    },
+    {
       "id": "model_residualblock",
       "label": "ResidualBlock",
       "_callable": true,
@@ -35,25 +48,12 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
+      "community": 16,
+      "community_name": "OptimizationTests",
       "file_type": "code",
       "norm_label": "optimizationtests",
       "source_file": "tests/test_optimization.py",
       "source_location": "L12"
-    },
-    {
-      "id": "dataset_portfoliodataset",
-      "label": "PortfolioDataset",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "code",
-      "norm_label": "portfoliodataset",
-      "source_file": "dataset.py",
-      "source_location": "L93"
     },
     {
       "id": "server_src_config_auth_getjwtsecret",
@@ -61,11 +61,47 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "getjwtsecret()",
       "source_file": "server/src/config/auth.js",
       "source_location": "L1"
+    },
+    {
+      "id": "server_src_config_db_connectdb",
+      "label": "connectDB()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "index.js",
+      "file_type": "code",
+      "norm_label": "connectdb()",
+      "source_file": "server/src/config/db.js",
+      "source_location": "L3"
+    },
+    {
+      "id": "server_src_config_db_disconnectdb",
+      "label": "disconnectDB()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "index.js",
+      "file_type": "code",
+      "norm_label": "disconnectdb()",
+      "source_file": "server/src/config/db.js",
+      "source_location": "L11"
+    },
+    {
+      "id": "server_src_index_startserver",
+      "label": "startServer()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "index.js",
+      "file_type": "code",
+      "norm_label": "startserver()",
+      "source_file": "server/src/index.js",
+      "source_location": "L58"
     },
     {
       "id": "server_src_middleware_auth_middleware_authenticate",
@@ -73,7 +109,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "authenticate()",
       "source_file": "server/src/middleware/auth.middleware.js",
@@ -85,7 +121,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "optionalauthenticate()",
       "source_file": "server/src/middleware/auth.middleware.js",
@@ -97,7 +133,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "generatetoken()",
       "source_file": "server/src/routes/auth.routes.js",
@@ -109,7 +145,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "applyportfoliooperation()",
       "source_file": "server/src/services/ledger.service.js",
@@ -121,7 +157,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "cents()",
       "source_file": "server/src/services/ledger.service.js",
@@ -133,7 +169,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "invalid()",
       "source_file": "server/src/services/ledger.service.js",
@@ -145,7 +181,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "json()",
       "source_file": "server/test/auth.test.js",
@@ -157,7 +193,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "status()",
       "source_file": "server/test/auth.test.js",
@@ -169,7 +205,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "quote()",
       "source_file": "server/test/ledger.test.js",
@@ -258,6 +294,138 @@
       "norm_label": "supported_tickers()",
       "source_file": "app.py",
       "source_location": "L129"
+    },
+    {
+      "id": "data_loader_get_sp500_tickers",
+      "label": "get_sp500_tickers()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "get_sp500_tickers()",
+      "source_file": "data_loader.py",
+      "source_location": "L6"
+    },
+    {
+      "id": "data_loader_load_portfolio_data",
+      "label": "load_portfolio_data()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "load_portfolio_data()",
+      "source_file": "data_loader.py",
+      "source_location": "L26"
+    },
+    {
+      "id": "dataset_download_and_prepare_data",
+      "label": "download_and_prepare_data()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "download_and_prepare_data()",
+      "source_file": "dataset.py",
+      "source_location": "L63"
+    },
+    {
+      "id": "dataset_get_tickers",
+      "label": "get_tickers()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "get_tickers()",
+      "source_file": "dataset.py",
+      "source_location": "L39"
+    },
+    {
+      "id": "dataset_portfoliodataset_getitem",
+      "label": ".__getitem__()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": ".__getitem__()",
+      "source_file": "dataset.py",
+      "source_location": "L166"
+    },
+    {
+      "id": "dataset_portfoliodataset_init",
+      "label": ".__init__()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": ".__init__()",
+      "source_file": "dataset.py",
+      "source_location": "L111"
+    },
+    {
+      "id": "dataset_portfoliodataset_len",
+      "label": ".__len__()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": ".__len__()",
+      "source_file": "dataset.py",
+      "source_location": "L163"
+    },
+    {
+      "id": "feature_eng_compute_macd",
+      "label": "compute_macd()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "compute_macd()",
+      "source_file": "feature_eng.py",
+      "source_location": "L42"
+    },
+    {
+      "id": "feature_eng_compute_rsi",
+      "label": "compute_rsi()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "compute_rsi()",
+      "source_file": "feature_eng.py",
+      "source_location": "L22"
+    },
+    {
+      "id": "feature_eng_engineer_features",
+      "label": "engineer_features()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "engineer_features()",
+      "source_file": "feature_eng.py",
+      "source_location": "L60"
+    },
+    {
+      "id": "feature_eng_save_engineered_features",
+      "label": "save_engineered_features()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "save_engineered_features()",
+      "source_file": "feature_eng.py",
+      "source_location": "L189"
     },
     {
       "id": "main_main",
@@ -404,100 +572,16 @@
       "source_location": "L83"
     },
     {
-      "id": "tests_test_optimization_optimizationtests_request",
-      "label": ".request()",
+      "id": "train_train",
+      "label": "train()",
       "_callable": true,
       "_origin": "ast",
       "community": 1,
       "community_name": "app.py",
       "file_type": "code",
-      "norm_label": ".request()",
-      "source_file": "tests/test_optimization.py",
-      "source_location": "L27"
-    },
-    {
-      "id": "tests_test_optimization_optimizationtests_setupclass",
-      "label": ".setUpClass()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": ".setupclass()",
-      "source_file": "tests/test_optimization.py",
-      "source_location": "L14"
-    },
-    {
-      "id": "tests_test_optimization_optimizationtests_test_applies_requested_exposure_limit",
-      "label": ".test_applies_requested_exposure_limit()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": ".test_applies_requested_exposure_limit()",
-      "source_file": "tests/test_optimization.py",
-      "source_location": "L30"
-    },
-    {
-      "id": "tests_test_optimization_optimizationtests_test_applies_zero_risk_free_rate",
-      "label": ".test_applies_zero_risk_free_rate()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": ".test_applies_zero_risk_free_rate()",
-      "source_file": "tests/test_optimization.py",
-      "source_location": "L41"
-    },
-    {
-      "id": "tests_test_optimization_optimizationtests_test_invalid_inputs_are_rejected",
-      "label": ".test_invalid_inputs_are_rejected()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": ".test_invalid_inputs_are_rejected()",
-      "source_file": "tests/test_optimization.py",
-      "source_location": "L47"
-    },
-    {
-      "id": "tests_test_optimization_optimizationtests_test_solver_failure_is_not_returned_as_success",
-      "label": ".test_solver_failure_is_not_returned_as_success()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": ".test_solver_failure_is_not_returned_as_success()",
-      "source_file": "tests/test_optimization.py",
-      "source_location": "L57"
-    },
-    {
-      "id": "tests_test_optimization_optimizationtests_test_solver_rejects_infeasible_constraints",
-      "label": ".test_solver_rejects_infeasible_constraints()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": ".test_solver_rejects_infeasible_constraints()",
-      "source_file": "tests/test_optimization.py",
-      "source_location": "L53"
-    },
-    {
-      "id": "tests_test_optimization_optimizationtests_test_supported_tickers_match_initialized_engine_universe",
-      "label": ".test_supported_tickers_match_initialized_engine_universe()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": ".test_supported_tickers_match_initialized_engine_universe()",
-      "source_file": "tests/test_optimization.py",
-      "source_location": "L36"
+      "norm_label": "train()",
+      "source_file": "train.py",
+      "source_location": "L15"
     },
     {
       "id": "website_src_hooks_useintersectionobserver_useintersectionobserver",
@@ -524,148 +608,100 @@
       "source_location": "L44"
     },
     {
-      "id": "data_loader_get_sp500_tickers",
-      "label": "get_sp500_tickers()",
+      "id": "tests_test_optimization_optimizationtests_request",
+      "label": ".request()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
-      "community_name": "Dataset",
+      "community_name": "OptimizationTests",
       "file_type": "code",
-      "norm_label": "get_sp500_tickers()",
-      "source_file": "data_loader.py",
-      "source_location": "L6"
+      "norm_label": ".request()",
+      "source_file": "tests/test_optimization.py",
+      "source_location": "L27"
     },
     {
-      "id": "data_loader_load_portfolio_data",
-      "label": "load_portfolio_data()",
+      "id": "tests_test_optimization_optimizationtests_setupclass",
+      "label": ".setUpClass()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
-      "community_name": "Dataset",
+      "community_name": "OptimizationTests",
       "file_type": "code",
-      "norm_label": "load_portfolio_data()",
-      "source_file": "data_loader.py",
-      "source_location": "L26"
+      "norm_label": ".setupclass()",
+      "source_file": "tests/test_optimization.py",
+      "source_location": "L14"
     },
     {
-      "id": "dataset_download_and_prepare_data",
-      "label": "download_and_prepare_data()",
+      "id": "tests_test_optimization_optimizationtests_test_applies_requested_exposure_limit",
+      "label": ".test_applies_requested_exposure_limit()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
-      "community_name": "Dataset",
+      "community_name": "OptimizationTests",
       "file_type": "code",
-      "norm_label": "download_and_prepare_data()",
-      "source_file": "dataset.py",
-      "source_location": "L63"
+      "norm_label": ".test_applies_requested_exposure_limit()",
+      "source_file": "tests/test_optimization.py",
+      "source_location": "L30"
     },
     {
-      "id": "dataset_get_tickers",
-      "label": "get_tickers()",
+      "id": "tests_test_optimization_optimizationtests_test_applies_zero_risk_free_rate",
+      "label": ".test_applies_zero_risk_free_rate()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
-      "community_name": "Dataset",
+      "community_name": "OptimizationTests",
       "file_type": "code",
-      "norm_label": "get_tickers()",
-      "source_file": "dataset.py",
-      "source_location": "L39"
+      "norm_label": ".test_applies_zero_risk_free_rate()",
+      "source_file": "tests/test_optimization.py",
+      "source_location": "L41"
     },
     {
-      "id": "dataset_portfoliodataset_getitem",
-      "label": ".__getitem__()",
+      "id": "tests_test_optimization_optimizationtests_test_invalid_inputs_are_rejected",
+      "label": ".test_invalid_inputs_are_rejected()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
-      "community_name": "Dataset",
+      "community_name": "OptimizationTests",
       "file_type": "code",
-      "norm_label": ".__getitem__()",
-      "source_file": "dataset.py",
-      "source_location": "L166"
+      "norm_label": ".test_invalid_inputs_are_rejected()",
+      "source_file": "tests/test_optimization.py",
+      "source_location": "L47"
     },
     {
-      "id": "dataset_portfoliodataset_init",
-      "label": ".__init__()",
+      "id": "tests_test_optimization_optimizationtests_test_solver_failure_is_not_returned_as_success",
+      "label": ".test_solver_failure_is_not_returned_as_success()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
-      "community_name": "Dataset",
+      "community_name": "OptimizationTests",
       "file_type": "code",
-      "norm_label": ".__init__()",
-      "source_file": "dataset.py",
-      "source_location": "L111"
+      "norm_label": ".test_solver_failure_is_not_returned_as_success()",
+      "source_file": "tests/test_optimization.py",
+      "source_location": "L57"
     },
     {
-      "id": "dataset_portfoliodataset_len",
-      "label": ".__len__()",
+      "id": "tests_test_optimization_optimizationtests_test_solver_rejects_infeasible_constraints",
+      "label": ".test_solver_rejects_infeasible_constraints()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
-      "community_name": "Dataset",
+      "community_name": "OptimizationTests",
       "file_type": "code",
-      "norm_label": ".__len__()",
-      "source_file": "dataset.py",
-      "source_location": "L163"
+      "norm_label": ".test_solver_rejects_infeasible_constraints()",
+      "source_file": "tests/test_optimization.py",
+      "source_location": "L53"
     },
     {
-      "id": "feature_eng_compute_macd",
-      "label": "compute_macd()",
+      "id": "tests_test_optimization_optimizationtests_test_supported_tickers_match_initialized_engine_universe",
+      "label": ".test_supported_tickers_match_initialized_engine_universe()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
-      "community_name": "Dataset",
+      "community_name": "OptimizationTests",
       "file_type": "code",
-      "norm_label": "compute_macd()",
-      "source_file": "feature_eng.py",
-      "source_location": "L42"
-    },
-    {
-      "id": "feature_eng_compute_rsi",
-      "label": "compute_rsi()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "code",
-      "norm_label": "compute_rsi()",
-      "source_file": "feature_eng.py",
-      "source_location": "L22"
-    },
-    {
-      "id": "feature_eng_engineer_features",
-      "label": "engineer_features()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "code",
-      "norm_label": "engineer_features()",
-      "source_file": "feature_eng.py",
-      "source_location": "L60"
-    },
-    {
-      "id": "feature_eng_save_engineered_features",
-      "label": "save_engineered_features()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "code",
-      "norm_label": "save_engineered_features()",
-      "source_file": "feature_eng.py",
-      "source_location": "L189"
-    },
-    {
-      "id": "train_train",
-      "label": "train()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "code",
-      "norm_label": "train()",
-      "source_file": "train.py",
-      "source_location": "L15"
+      "norm_label": ".test_supported_tickers_match_initialized_engine_universe()",
+      "source_file": "tests/test_optimization.py",
+      "source_location": "L36"
     },
     {
       "id": "server_src_services_agent_service_conversationcontext",
@@ -677,7 +713,7 @@
       "file_type": "code",
       "norm_label": "conversationcontext()",
       "source_file": "server/src/services/agent.service.js",
-      "source_location": "L100"
+      "source_location": "L103"
     },
     {
       "id": "server_src_services_agent_service_definition",
@@ -701,7 +737,7 @@
       "file_type": "code",
       "norm_label": "runagentconversation()",
       "source_file": "server/src/services/agent.service.js",
-      "source_location": "L129"
+      "source_location": "L132"
     },
     {
       "id": "server_src_services_groq_service_copiloterror",
@@ -728,6 +764,18 @@
       "source_location": "L16"
     },
     {
+      "id": "server_src_services_quant_service_fetchpricehistory",
+      "label": "fetchPriceHistory()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "fetchpricehistory()",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L97"
+    },
+    {
       "id": "server_src_services_quant_service_fetchsupportedtickers",
       "label": "fetchSupportedTickers()",
       "_callable": true,
@@ -737,7 +785,31 @@
       "file_type": "code",
       "norm_label": "fetchsupportedtickers()",
       "source_file": "server/src/services/quant.service.js",
-      "source_location": "L103"
+      "source_location": "L104"
+    },
+    {
+      "id": "server_src_services_quant_service_runquantoptimization",
+      "label": "runQuantOptimization()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "runquantoptimization()",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L84"
+    },
+    {
+      "id": "server_src_services_quant_service_solvemarkowitzsharpe",
+      "label": "solveMarkowitzSharpe()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "solvemarkowitzsharpe()",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L10"
     },
     {
       "id": "server_test_agent_loop_test_call",
@@ -1136,6 +1208,18 @@
       "source_location": "L3"
     },
     {
+      "id": "website_src_components_pricehistory_pricechart_pricechart",
+      "label": "PriceChart()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "App.jsx",
+      "file_type": "code",
+      "norm_label": "pricechart()",
+      "source_file": "website/src/components/PriceHistory/PriceChart.jsx",
+      "source_location": "L26"
+    },
+    {
       "id": "website_src_components_pricehistory_pricehistory_pricehistory",
       "label": "PriceHistory()",
       "_callable": true,
@@ -1196,16 +1280,16 @@
       "source_location": "L10"
     },
     {
-      "id": "website_src_components_pricehistory_pricechart_pricechart",
-      "label": "PriceChart()",
+      "id": "server_test_quant_response_test_redis_connect",
+      "label": ".connect()",
       "_callable": true,
       "_origin": "ast",
-      "community": 5,
-      "community_name": "stocks.js",
+      "community": 34,
+      "community_name": ".connect",
       "file_type": "code",
-      "norm_label": "pricechart()",
-      "source_file": "website/src/components/PriceHistory/PriceChart.jsx",
-      "source_location": "L26"
+      "norm_label": ".connect()",
+      "source_file": "server/test/quant-response.test.js",
+      "source_location": "L87"
     },
     {
       "id": "website_src_components_stockselector_filtertabs_filtertabs",
@@ -1388,36 +1472,12 @@
       "source_location": "L1"
     },
     {
-      "id": "server_src_config_db_connectdb",
-      "label": "connectDB()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "index.js",
-      "file_type": "code",
-      "norm_label": "connectdb()",
-      "source_file": "server/src/config/db.js",
-      "source_location": "L3"
-    },
-    {
-      "id": "server_src_config_db_disconnectdb",
-      "label": "disconnectDB()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "index.js",
-      "file_type": "code",
-      "norm_label": "disconnectdb()",
-      "source_file": "server/src/config/db.js",
-      "source_location": "L11"
-    },
-    {
       "id": "server_src_config_redis_getredis",
       "label": "getRedis()",
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "getredis()",
       "source_file": "server/src/config/redis.js",
@@ -1429,7 +1489,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "initredis()",
       "source_file": "server/src/config/redis.js",
@@ -1441,23 +1501,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "isredisready()",
       "source_file": "server/src/config/redis.js",
       "source_location": "L55"
-    },
-    {
-      "id": "server_src_index_startserver",
-      "label": "startServer()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "index.js",
-      "file_type": "code",
-      "norm_label": "startserver()",
-      "source_file": "server/src/index.js",
-      "source_location": "L58"
     },
     {
       "id": "server_src_services_cache_service_generateoptimizationhash",
@@ -1465,11 +1513,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "generateoptimizationhash()",
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L15"
+      "source_location": "L16"
     },
     {
       "id": "server_src_services_cache_service_getcachedoptimization",
@@ -1477,11 +1525,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "getcachedoptimization()",
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L21"
+      "source_location": "L22"
     },
     {
       "id": "server_src_services_cache_service_getcachedprices",
@@ -1489,11 +1537,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "getcachedprices()",
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L81"
+      "source_location": "L87"
     },
     {
       "id": "server_src_services_cache_service_setcachedoptimization",
@@ -1501,11 +1549,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "setcachedoptimization()",
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L54"
+      "source_location": "L59"
     },
     {
       "id": "server_src_services_cache_service_setcachedprices",
@@ -1513,47 +1561,47 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "setcachedprices()",
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L102"
+      "source_location": "L108"
     },
     {
-      "id": "server_src_services_quant_service_fetchpricehistory",
-      "label": "fetchPriceHistory()",
+      "id": "server_src_services_quant_response_isrecord",
+      "label": "isRecord()",
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
-      "norm_label": "fetchpricehistory()",
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L96"
+      "norm_label": "isrecord()",
+      "source_file": "server/src/services/quant-response.js",
+      "source_location": "L1"
     },
     {
-      "id": "server_src_services_quant_service_runquantoptimization",
-      "label": "runQuantOptimization()",
+      "id": "server_src_services_quant_response_validatequantresponse",
+      "label": "validateQuantResponse()",
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
-      "norm_label": "runquantoptimization()",
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L83"
+      "norm_label": "validatequantresponse()",
+      "source_file": "server/src/services/quant-response.js",
+      "source_location": "L4"
     },
     {
-      "id": "server_src_services_quant_service_solvemarkowitzsharpe",
-      "label": "solveMarkowitzSharpe()",
+      "id": "server_test_quant_response_test_valid",
+      "label": "valid()",
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
-      "norm_label": "solvemarkowitzsharpe()",
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L9"
+      "norm_label": "valid()",
+      "source_file": "server/test/quant-response.test.js",
+      "source_location": "L12"
     },
     {
       "id": "website_src_components_myportfolio_myportfolio_money",
@@ -1644,18 +1692,62 @@
       "label": "auth.js",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "auth.js",
       "source_file": "server/src/config/auth.js",
       "source_location": "L1"
     },
     {
+      "id": "server_src_config_db",
+      "label": "db.js",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "index.js",
+      "file_type": "code",
+      "norm_label": "db.js",
+      "source_file": "server/src/config/db.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_src_index",
+      "label": "index.js",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "index.js",
+      "file_type": "code",
+      "norm_label": "index.js",
+      "source_file": "server/src/index.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_src_index_allowedorigins",
+      "label": "allowedOrigins",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "index.js",
+      "file_type": "code",
+      "norm_label": "allowedorigins",
+      "source_file": "server/src/index.js",
+      "source_location": "L21"
+    },
+    {
+      "id": "server_src_index_app",
+      "label": "app",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "index.js",
+      "file_type": "code",
+      "norm_label": "app",
+      "source_file": "server/src/index.js",
+      "source_location": "L17"
+    },
+    {
       "id": "server_src_middleware_auth_middleware",
       "label": "auth.middleware.js",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "auth.middleware.js",
       "source_file": "server/src/middleware/auth.middleware.js",
@@ -1666,7 +1758,7 @@
       "label": "AgentSession.js",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "agentsession.js",
       "source_file": "server/src/models/AgentSession.js",
@@ -1677,7 +1769,7 @@
       "label": "AgentSession",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "agentsession",
       "source_file": "server/src/models/AgentSession.js",
@@ -1688,7 +1780,7 @@
       "label": "AgentSessionSchema",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "agentsessionschema",
       "source_file": "server/src/models/AgentSession.js",
@@ -1699,7 +1791,7 @@
       "label": "MessageSchema",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "messageschema",
       "source_file": "server/src/models/AgentSession.js",
@@ -1710,7 +1802,7 @@
       "label": "User.js",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "user.js",
       "source_file": "server/src/models/User.js",
@@ -1721,7 +1813,7 @@
       "label": "User",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "user",
       "source_file": "server/src/models/User.js",
@@ -1732,7 +1824,7 @@
       "label": "UserSchema",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "userschema",
       "source_file": "server/src/models/User.js",
@@ -1743,7 +1835,7 @@
       "label": "agent.routes.js",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "agent.routes.js",
       "source_file": "server/src/routes/agent.routes.js",
@@ -1754,7 +1846,7 @@
       "label": "AgentChatSchema",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "agentchatschema",
       "source_file": "server/src/routes/agent.routes.js",
@@ -1765,7 +1857,7 @@
       "label": "pending",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "pending",
       "source_file": "server/src/routes/agent.routes.js",
@@ -1776,7 +1868,7 @@
       "label": "router",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "router",
       "source_file": "server/src/routes/agent.routes.js",
@@ -1787,7 +1879,7 @@
       "label": "windows",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "windows",
       "source_file": "server/src/routes/agent.routes.js",
@@ -1798,7 +1890,7 @@
       "label": "auth.routes.js",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "auth.routes.js",
       "source_file": "server/src/routes/auth.routes.js",
@@ -1809,7 +1901,7 @@
       "label": "LoginSchema",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "loginschema",
       "source_file": "server/src/routes/auth.routes.js",
@@ -1820,7 +1912,7 @@
       "label": "RegisterSchema",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "registerschema",
       "source_file": "server/src/routes/auth.routes.js",
@@ -1831,18 +1923,51 @@
       "label": "router",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "router",
       "source_file": "server/src/routes/auth.routes.js",
       "source_location": "L11"
     },
     {
+      "id": "server_src_routes_portfolio_routes",
+      "label": "portfolio.routes.js",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "index.js",
+      "file_type": "code",
+      "norm_label": "portfolio.routes.js",
+      "source_file": "server/src/routes/portfolio.routes.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_src_routes_portfolio_routes_router",
+      "label": "router",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "index.js",
+      "file_type": "code",
+      "norm_label": "router",
+      "source_file": "server/src/routes/portfolio.routes.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "server_src_routes_portfolio_routes_saveportfolioschema",
+      "label": "SavePortfolioSchema",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "index.js",
+      "file_type": "code",
+      "norm_label": "saveportfolioschema",
+      "source_file": "server/src/routes/portfolio.routes.js",
+      "source_location": "L9"
+    },
+    {
       "id": "server_src_services_ledger_service",
       "label": "ledger.service.js",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "ledger.service.js",
       "source_file": "server/src/services/ledger.service.js",
@@ -1853,7 +1978,7 @@
       "label": "PortfolioOperationSchema",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "portfoliooperationschema",
       "source_file": "server/src/services/ledger.service.js",
@@ -1864,7 +1989,7 @@
       "label": "accounts.test.js",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "accounts.test.js",
       "source_file": "server/test/accounts.test.js",
@@ -1875,7 +2000,7 @@
       "label": "agent-sessions.test.js",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "agent-sessions.test.js",
       "source_file": "server/test/agent-sessions.test.js",
@@ -1886,10 +2011,21 @@
       "label": "auth.test.js",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "auth.test.js",
       "source_file": "server/test/auth.test.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_test_database_test",
+      "label": "database.test.js",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "index.js",
+      "file_type": "code",
+      "norm_label": "database.test.js",
+      "source_file": "server/test/database.test.js",
       "source_location": "L1"
     },
     {
@@ -1897,7 +2033,7 @@
       "label": "ledger.test.js",
       "_origin": "ast",
       "community": 0,
-      "community_name": "auth.routes.js",
+      "community_name": "index.js",
       "file_type": "code",
       "norm_label": "ledger.test.js",
       "source_file": "server/test/ledger.test.js",
@@ -1912,6 +2048,39 @@
       "file_type": "code",
       "norm_label": "app.py",
       "source_file": "app.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "data_loader",
+      "label": "data_loader.py",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "data_loader.py",
+      "source_file": "data_loader.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "dataset",
+      "label": "Dataset",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "dataset",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "feature_eng",
+      "label": "feature_eng.py",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "feature_eng.py",
+      "source_file": "feature_eng.py",
       "source_location": "L1"
     },
     {
@@ -1959,6 +2128,17 @@
       "source_location": ""
     },
     {
+      "id": "scripts_update_data",
+      "label": "update_data.py",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "update_data.py",
+      "source_file": "scripts/update_data.py",
+      "source_location": "L1"
+    },
+    {
       "id": "tests_test_optimization",
       "label": "test_optimization.py",
       "_origin": "ast",
@@ -1968,6 +2148,127 @@
       "norm_label": "test_optimization.py",
       "source_file": "tests/test_optimization.py",
       "source_location": "L1"
+    },
+    {
+      "id": "train",
+      "label": "train.py",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "train.py",
+      "source_file": "train.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "dotenv",
+      "label": "dotenv",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "concept",
+      "norm_label": "dotenv",
+      "source_file": "server/package.json",
+      "source_location": "L16"
+    },
+    {
+      "id": "data_loader_rationale_27",
+      "label": "Loads historical adjusted close data. If data exists in the database, it loads\u2026",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "rationale",
+      "norm_label": "loads historical adjusted close data. if data exists in the database, it loads...",
+      "source_file": "data_loader.py",
+      "source_location": "L27"
+    },
+    {
+      "id": "data_loader_rationale_7",
+      "label": "Scrapes the current S&P 500 ticker list from Wikipedia.",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "rationale",
+      "norm_label": "scrapes the current s&p 500 ticker list from wikipedia.",
+      "source_file": "data_loader.py",
+      "source_location": "L7"
+    },
+    {
+      "id": "dataset_rationale_40",
+      "label": "Returns the list of tickers configured in CONFIG. If CONFIG[\"TICKERS\"] is None,\u2026",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "rationale",
+      "norm_label": "returns the list of tickers configured in config. if config[\"tickers\"] is none,...",
+      "source_file": "dataset.py",
+      "source_location": "L40"
+    },
+    {
+      "id": "dataset_rationale_64",
+      "label": "Downloads historical price data and engineers features based on CONFIG.\u2026",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "rationale",
+      "norm_label": "downloads historical price data and engineers features based on config....",
+      "source_file": "dataset.py",
+      "source_location": "L64"
+    },
+    {
+      "id": "dataset_rationale_94",
+      "label": "Dataset for portfolio return prediction. Input ----- Previous `window_size`\u2026",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "rationale",
+      "norm_label": "dataset for portfolio return prediction. input ----- previous `window_size`...",
+      "source_file": "dataset.py",
+      "source_location": "L94"
+    },
+    {
+      "id": "feature_eng_rationale_193",
+      "label": "Generate engineered features and save them to the database.",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "rationale",
+      "norm_label": "generate engineered features and save them to the database.",
+      "source_file": "feature_eng.py",
+      "source_location": "L193"
+    },
+    {
+      "id": "feature_eng_rationale_23",
+      "label": "Compute Relative Strength Index (RSI).",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "rationale",
+      "norm_label": "compute relative strength index (rsi).",
+      "source_file": "feature_eng.py",
+      "source_location": "L23"
+    },
+    {
+      "id": "feature_eng_rationale_43",
+      "label": "Compute MACD and Signal Line.",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "rationale",
+      "norm_label": "compute macd and signal line.",
+      "source_file": "feature_eng.py",
+      "source_location": "L43"
+    },
+    {
+      "id": "feature_eng_rationale_61",
+      "label": "Generate technical indicators for every stock. Returns ------- pd.DataFrame\u2026",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "app.py",
+      "file_type": "rationale",
+      "norm_label": "generate technical indicators for every stock. returns ------- pd.dataframe...",
+      "source_file": "feature_eng.py",
+      "source_location": "L61"
     },
     {
       "id": "model_rationale_164",
@@ -2538,6 +2839,18 @@
       "source_location": "L244"
     },
     {
+      "id": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_new_open_high_priority_issue_2026_11_13",
+      "label": "New open high-priority issue - 2026-11-13",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "RiskFrame UI and Account Corrections Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "new open high-priority issue - 2026-11-13",
+      "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
+      "source_location": "L256"
+    },
+    {
       "id": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_paused_work_resume_after_quota_reset",
       "label": "Paused work - resume after quota reset",
       "_origin": "ast",
@@ -3060,171 +3373,6 @@
       "source_location": "L151"
     },
     {
-      "id": "data_loader",
-      "label": "data_loader.py",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "code",
-      "norm_label": "data_loader.py",
-      "source_file": "data_loader.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "dataset",
-      "label": "Dataset",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "code",
-      "norm_label": "dataset",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "feature_eng",
-      "label": "feature_eng.py",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "code",
-      "norm_label": "feature_eng.py",
-      "source_file": "feature_eng.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_update_data",
-      "label": "update_data.py",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "code",
-      "norm_label": "update_data.py",
-      "source_file": "scripts/update_data.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "train",
-      "label": "train.py",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "code",
-      "norm_label": "train.py",
-      "source_file": "train.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "dotenv",
-      "label": "dotenv",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "concept",
-      "norm_label": "dotenv",
-      "source_file": "server/package.json",
-      "source_location": "L16"
-    },
-    {
-      "id": "data_loader_rationale_27",
-      "label": "Loads historical adjusted close data. If data exists in the database, it loads\u2026",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "rationale",
-      "norm_label": "loads historical adjusted close data. if data exists in the database, it loads...",
-      "source_file": "data_loader.py",
-      "source_location": "L27"
-    },
-    {
-      "id": "data_loader_rationale_7",
-      "label": "Scrapes the current S&P 500 ticker list from Wikipedia.",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "rationale",
-      "norm_label": "scrapes the current s&p 500 ticker list from wikipedia.",
-      "source_file": "data_loader.py",
-      "source_location": "L7"
-    },
-    {
-      "id": "dataset_rationale_40",
-      "label": "Returns the list of tickers configured in CONFIG. If CONFIG[\"TICKERS\"] is None,\u2026",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "rationale",
-      "norm_label": "returns the list of tickers configured in config. if config[\"tickers\"] is none,...",
-      "source_file": "dataset.py",
-      "source_location": "L40"
-    },
-    {
-      "id": "dataset_rationale_64",
-      "label": "Downloads historical price data and engineers features based on CONFIG.\u2026",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "rationale",
-      "norm_label": "downloads historical price data and engineers features based on config....",
-      "source_file": "dataset.py",
-      "source_location": "L64"
-    },
-    {
-      "id": "dataset_rationale_94",
-      "label": "Dataset for portfolio return prediction. Input ----- Previous `window_size`\u2026",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "rationale",
-      "norm_label": "dataset for portfolio return prediction. input ----- previous `window_size`...",
-      "source_file": "dataset.py",
-      "source_location": "L94"
-    },
-    {
-      "id": "feature_eng_rationale_193",
-      "label": "Generate engineered features and save them to the database.",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "rationale",
-      "norm_label": "generate engineered features and save them to the database.",
-      "source_file": "feature_eng.py",
-      "source_location": "L193"
-    },
-    {
-      "id": "feature_eng_rationale_23",
-      "label": "Compute Relative Strength Index (RSI).",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "rationale",
-      "norm_label": "compute relative strength index (rsi).",
-      "source_file": "feature_eng.py",
-      "source_location": "L23"
-    },
-    {
-      "id": "feature_eng_rationale_43",
-      "label": "Compute MACD and Signal Line.",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "rationale",
-      "norm_label": "compute macd and signal line.",
-      "source_file": "feature_eng.py",
-      "source_location": "L43"
-    },
-    {
-      "id": "feature_eng_rationale_61",
-      "label": "Generate technical indicators for every stock. Returns ------- pd.DataFrame\u2026",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "Dataset",
-      "file_type": "rationale",
-      "norm_label": "generate technical indicators for every stock. returns ------- pd.dataframe...",
-      "source_file": "feature_eng.py",
-      "source_location": "L61"
-    },
-    {
       "id": "server_src_models_portfolio",
       "label": "Portfolio.js",
       "_origin": "ast",
@@ -3267,39 +3415,6 @@
       "norm_label": "rebalanceentryschema",
       "source_file": "server/src/models/Portfolio.js",
       "source_location": "L3"
-    },
-    {
-      "id": "server_src_routes_portfolio_routes",
-      "label": "portfolio.routes.js",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "agent.service.js",
-      "file_type": "code",
-      "norm_label": "portfolio.routes.js",
-      "source_file": "server/src/routes/portfolio.routes.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_src_routes_portfolio_routes_router",
-      "label": "router",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "agent.service.js",
-      "file_type": "code",
-      "norm_label": "router",
-      "source_file": "server/src/routes/portfolio.routes.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "server_src_routes_portfolio_routes_saveportfolioschema",
-      "label": "SavePortfolioSchema",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "agent.service.js",
-      "file_type": "code",
-      "norm_label": "saveportfolioschema",
-      "source_file": "server/src/routes/portfolio.routes.js",
-      "source_location": "L9"
     },
     {
       "id": "server_src_services_agent_service",
@@ -3401,6 +3516,17 @@
       "source_location": "L6"
     },
     {
+      "id": "server_src_services_quant_service",
+      "label": "quant.service.js",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "quant.service.js",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L1"
+    },
+    {
       "id": "server_test_agent_deadline_test",
       "label": "agent-deadline.test.js",
       "_origin": "ast",
@@ -3431,6 +3557,17 @@
       "file_type": "code",
       "norm_label": "agent.test.js",
       "source_file": "server/test/agent.test.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_test_api_test",
+      "label": "api.test.js",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "agent.service.js",
+      "file_type": "code",
+      "norm_label": "api.test.js",
+      "source_file": "server/test/api.test.js",
       "source_location": "L1"
     },
     {
@@ -3637,6 +3774,28 @@
       "source_location": "L1"
     },
     {
+      "id": "website_src_components_pricehistory_pricechart",
+      "label": "PriceChart.jsx",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "App.jsx",
+      "file_type": "code",
+      "norm_label": "pricechart.jsx",
+      "source_file": "website/src/components/PriceHistory/PriceChart.jsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "website_src_components_pricehistory_pricehistory",
+      "label": "PriceHistory.jsx",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "App.jsx",
+      "file_type": "code",
+      "norm_label": "pricehistory.jsx",
+      "source_file": "website/src/components/PriceHistory/PriceHistory.jsx",
+      "source_location": "L1"
+    },
+    {
       "id": "website_src_components_userauth_authmodal",
       "label": "AuthModal.jsx",
       "_origin": "ast",
@@ -3756,6 +3915,78 @@
       "norm_label": "portfolio.spec.js",
       "source_file": "website/tests/portfolio.spec.js",
       "source_location": "L1"
+    },
+    {
+      "id": "docs_audits_2026_11_13_quant_response_validation",
+      "label": "2026-11-13-quant-response-validation.md",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "2026-11-13-quant-response-validation.md",
+      "source_file": "docs/audits/2026-11-13-quant-response-validation.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_audits_2026_11_13_quant_response_validation_correction_verified_2026_11_13",
+      "label": "Correction verified - 2026-11-13",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "correction verified - 2026-11-13",
+      "source_file": "docs/audits/2026-11-13-quant-response-validation.md",
+      "source_location": "L26"
+    },
+    {
+      "id": "docs_audits_2026_11_13_quant_response_validation_evidence",
+      "label": "Evidence",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "evidence",
+      "source_file": "docs/audits/2026-11-13-quant-response-validation.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "docs_audits_2026_11_13_quant_response_validation_high_malformed_optimization_responses_accepted_and_cached",
+      "label": "High - malformed optimization responses accepted and cached",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "high - malformed optimization responses accepted and cached",
+      "source_file": "docs/audits/2026-11-13-quant-response-validation.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_audits_2026_11_13_quant_response_validation_limits",
+      "label": "Limits",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "limits",
+      "source_file": "docs/audits/2026-11-13-quant-response-validation.md",
+      "source_location": "L21"
+    },
+    {
+      "id": "docs_audits_2026_11_13_quant_response_validation_required_correction",
+      "label": "Required correction",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "required correction",
+      "source_file": "docs/audits/2026-11-13-quant-response-validation.md",
+      "source_location": "L13"
     },
     {
       "id": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections",
@@ -3900,6 +4131,18 @@
       "norm_label": "step 5 - final integration gate and documentation",
       "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
       "source_location": "L58"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_13_groq_copilot_topic_restriction_follow_up_completed_2026_11_13",
+      "label": "Topic restriction follow-up - completed 2026-11-13",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "Groq Copilot Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "topic restriction follow-up - completed 2026-11-13",
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L87"
     },
     {
       "id": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup",
@@ -4461,6 +4704,18 @@
       "source_location": "L1"
     },
     {
+      "id": "docs_audits_2026_11_13_groq_integration_copilot_topic_boundary_2026_11_13",
+      "label": "Copilot topic boundary - 2026-11-13",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "Groq integration verification - 2026-11-13",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "copilot topic boundary - 2026-11-13",
+      "source_file": "docs/audits/2026-11-13-groq-integration.md",
+      "source_location": "L37"
+    },
+    {
       "id": "docs_audits_2026_11_13_groq_integration_groq_integration_verification_2026_11_13",
       "label": "Groq integration verification - 2026-11-13",
       "_origin": "ast",
@@ -4927,39 +5182,6 @@
       "source_location": "L28"
     },
     {
-      "id": "website_src_components_pricehistory_pricechart",
-      "label": "PriceChart.jsx",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "stocks.js",
-      "file_type": "code",
-      "norm_label": "pricechart.jsx",
-      "source_file": "website/src/components/PriceHistory/PriceChart.jsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "website_src_components_pricehistory_pricehistory",
-      "label": "PriceHistory.jsx",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "stocks.js",
-      "file_type": "code",
-      "norm_label": "pricehistory.jsx",
-      "source_file": "website/src/components/PriceHistory/PriceHistory.jsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "website_src_components_results_breakdowntable",
-      "label": "BreakdownTable.jsx",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "stocks.js",
-      "file_type": "code",
-      "norm_label": "breakdowntable.jsx",
-      "source_file": "website/src/components/Results/BreakdownTable.jsx",
-      "source_location": "L1"
-    },
-    {
       "id": "website_src_components_stockselector_filtertabs",
       "label": "FilterTabs.jsx",
       "_origin": "ast",
@@ -5037,17 +5259,6 @@
       "source_location": "L1"
     },
     {
-      "id": "website_src_data_stocks_company_map",
-      "label": "COMPANY_MAP",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "stocks.js",
-      "file_type": "code",
-      "norm_label": "company_map",
-      "source_file": "website/src/data/stocks.js",
-      "source_location": "L209"
-    },
-    {
       "id": "website_src_data_stocks_max_stocks",
       "label": "MAX_STOCKS",
       "_origin": "ast",
@@ -5114,6 +5325,17 @@
       "source_location": "L214"
     },
     {
+      "id": "website_src_components_results_breakdowntable",
+      "label": "BreakdownTable.jsx",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "Results.jsx",
+      "file_type": "code",
+      "norm_label": "breakdowntable.jsx",
+      "source_file": "website/src/components/Results/BreakdownTable.jsx",
+      "source_location": "L1"
+    },
+    {
       "id": "website_src_components_results_emptystate",
       "label": "EmptyState.jsx",
       "_origin": "ast",
@@ -5169,66 +5391,33 @@
       "source_location": "L1"
     },
     {
-      "id": "server_src_config_db",
-      "label": "db.js",
+      "id": "website_src_data_stocks_company_map",
+      "label": "COMPANY_MAP",
       "_origin": "ast",
-      "community": 7,
-      "community_name": "index.js",
+      "community": 6,
+      "community_name": "Results.jsx",
       "file_type": "code",
-      "norm_label": "db.js",
-      "source_file": "server/src/config/db.js",
-      "source_location": "L1"
+      "norm_label": "company_map",
+      "source_file": "website/src/data/stocks.js",
+      "source_location": "L209"
     },
     {
       "id": "server_src_config_redis",
       "label": "redis.js",
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "redis.js",
       "source_file": "server/src/config/redis.js",
       "source_location": "L1"
     },
     {
-      "id": "server_src_index",
-      "label": "index.js",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "index.js",
-      "file_type": "code",
-      "norm_label": "index.js",
-      "source_file": "server/src/index.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_src_index_allowedorigins",
-      "label": "allowedOrigins",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "index.js",
-      "file_type": "code",
-      "norm_label": "allowedorigins",
-      "source_file": "server/src/index.js",
-      "source_location": "L21"
-    },
-    {
-      "id": "server_src_index_app",
-      "label": "app",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "index.js",
-      "file_type": "code",
-      "norm_label": "app",
-      "source_file": "server/src/index.js",
-      "source_location": "L17"
-    },
-    {
       "id": "server_src_routes_health_routes",
       "label": "health.routes.js",
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "health.routes.js",
       "source_file": "server/src/routes/health.routes.js",
@@ -5239,7 +5428,7 @@
       "label": "router",
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "router",
       "source_file": "server/src/routes/health.routes.js",
@@ -5250,7 +5439,7 @@
       "label": "optimize.routes.js",
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "optimize.routes.js",
       "source_file": "server/src/routes/optimize.routes.js",
@@ -5261,7 +5450,7 @@
       "label": "OptimizeRequestSchema",
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "optimizerequestschema",
       "source_file": "server/src/routes/optimize.routes.js",
@@ -5272,7 +5461,7 @@
       "label": "router",
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "router",
       "source_file": "server/src/routes/optimize.routes.js",
@@ -5283,7 +5472,7 @@
       "label": "cache.service.js",
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "cache.service.js",
       "source_file": "server/src/services/cache.service.js",
@@ -5294,54 +5483,43 @@
       "label": "cacheStats",
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "cachestats",
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L9"
+      "source_location": "L10"
     },
     {
       "id": "server_src_services_cache_service_inmemorycache",
       "label": "inMemoryCache",
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "inmemorycache",
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L5"
+      "source_location": "L6"
     },
     {
       "id": "server_src_services_cache_service_inmemoryexpiry",
       "label": "inMemoryExpiry",
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "inmemoryexpiry",
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L6"
+      "source_location": "L7"
     },
     {
-      "id": "server_src_services_quant_service",
-      "label": "quant.service.js",
+      "id": "server_src_services_quant_response",
+      "label": "quant-response.js",
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
-      "norm_label": "quant.service.js",
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_test_api_test",
-      "label": "api.test.js",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "index.js",
-      "file_type": "code",
-      "norm_label": "api.test.js",
-      "source_file": "server/test/api.test.js",
+      "norm_label": "quant-response.js",
+      "source_file": "server/src/services/quant-response.js",
       "source_location": "L1"
     },
     {
@@ -5349,21 +5527,10 @@
       "label": "cache.test.js",
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "cache.test.js",
       "source_file": "server/test/cache.test.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_test_database_test",
-      "label": "database.test.js",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "index.js",
-      "file_type": "code",
-      "norm_label": "database.test.js",
-      "source_file": "server/test/database.test.js",
       "source_location": "L1"
     },
     {
@@ -5371,22 +5538,77 @@
       "label": "health.test.js",
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "health.test.js",
       "source_file": "server/test/health.test.js",
       "source_location": "L1"
     },
     {
+      "id": "server_test_quant_response_test",
+      "label": "quant-response.test.js",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "optimize.routes.js",
+      "file_type": "code",
+      "norm_label": "quant-response.test.js",
+      "source_file": "server/test/quant-response.test.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_test_quant_response_test_tickers",
+      "label": "tickers",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "optimize.routes.js",
+      "file_type": "code",
+      "norm_label": "tickers",
+      "source_file": "server/test/quant-response.test.js",
+      "source_location": "L11"
+    },
+    {
       "id": "server_test_redis_test",
       "label": "redis.test.js",
       "_origin": "ast",
       "community": 7,
-      "community_name": "index.js",
+      "community_name": "optimize.routes.js",
       "file_type": "code",
       "norm_label": "redis.test.js",
       "source_file": "server/test/redis.test.js",
       "source_location": "L1"
+    },
+    {
+      "id": "website_tests_quant_response_spec",
+      "label": "quant-response.spec.js",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "optimize.routes.js",
+      "file_type": "code",
+      "norm_label": "quant-response.spec.js",
+      "source_file": "website/tests/quant-response.spec.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "website_tests_quant_response_spec_express",
+      "label": "express",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "optimize.routes.js",
+      "file_type": "code",
+      "norm_label": "express",
+      "source_file": "website/tests/quant-response.spec.js",
+      "source_location": "L6"
+    },
+    {
+      "id": "website_tests_quant_response_spec_require",
+      "label": "require",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "optimize.routes.js",
+      "file_type": "code",
+      "norm_label": "require",
+      "source_file": "website/tests/quant-response.spec.js",
+      "source_location": "L5"
     },
     {
       "id": "website_src_components_myportfolio_myportfolio",
@@ -5953,7 +6175,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/src/services/agent.service.js",
-      "source_location": "L132",
+      "source_location": "L135",
       "weight": 1.0
     },
     {
@@ -5965,7 +6187,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/src/services/agent.service.js",
-      "source_location": "L134",
+      "source_location": "L137",
       "weight": 1.0
     },
     {
@@ -5977,7 +6199,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/src/services/agent.service.js",
-      "source_location": "L139",
+      "source_location": "L142",
       "weight": 1.0
     },
     {
@@ -5989,7 +6211,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/src/services/agent.service.js",
-      "source_location": "L141",
+      "source_location": "L144",
       "weight": 1.0
     },
     {
@@ -6001,7 +6223,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/src/services/agent.service.js",
-      "source_location": "L158",
+      "source_location": "L161",
       "weight": 1.0
     },
     {
@@ -6013,7 +6235,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/src/services/agent.service.js",
-      "source_location": "L161",
+      "source_location": "L164",
       "weight": 1.0
     },
     {
@@ -6025,7 +6247,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L22",
+      "source_location": "L23",
       "weight": 1.0
     },
     {
@@ -6037,7 +6259,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0
     },
     {
@@ -6049,7 +6271,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L28",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_cache_service_getcachedoptimization",
+      "target": "server_src_services_quant_response_validatequantresponse",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/src/services/cache.service.js",
+      "source_location": "L32",
       "weight": 1.0
     },
     {
@@ -6061,7 +6295,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L84",
+      "source_location": "L90",
       "weight": 1.0
     },
     {
@@ -6073,24 +6307,12 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L86",
+      "source_location": "L92",
       "weight": 1.0
     },
     {
       "source": "server_src_services_cache_service_setcachedoptimization",
-      "target": "server_src_services_cache_service_generateoptimizationhash",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "server/src/services/cache.service.js",
-      "source_location": "L55",
-      "weight": 1.0
-    },
-    {
-      "source": "server_src_services_cache_service_setcachedoptimization",
-      "target": "server_src_config_redis_isredisready",
+      "target": "server_src_services_quant_response_validatequantresponse",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -6102,6 +6324,30 @@
     },
     {
       "source": "server_src_services_cache_service_setcachedoptimization",
+      "target": "server_src_services_cache_service_generateoptimizationhash",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/src/services/cache.service.js",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_cache_service_setcachedoptimization",
+      "target": "server_src_config_redis_isredisready",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/src/services/cache.service.js",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_cache_service_setcachedoptimization",
       "target": "server_src_config_redis_getredis",
       "relation": "calls",
       "_origin": "ast",
@@ -6109,7 +6355,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L62",
+      "source_location": "L68",
       "weight": 1.0
     },
     {
@@ -6121,7 +6367,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L105",
+      "source_location": "L111",
       "weight": 1.0
     },
     {
@@ -6133,7 +6379,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L107",
+      "source_location": "L113",
       "weight": 1.0
     },
     {
@@ -6182,6 +6428,30 @@
       "context": "call",
       "source_file": "server/src/services/ledger.service.js",
       "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_quant_response_validatequantresponse",
+      "target": "server_src_services_quant_response_isrecord",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/src/services/quant-response.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_quant_service_runquantoptimization",
+      "target": "server_src_services_quant_response_validatequantresponse",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L90",
       "weight": 1.0
     },
     {
@@ -7566,7 +7836,7 @@
     },
     {
       "source": "server_src_services_cache_service",
-      "target": "server_src_config_redis_getredis",
+      "target": "server_src_services_quant_response_validatequantresponse",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -7578,6 +7848,18 @@
     },
     {
       "source": "server_src_services_cache_service",
+      "target": "server_src_config_redis_getredis",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/src/services/cache.service.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_cache_service",
       "target": "server_src_config_redis_isredisready",
       "relation": "imports",
       "_origin": "ast",
@@ -7585,6 +7867,18 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "server/src/services/cache.service.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_quant_service",
+      "target": "server_src_services_quant_response_validatequantresponse",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/src/services/quant.service.js",
       "source_location": "L2",
       "weight": 1.0
     },
@@ -7874,6 +8168,78 @@
       "context": "import",
       "source_file": "server/test/ledger.test.js",
       "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_quant_response_test",
+      "target": "server_src_config_redis_initredis",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/quant-response.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_quant_response_test",
+      "target": "server_src_routes_optimize_routes_router",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/quant-response.test.js",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_quant_response_test",
+      "target": "server_src_services_quant_service_runquantoptimization",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/quant-response.test.js",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_quant_response_test",
+      "target": "server_src_services_cache_service_cachestats",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/quant-response.test.js",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_quant_response_test",
+      "target": "server_src_services_cache_service_getcachedoptimization",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/quant-response.test.js",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_quant_response_test",
+      "target": "server_src_services_cache_service_setcachedoptimization",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/quant-response.test.js",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -8693,6 +9059,18 @@
       "weight": 1.0
     },
     {
+      "source": "website_tests_quant_response_spec",
+      "target": "server_src_routes_optimize_routes_router",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "website/tests/quant-response.spec.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
       "source": "app",
       "target": "dataset",
       "relation": "imports_from",
@@ -9162,6 +9540,18 @@
     },
     {
       "source": "server_src_services_cache_service",
+      "target": "server_src_services_quant_response",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/src/services/cache.service.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_cache_service",
       "target": "server_src_config_redis",
       "relation": "imports_from",
       "_origin": "ast",
@@ -9169,6 +9559,18 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "server/src/services/cache.service.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_quant_service",
+      "target": "server_src_services_quant_response",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/src/services/quant.service.js",
       "source_location": "L2",
       "weight": 1.0
     },
@@ -9410,6 +9812,54 @@
       "context": "import",
       "source_file": "server/test/ledger.test.js",
       "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_quant_response_test",
+      "target": "server_src_config_redis",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/quant-response.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_quant_response_test",
+      "target": "server_src_routes_optimize_routes",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/quant-response.test.js",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_quant_response_test",
+      "target": "server_src_services_quant_service",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/quant-response.test.js",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_quant_response_test",
+      "target": "server_src_services_cache_service",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/test/quant-response.test.js",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -10037,6 +10487,18 @@
       "weight": 1.0
     },
     {
+      "source": "website_tests_quant_response_spec",
+      "target": "server_src_routes_optimize_routes",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "website/tests/quant-response.spec.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
       "source": "app",
       "target": "app_health",
       "relation": "contains",
@@ -10433,6 +10895,72 @@
       "weight": 1.0
     },
     {
+      "source": "docs_audits_2026_11_13_groq_integration_groq_integration_verification_2026_11_13",
+      "target": "docs_audits_2026_11_13_groq_integration_copilot_topic_boundary_2026_11_13",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-groq-integration.md",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_13_quant_response_validation",
+      "target": "docs_audits_2026_11_13_quant_response_validation_high_malformed_optimization_responses_accepted_and_cached",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-quant-response-validation.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_13_quant_response_validation_high_malformed_optimization_responses_accepted_and_cached",
+      "target": "docs_audits_2026_11_13_quant_response_validation_required_correction",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-quant-response-validation.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_13_quant_response_validation_high_malformed_optimization_responses_accepted_and_cached",
+      "target": "docs_audits_2026_11_13_quant_response_validation_limits",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-quant-response-validation.md",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_13_quant_response_validation_high_malformed_optimization_responses_accepted_and_cached",
+      "target": "docs_audits_2026_11_13_quant_response_validation_correction_verified_2026_11_13",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-quant-response-validation.md",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_audits_2026_11_13_quant_response_validation_high_malformed_optimization_responses_accepted_and_cached",
+      "target": "docs_audits_2026_11_13_quant_response_validation_evidence",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/audits/2026-11-13-quant-response-validation.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
       "source": "docs_audits_2026_11_13_trading_and_proposals_followup",
       "target": "docs_audits_2026_11_13_trading_and_proposals_followup_trading_and_proposal_ui_follow_up_2026_11_13",
       "relation": "contains",
@@ -10742,6 +11270,17 @@
     },
     {
       "source": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_riskframe_ui_and_account_corrections_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_new_open_high_priority_issue_2026_11_13",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
+      "source_location": "L256",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_riskframe_ui_and_account_corrections_implementation_plan",
       "target": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_product_decisions_proposed_for_this_correction",
       "relation": "contains",
       "_origin": "ast",
@@ -10936,6 +11475,17 @@
       "confidence_score": 1.0,
       "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
       "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_13_groq_copilot_groq_copilot_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_13_groq_copilot_topic_restriction_follow_up_completed_2026_11_13",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-13-groq-copilot.md",
+      "source_location": "L87",
       "weight": 1.0
     },
     {
@@ -12156,7 +12706,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/src/services/agent.service.js",
-      "source_location": "L100",
+      "source_location": "L103",
       "weight": 1.0
     },
     {
@@ -12167,7 +12717,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/src/services/agent.service.js",
-      "source_location": "L129",
+      "source_location": "L132",
       "weight": 1.0
     },
     {
@@ -12249,13 +12799,24 @@
     },
     {
       "source": "server_src_services_cache_service",
+      "target": "server_src_services_cache_service_cachestats",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/src/services/cache.service.js",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_cache_service",
       "target": "server_src_services_cache_service_setcachedprices",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L102",
+      "source_location": "L108",
       "weight": 1.0
     },
     {
@@ -12266,7 +12827,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -12277,18 +12838,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L21",
-      "weight": 1.0
-    },
-    {
-      "source": "server_src_services_cache_service",
-      "target": "server_src_services_cache_service_inmemorycache",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "server/src/services/cache.service.js",
-      "source_location": "L5",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -12299,12 +12849,12 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L54",
+      "source_location": "L59",
       "weight": 1.0
     },
     {
       "source": "server_src_services_cache_service",
-      "target": "server_src_services_cache_service_inmemoryexpiry",
+      "target": "server_src_services_cache_service_inmemorycache",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -12315,24 +12865,24 @@
     },
     {
       "source": "server_src_services_cache_service",
+      "target": "server_src_services_cache_service_inmemoryexpiry",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/src/services/cache.service.js",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_cache_service",
       "target": "server_src_services_cache_service_getcachedprices",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/src/services/cache.service.js",
-      "source_location": "L81",
-      "weight": 1.0
-    },
-    {
-      "source": "server_src_services_cache_service",
-      "target": "server_src_services_cache_service_cachestats",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "server/src/services/cache.service.js",
-      "source_location": "L9",
+      "source_location": "L87",
       "weight": 1.0
     },
     {
@@ -12413,25 +12963,25 @@
       "weight": 1.0
     },
     {
-      "source": "server_src_services_quant_service",
-      "target": "server_src_services_quant_service_fetchsupportedtickers",
+      "source": "server_src_services_quant_response",
+      "target": "server_src_services_quant_response_isrecord",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L103",
+      "source_file": "server/src/services/quant-response.js",
+      "source_location": "L1",
       "weight": 1.0
     },
     {
-      "source": "server_src_services_quant_service",
-      "target": "server_src_services_quant_service_runquantoptimization",
+      "source": "server_src_services_quant_response",
+      "target": "server_src_services_quant_response_validatequantresponse",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L83",
+      "source_file": "server/src/services/quant-response.js",
+      "source_location": "L4",
       "weight": 1.0
     },
     {
@@ -12442,7 +12992,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/src/services/quant.service.js",
-      "source_location": "L9",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_quant_service",
+      "target": "server_src_services_quant_service_fetchsupportedtickers",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "server_src_services_quant_service",
+      "target": "server_src_services_quant_service_runquantoptimization",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L84",
       "weight": 1.0
     },
     {
@@ -12453,7 +13025,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/src/services/quant.service.js",
-      "source_location": "L96",
+      "source_location": "L97",
       "weight": 1.0
     },
     {
@@ -12520,6 +13092,28 @@
       "confidence_score": 1.0,
       "source_file": "server/test/ledger.test.js",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_quant_response_test",
+      "target": "server_test_quant_response_test_tickers",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/test/quant-response.test.js",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "server_test_quant_response_test",
+      "target": "server_test_quant_response_test_valid",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/test/quant-response.test.js",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -13513,6 +14107,28 @@
       "weight": 1.0
     },
     {
+      "source": "website_tests_quant_response_spec",
+      "target": "website_tests_quant_response_spec_require",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "website/tests/quant-response.spec.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "website_tests_quant_response_spec",
+      "target": "website_tests_quant_response_spec_express",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "website/tests/quant-response.spec.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
       "source": "website_vercel",
       "target": "website_vercel_buildcommand",
       "relation": "contains",
@@ -13964,6 +14580,17 @@
       "weight": 1.0
     },
     {
+      "source": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections",
+      "target": "docs_audits_2026_11_13_quant_response_validation",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
+      "source_location": "L258",
+      "weight": 1.0
+    },
+    {
       "source": "docs_superpowers_plans_2026_11_13_trading_and_proposal_ui_followup",
       "target": "docs_superpowers_plans_2026_11_13_groq_copilot",
       "relation": "references",
@@ -14060,5 +14687,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "250ae7f1e9e0a3458075f80c11d49fa244c513c8"
+  "built_at_commit": "a9238f8420281459ec5c0b80138928e7a82939cc"
 }

@@ -210,9 +210,9 @@
     "semantic_hash": ""
   },
   "requirements.txt": {
-    "mtime": 1789152473.2361865,
-    "seen": 1794402156.5096767,
-    "ast_hash": "91f581d0835e264ad15f3f77dfdb2296",
+    "mtime": 1794570013.7672896,
+    "seen": 1794576280.9291031,
+    "ast_hash": "ac33cc08bea64ab1c837c053b38a7449",
     "semantic_hash": ""
   },
   "website/index.html": {
@@ -318,21 +318,21 @@
     "semantic_hash": ""
   },
   "server/src/services/agent.service.js": {
-    "mtime": 1794517247.269727,
-    "seen": 1794517572.1257508,
-    "ast_hash": "9f21ee51b5a6a0010c607a161f723692",
+    "mtime": 1794576208.900045,
+    "seen": 1794576280.9289875,
+    "ast_hash": "970536873013a465578d34780f5dfd31",
     "semantic_hash": ""
   },
   "server/src/services/cache.service.js": {
-    "mtime": 1794484695.020352,
-    "seen": 1794512725.89155,
-    "ast_hash": "30119eb927d9c94e30a57afded475e2d",
+    "mtime": 1794573912.6572435,
+    "seen": 1794576280.9289894,
+    "ast_hash": "518949ee4afd5a1ca86cb113199375dd",
     "semantic_hash": ""
   },
   "server/src/services/quant.service.js": {
-    "mtime": 1794515921.1422164,
-    "seen": 1794517572.1257553,
-    "ast_hash": "b82a6d0614e04e6f5553e7052e3998bf",
+    "mtime": 1794573912.3824098,
+    "seen": 1794576280.9289966,
+    "ast_hash": "3963c0afbf3313953ec2799b5693cc55",
     "semantic_hash": ""
   },
   "server/test/api.test.js": {
@@ -432,9 +432,9 @@
     "semantic_hash": ""
   },
   "server/test/agent.test.js": {
-    "mtime": 1794516187.2932324,
-    "seen": 1794517572.125761,
-    "ast_hash": "9df1624f38ab0cc20d96f3faeaecf4de",
+    "mtime": 1794573913.4480357,
+    "seen": 1794576280.9290042,
+    "ast_hash": "7c674999591ab8cedc6af67f1ee1f578",
     "semantic_hash": ""
   },
   "server/test/auth.test.js": {
@@ -444,9 +444,9 @@
     "semantic_hash": ""
   },
   "server/test/cache.test.js": {
-    "mtime": 1794483513.897356,
-    "seen": 1794512725.8915586,
-    "ast_hash": "45dcf47c6c7f14f23022e25addb4d2a1",
+    "mtime": 1794573912.9344115,
+    "seen": 1794576280.9290085,
+    "ast_hash": "8df2ba6b1f2016b76500936e04b5f660",
     "semantic_hash": ""
   },
   "server/test/database.test.js": {
@@ -552,15 +552,15 @@
     "semantic_hash": ""
   },
   "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md": {
-    "mtime": 1794517465.3981962,
-    "seen": 1794517572.12584,
-    "ast_hash": "7880a335b9a420e535c05ddb71c06d1b",
+    "mtime": 1794575729.3011136,
+    "seen": 1794576280.929098,
+    "ast_hash": "4032b7ae4ba7a8be5f49c85dd6e28162",
     "semantic_hash": ""
   },
   "server/test/rebalance.test.js": {
-    "mtime": 1794512770.6116028,
-    "seen": 1794512910.6174765,
-    "ast_hash": "6cfd44e61a37b3578b88be428f4bedb6",
+    "mtime": 1794573913.4490323,
+    "seen": 1794576280.929016,
+    "ast_hash": "28c07ecae9ee68d133ba046e02bec1d3",
     "semantic_hash": ""
   },
   "docs/audits/2026-11-13-followup-evidence.json": {
@@ -582,9 +582,9 @@
     "semantic_hash": ""
   },
   "server/test/agent-loop.test.js": {
-    "mtime": 1794516323.0574133,
-    "seen": 1794517572.1257586,
-    "ast_hash": "081e4ad5d04c73cdb16881029505863b",
+    "mtime": 1794576208.901047,
+    "seen": 1794576280.9290013,
+    "ast_hash": "867bdabf0289e17d210a8132ef0fa37c",
     "semantic_hash": ""
   },
   "server/test/groq.test.js": {
@@ -606,9 +606,9 @@
     "semantic_hash": ""
   },
   "docs/audits/2026-11-13-groq-integration.md": {
-    "mtime": 1794517465.3981962,
-    "seen": 1794517572.1258366,
-    "ast_hash": "1ff4189f55394d8714115955ab20a363",
+    "mtime": 1794576248.901449,
+    "seen": 1794576280.9290931,
+    "ast_hash": "e443f2bff7463ef65069c80e5a8e3c28",
     "semantic_hash": ""
   },
   "docs/audits/2026-11-13-trading-and-proposals-followup.md": {
@@ -618,9 +618,9 @@
     "semantic_hash": ""
   },
   "docs/superpowers/plans/2026-11-13-groq-copilot.md": {
-    "mtime": 1794517465.3981962,
-    "seen": 1794517572.1258407,
-    "ast_hash": "3e922cf29c53c3a960df3aca6d0aa4ca",
+    "mtime": 1794576161.6680207,
+    "seen": 1794576280.9290993,
+    "ast_hash": "1996803ef0e9069c6c41feb11c815f53",
     "semantic_hash": ""
   },
   "docs/superpowers/plans/2026-11-13-trading-and-proposal-ui-followup.md": {
@@ -681,6 +681,30 @@
     "mtime": 1794513248.0861633,
     "seen": 1794517572.1258538,
     "ast_hash": "0aee8c841349d9527bd49a6049c2c336",
+    "semantic_hash": ""
+  },
+  "server/src/services/quant-response.js": {
+    "mtime": 1794573912.093919,
+    "seen": 1794576280.928995,
+    "ast_hash": "dd72eec67514e02bc36f05e3bd9a353f",
+    "semantic_hash": ""
+  },
+  "server/test/quant-response.test.js": {
+    "mtime": 1794575741.278546,
+    "seen": 1794576280.9290147,
+    "ast_hash": "1e5a00f5512876424326cd0854df558d",
+    "semantic_hash": ""
+  },
+  "website/tests/quant-response.spec.js": {
+    "mtime": 1794575652.5789387,
+    "seen": 1794576280.9290783,
+    "ast_hash": "48bd7bb2a99f49a0208defc361bddd2b",
+    "semantic_hash": ""
+  },
+  "docs/audits/2026-11-13-quant-response-validation.md": {
+    "mtime": 1794575786.9575908,
+    "seen": 1794576280.929094,
+    "ast_hash": "6a9eb651766cc042198f88b4f1fae39c",
     "semantic_hash": ""
   }
 }
