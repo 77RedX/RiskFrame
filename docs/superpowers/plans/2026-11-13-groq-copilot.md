@@ -82,3 +82,10 @@ Excluded from this initial phase: autonomous trading, strategy writes, browser a
 ## Completion status
 
 Steps 1-5 are implemented and verified; source review and its deadline correction are complete. Gates: full Edge 42/42, focused final UI 11/11, backend 26/26, Python 6/6; Docker builds, live Groq/Python/Atlas/browser checks and secret-boundary scans passed. See docs/audits/2026-11-13-groq-integration.md. A final graph refresh follows the source/documentation commit. Render deployment, external credential retirement and shared cross-replica rate limiting remain outside this branch's completed scope. No automatic push or merge.
+
+
+## Topic restriction follow-up - completed 2026-11-13
+
+- [x] Restrict conversational scope to finance/portfolio analysis and RiskFrame help; explicitly decline unrelated coding, including segment trees, without tools. Preserve relevant answers in mixed requests and permitted setup/API help.
+- [x] Verify policy ordering above untrusted history and existing server tool guards (31 backend tests); test real Groq refusals/override attempts and legitimate questions; verify three real guest messages in Microsoft Edge after local backend rebuild.
+- [x] Document the model-level nature of the restriction, ongoing fallibility of generated prose, lack of a deterministic scope classifier, and the need to deploy the updated backend. See the integration audit follow-up. No production deployment or automatic push.
