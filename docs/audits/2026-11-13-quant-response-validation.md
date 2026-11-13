@@ -21,3 +21,12 @@ Tests should cover each malformed case, legitimate zero/negative metrics, floati
 ## Limits
 
 No live Python failure or production-cache corruption was asserted. Server reproduction mocked Axios and used an ephemeral local Express process and memory cache; browser requests were intercepted. No production Redis writes, account changes, Docker restart or Groq inference calls occurred. This verifies a response-boundary defect, not a claim that the normal Python engine currently emits malformed data.
+
+
+## Correction verified - 2026-11-13
+
+The shared quant boundary and both optimization cache paths now use the same strict numeric/basket validator. Metrics must be finite, volatility nonnegative, allocation keys must exactly match the requested basket, weights must be nonnegative and no greater than the requested cap plus 1e-6, and their sum must be within 1e-5 of one. The Python engine remains responsible for checking the requested symbols against its supported universe; Node rejects any substituted/missing result symbol. Model predictions are required for every symbol because the results table consumes them unconditionally; optional individual metrics must be complete and finite when supplied. No string coercion or synthetic zero replacement occurs. Valid negative returns/Sharpe and zeros remain accepted.
+
+Optimization keys are now rf:opt:v3, so old v2 records are bypassed and expire normally. Redis and memory reads validate again; invalid records become misses. Writes validate before touching either cache or its set counter. No Redis flush, database changes or volume deletion occurred.
+
+Regression tests first failed against the original service/cache/HTTP route, then passed after the fix. All 30 backend tests pass, including simulated Redis malformed JSON, malformed payloads, valid writes/hits, memory corruption, repeated HTTP 503 without caching, and valid HTTP caching. Existing copilot/rebalance fixtures now supply the real response contract. All 43 Edge tests pass. The new Edge regression routes a browser request through the real Node route with only the sidecar mocked: malformed data shows the unavailable error without results/NaN; retry with valid data renders four rows. A rebuilt local Docker backend accepted a real three-symbol Python result with weights summing to 0.9999999999999994, then returned an identical Redis hit. Production deployment was not changed.

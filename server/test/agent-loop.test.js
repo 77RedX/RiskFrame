@@ -19,7 +19,7 @@ async function fixture(responses, run) {
       return { data: { choices: [{ finish_reason: message.tool_calls ? 'tool_calls' : 'stop', message }] } };
     }
     optimizations.push(body);
-    return { data: { allocation: { AAPL: 0.5, MSFT: 0.5 }, metrics: { expected_return: 0.1, volatility: 0.2, sharpe_ratio: 0.5 }, market_data_as_of: '2026-11-12', applied_settings: { max_weight: body.max_weight, risk_free_rate: body.risk_free_rate } } };
+    return { data: { allocation: { AAPL: 0.5, MSFT: 0.5 }, ai_predictions: { AAPL: 0.1, MSFT: 0.1 }, metrics: { expected_return: 0.1, volatility: 0.2, sharpe_ratio: 0.5 }, market_data_as_of: '2026-11-12', applied_settings: { max_weight: body.max_weight, risk_free_rate: body.risk_free_rate } } };
   };
   try { await run({ requests, optimizations }); }
   finally {
@@ -68,7 +68,7 @@ test('provider tool loops stop instead of making unbounded requests', async () =
 });
 
 test('owned bounded history supports follow-ups without trusting guest tool results', async () => {
-  const history = [{ role: 'user', content: 'Earlier basket question' }, { role: 'assistant', content: 'Earlier answer', toolCalls: [{ tool: 'optimizePortfolio', params: { tickers: ['AAPL', 'MSFT'] }, result: { allocation: { AAPL: 0.5, MSFT: 0.5 }, metrics: { expected_return: 0.1, volatility: 0.2, sharpe_ratio: 0.5 }, market_data_as_of: '2026-11-12', engine: 'python' } }] }];
+  const history = [{ role: 'user', content: 'Earlier basket question' }, { role: 'assistant', content: 'Earlier answer', toolCalls: [{ tool: 'optimizePortfolio', params: { tickers: ['AAPL', 'MSFT'] }, result: { allocation: { AAPL: 0.5, MSFT: 0.5 }, ai_predictions: { AAPL: 0.1, MSFT: 0.1 }, metrics: { expected_return: 0.1, volatility: 0.2, sharpe_ratio: 0.5 }, market_data_as_of: '2026-11-12', engine: 'python' } }] }];
   await fixture([call('analyzeRisk'), finish('Follow-up explanation')], async ({ requests }) => {
     const output = await runAgentConversation({ message: 'And its risk?', history, trustedHistory: true });
     assert.ok(requests[0].messages.some(m => m.content === 'Earlier basket question'));

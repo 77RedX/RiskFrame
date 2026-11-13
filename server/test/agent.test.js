@@ -15,12 +15,12 @@ test('risk tool evaluates canonical optimizer metrics', async () => {
 
 test('copilot preserves result provenance and adapts canonical metrics for saved strategies', async () => {
   const post = axios.post, save = Portfolio.prototype.save;
-  const source = { allocation: { AAPL: 0.5, MSFT: 0.5 }, metrics: { expected_return: 0, volatility: 0.2, sharpe_ratio: 0 }, applied_settings: { max_weight: 0.5, risk_free_rate: 0 }, market_data_as_of: '2026-11-12', calculated_at: '2026-11-13T00:00:00Z' };
+  const source = { allocation: { AAPL: 0.5, MSFT: 0.5 }, ai_predictions: { AAPL: 0.1, MSFT: 0.1 }, metrics: { expected_return: 0, volatility: 0.2, sharpe_ratio: 0 }, applied_settings: { max_weight: 0.5, risk_free_rate: 0 }, market_data_as_of: '2026-11-12', calculated_at: '2026-11-13T00:00:00Z' };
   axios.post = async () => ({ data: source });
   let stored;
   Portfolio.prototype.save = async function () { await this.validate(); stored = this; };
   try {
-    const result = await agentTools.optimizePortfolio.execute({ tickers: ['AAPL', 'MSFT'] });
+    const result = await agentTools.optimizePortfolio.execute({ tickers: ['AAPL', 'MSFT'], maxWeight: 0.5, riskFreeRate: 0 });
     assert.equal(result.market_data_as_of, source.market_data_as_of);
     assert.deepEqual(result.applied_settings, source.applied_settings);
     assert.equal(result.engine, 'python-pytorch-slsqp');

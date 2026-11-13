@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import { validateQuantResponse } from './quant-response.js';
 import { getRedis, isRedisReady } from '../config/redis.js';
 
 // Resilient in-memory fallback cache (LRU-like with TTL)
@@ -20,7 +21,7 @@ function generateOptimizationHash(tickers, maxWeight = 0.35, riskFreeRate = 0.04
 
 export async function getCachedOptimization(tickers, maxWeight = 0.35, riskFreeRate = 0.04) {
   const hash = generateOptimizationHash(tickers, maxWeight, riskFreeRate);
-  const key = `rf:opt:v2:${hash}`;
+  const key = `rf:opt:v3:${hash}`;
 
   // 1. Try Redis first
   if (isRedisReady()) {
@@ -28,8 +29,9 @@ export async function getCachedOptimization(tickers, maxWeight = 0.35, riskFreeR
       const redis = getRedis();
       const val = await redis.get(key);
       if (val) {
+        const data = validateQuantResponse(JSON.parse(val), tickers, maxWeight);
         cacheStats.hits++;
-        return { data: JSON.parse(val), source: 'redis' };
+        return { data, source: 'redis' };
       }
     } catch (err) {
       console.warn(`[Cache] Redis read warning: ${err.message}`);
@@ -40,8 +42,11 @@ export async function getCachedOptimization(tickers, maxWeight = 0.35, riskFreeR
   if (inMemoryCache.has(key)) {
     const expiresAt = inMemoryExpiry.get(key) || 0;
     if (Date.now() < expiresAt) {
-      cacheStats.hits++;
-      return { data: inMemoryCache.get(key), source: 'memory' };
+      try {
+        const data = validateQuantResponse(inMemoryCache.get(key), tickers, maxWeight);
+        cacheStats.hits++;
+        return { data, source: 'memory' };
+      } catch { /* Discard malformed entries and recompute. */ }
     }
     inMemoryCache.delete(key);
     inMemoryExpiry.delete(key);
@@ -52,8 +57,9 @@ export async function getCachedOptimization(tickers, maxWeight = 0.35, riskFreeR
 }
 
 export async function setCachedOptimization(tickers, maxWeight, riskFreeRate, data, ttlSeconds = 86400) {
+  validateQuantResponse(data, tickers, maxWeight);
   const hash = generateOptimizationHash(tickers, maxWeight, riskFreeRate);
-  const key = `rf:opt:v2:${hash}`;
+  const key = `rf:opt:v3:${hash}`;
   cacheStats.sets++;
 
   // 1. Save in Redis
