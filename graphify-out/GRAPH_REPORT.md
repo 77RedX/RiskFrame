@@ -1,16 +1,16 @@
-# Graph Report - RiskFrame  (2026-11-13)
+# Graph Report - RiskFrame  (2026-11-25)
 
 ## Corpus Check
-- 101 files · ~229,673 words
+- 101 files · ~230,377 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 495 nodes · 778 edges · 35 communities (19 shown, 3 thin omitted)
+- 497 nodes · 780 edges · 35 communities (19 shown, 4 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 7 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `a9238f84`
+- Built from commit: `12d832f7`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -34,12 +34,13 @@
 - Optimization Button Fix Plan
 - optimization.spec.js
 - accounts.spec.js
+- loading.spec.js
 - Groq Copilot Implementation Plan
 - Trading and proposal UI follow-up - 2026-11-13
 - Groq integration verification - 2026-11-13
 
 ## God Nodes (most connected - your core abstractions)
-1. `RiskFrame UI and Account Corrections Implementation Plan` - 23 edges
+1. `RiskFrame UI and Account Corrections Implementation Plan` - 24 edges
 2. `RiskFrame UI audit — 2026-11-11` - 20 edges
 3. `getHeaders()` - 13 edges
 4. `RiskFrame` - 13 edges
@@ -65,7 +66,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (35 total, 3 thin omitted)
+## Communities (35 total, 4 thin omitted)
 
 ### Community 0 - "index.js"
 Cohesion: 0.09
@@ -96,8 +97,8 @@ Cohesion: 0.18
 Nodes (10): BreakdownTable(), EmptyState(), LoadingState(), animateValue(), MetricCard(), MetricCards(), Results(), SharpeBadge() (+2 more)
 
 ### Community 7 - "optimize.routes.js"
-Cohesion: 0.15
-Nodes (19): getRedis(), initRedis(), isRedisReady(), router, OptimizeRequestSchema, router, cacheStats, generateOptimizationHash() (+11 more)
+Cohesion: 0.13
+Nodes (22): getRedis(), initRedis(), isRedisReady(), router, OptimizeRequestSchema, router, cacheStats, generateOptimizationHash() (+14 more)
 
 ### Community 8 - "MyPortfolio.jsx"
 Cohesion: 0.38
@@ -113,7 +114,7 @@ Nodes (32): axios, bcryptjs, cors, express, ioredis, jsonwebtoken, morgan, depen
 
 ### Community 13 - "RiskFrame UI and Account Corrections Implementation Plan"
 Cohesion: 0.08
-Nodes (25): Completion criteria, Exact diagnosis of the signed-out portfolio, Final status - 2026-11-13, Groq and UI follow-up completed - 2026-11-13, Groq feature queued - 2026-11-13, Implementation ledger, New issues reported after completion - 2026-11-13, New open high-priority issue - 2026-11-13 (+17 more)
+Nodes (26): Completion criteria, Deployment startup readiness - completed 2026-11-25, Exact diagnosis of the signed-out portfolio, Final status - 2026-11-13, Groq and UI follow-up completed - 2026-11-13, Groq feature queued - 2026-11-13, Implementation ledger, New issues reported after completion - 2026-11-13 (+18 more)
 
 ### Community 14 - "dependencies"
 Cohesion: 0.33
@@ -124,8 +125,8 @@ Cohesion: 0.10
 Nodes (20): Completed in this pass, Limits, P1 — Copilot messages execute raw HTML, P1 — Empty portfolios are replaced by demo holdings, P1 — Every deposit preset fails browser validation, P1 — Failed portfolio saves are silently treated as local success, P1 — Python optimization ignores the user's exposure limit and risk-free rate, P1 — Reference prices and seeded recommendations are presented as live model output (+12 more)
 
 ### Community 17 - "agent.service.js"
-Cohesion: 0.11
-Nodes (19): Portfolio, PortfolioSchema, RebalanceEntrySchema, agentTools, basket, conversationContext(), definition(), publicTools (+11 more)
+Cohesion: 0.13
+Nodes (16): Portfolio, PortfolioSchema, RebalanceEntrySchema, agentTools, basket, conversationContext(), definition(), publicTools (+8 more)
 
 ### Community 18 - "Optimization Button Fix Plan"
 Cohesion: 0.40
@@ -144,21 +145,21 @@ Cohesion: 0.29
 Nodes (6): Copilot topic boundary - 2026-11-13, Groq integration verification - 2026-11-13, Implemented behavior, Limited live checks, Remaining boundaries, Verified gates
 
 ## Knowledge Gaps
-- **174 isolated node(s):** `mongodb-memory-server`, `mongoose`, `name`, `version`, `description` (+169 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 228 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **176 isolated node(s):** `mongodb-memory-server`, `mongoose`, `name`, `version`, `description` (+171 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 230 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `dotenv` connect `app.py` to `dependencies`?**
-  _High betweenness centrality (0.020) - this node is a cross-community bridge._
+  _High betweenness centrality (0.019) - this node is a cross-community bridge._
 - **Why does `dotenv` connect `dependencies` to `app.py`?**
   _High betweenness centrality (0.019) - this node is a cross-community bridge._
 - **What connects `mongodb-memory-server`, `mongoose`, `name` to the rest of the system?**
-  _174 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _176 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `index.js` be split into smaller, more focused modules?**
-  _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09082125603864734 - nodes in this community are weakly interconnected._
 - **Should `app.py` be split into smaller, more focused modules?**
   _Cohesion score 0.061507936507936505 - nodes in this community are weakly interconnected._
 - **Should `App.jsx` be split into smaller, more focused modules?**

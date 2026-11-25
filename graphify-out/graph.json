@@ -764,18 +764,6 @@
       "source_location": "L16"
     },
     {
-      "id": "server_src_services_quant_service_fetchpricehistory",
-      "label": "fetchPriceHistory()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "agent.service.js",
-      "file_type": "code",
-      "norm_label": "fetchpricehistory()",
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L97"
-    },
-    {
       "id": "server_src_services_quant_service_fetchsupportedtickers",
       "label": "fetchSupportedTickers()",
       "_callable": true,
@@ -786,30 +774,6 @@
       "norm_label": "fetchsupportedtickers()",
       "source_file": "server/src/services/quant.service.js",
       "source_location": "L104"
-    },
-    {
-      "id": "server_src_services_quant_service_runquantoptimization",
-      "label": "runQuantOptimization()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "agent.service.js",
-      "file_type": "code",
-      "norm_label": "runquantoptimization()",
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L84"
-    },
-    {
-      "id": "server_src_services_quant_service_solvemarkowitzsharpe",
-      "label": "solveMarkowitzSharpe()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "agent.service.js",
-      "file_type": "code",
-      "norm_label": "solvemarkowitzsharpe()",
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L10"
     },
     {
       "id": "server_test_agent_loop_test_call",
@@ -1592,6 +1556,42 @@
       "source_location": "L4"
     },
     {
+      "id": "server_src_services_quant_service_fetchpricehistory",
+      "label": "fetchPriceHistory()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "optimize.routes.js",
+      "file_type": "code",
+      "norm_label": "fetchpricehistory()",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L97"
+    },
+    {
+      "id": "server_src_services_quant_service_runquantoptimization",
+      "label": "runQuantOptimization()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "optimize.routes.js",
+      "file_type": "code",
+      "norm_label": "runquantoptimization()",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L84"
+    },
+    {
+      "id": "server_src_services_quant_service_solvemarkowitzsharpe",
+      "label": "solveMarkowitzSharpe()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "optimize.routes.js",
+      "file_type": "code",
+      "norm_label": "solvemarkowitzsharpe()",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L10"
+    },
+    {
       "id": "server_test_quant_response_test_valid",
       "label": "valid()",
       "_callable": true,
@@ -2037,6 +2037,17 @@
       "file_type": "code",
       "norm_label": "ledger.test.js",
       "source_file": "server/test/ledger.test.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_test_rebalance_test",
+      "label": "rebalance.test.js",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "index.js",
+      "file_type": "code",
+      "norm_label": "rebalance.test.js",
+      "source_file": "server/test/rebalance.test.js",
       "source_location": "L1"
     },
     {
@@ -2765,6 +2776,18 @@
       "norm_label": "completion criteria",
       "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
       "source_location": "L168"
+    },
+    {
+      "id": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_deployment_startup_readiness_completed_2026_11_25",
+      "label": "Deployment startup readiness - completed 2026-11-25",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "RiskFrame UI and Account Corrections Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "deployment startup readiness - completed 2026-11-25",
+      "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
+      "source_location": "L261"
     },
     {
       "id": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_exact_diagnosis_of_the_signed_out_portfolio",
@@ -3516,17 +3539,6 @@
       "source_location": "L6"
     },
     {
-      "id": "server_src_services_quant_service",
-      "label": "quant.service.js",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "agent.service.js",
-      "file_type": "code",
-      "norm_label": "quant.service.js",
-      "source_file": "server/src/services/quant.service.js",
-      "source_location": "L1"
-    },
-    {
       "id": "server_test_agent_deadline_test",
       "label": "agent-deadline.test.js",
       "_origin": "ast",
@@ -3560,17 +3572,6 @@
       "source_location": "L1"
     },
     {
-      "id": "server_test_api_test",
-      "label": "api.test.js",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "agent.service.js",
-      "file_type": "code",
-      "norm_label": "api.test.js",
-      "source_file": "server/test/api.test.js",
-      "source_location": "L1"
-    },
-    {
       "id": "server_test_groq_test",
       "label": "groq.test.js",
       "_origin": "ast",
@@ -3579,17 +3580,6 @@
       "file_type": "code",
       "norm_label": "groq.test.js",
       "source_file": "server/test/groq.test.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_test_rebalance_test",
-      "label": "rebalance.test.js",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "agent.service.js",
-      "file_type": "code",
-      "norm_label": "rebalance.test.js",
-      "source_file": "server/test/rebalance.test.js",
       "source_location": "L1"
     },
     {
@@ -3893,6 +3883,17 @@
       "norm_label": "loading.spec.js",
       "source_file": "website/tests/loading.spec.js",
       "source_location": "L1"
+    },
+    {
+      "id": "website_tests_loading_spec_healthy",
+      "label": "healthy",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "loading.spec.js",
+      "file_type": "code",
+      "norm_label": "healthy",
+      "source_file": "website/tests/loading.spec.js",
+      "source_location": "L3"
     },
     {
       "id": "website_tests_market_data_spec",
@@ -5520,6 +5521,28 @@
       "file_type": "code",
       "norm_label": "quant-response.js",
       "source_file": "server/src/services/quant-response.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_src_services_quant_service",
+      "label": "quant.service.js",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "optimize.routes.js",
+      "file_type": "code",
+      "norm_label": "quant.service.js",
+      "source_file": "server/src/services/quant.service.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_test_api_test",
+      "label": "api.test.js",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "optimize.routes.js",
+      "file_type": "code",
+      "norm_label": "api.test.js",
+      "source_file": "server/test/api.test.js",
       "source_location": "L1"
     },
     {
@@ -11281,6 +11304,17 @@
     },
     {
       "source": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_riskframe_ui_and_account_corrections_implementation_plan",
+      "target": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_deployment_startup_readiness_completed_2026_11_25",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-11-12-ui-and-account-corrections.md",
+      "source_location": "L261",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_riskframe_ui_and_account_corrections_implementation_plan",
       "target": "docs_superpowers_plans_2026_11_12_ui_and_account_corrections_product_decisions_proposed_for_this_correction",
       "relation": "contains",
       "_origin": "ast",
@@ -14074,6 +14108,17 @@
       "weight": 1.0
     },
     {
+      "source": "website_tests_loading_spec",
+      "target": "website_tests_loading_spec_healthy",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "website/tests/loading.spec.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
       "source": "website_tests_optimization_spec",
       "target": "website_tests_optimization_spec_select",
       "relation": "contains",
@@ -14687,5 +14732,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "a9238f8420281459ec5c0b80138928e7a82939cc"
+  "built_at_commit": "12d832f7fc83d32d2bf64719bdc49e9925c0639b"
 }
