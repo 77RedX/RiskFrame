@@ -16,9 +16,9 @@ const getHeaders = (extra = {}) => {
 
 // Health Check
 export const checkHealth = (signal) =>
-  fetch(`${API}/api/live`, { signal })
-    .then((r) => r.json())
-    .then((d) => d.status === 'ok')
+  fetch(`${API}/api/health`, { signal, cache: 'no-store' })
+    .then((r) => r.ok ? r.json() : null)
+    .then((d) => d?.status === 'ok' && d.database === 'connected' && d.quant === 'ready')
     .catch(() => false);
 
 // Core Optimization (with Redis caching and user preference awareness)

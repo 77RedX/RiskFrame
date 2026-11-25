@@ -3,10 +3,10 @@ import { checkHealth } from '../api';
 import './LoadingScreen.css';
 
 const MESSAGES = [
-  'Initializing server...',
-  'Preparing your experience...',
-  'Loading market intelligence...',
-  'Almost ready...',
+  'Connecting to RiskFrame...',
+  'Waiting for backend and quant engine...',
+  'Services may take a few minutes to start...',
+  'Checking service readiness...',
 ];
 
 const POLL_INTERVAL = 3000;
@@ -31,14 +31,16 @@ export default function LoadingScreen({ onReady }) {
       clearTimeout(timeout);
       if (cancelled) return;
       if (ready) onReady();
-      else if (Date.now() - started >= TIMEOUT) setTimedOut(true);
-      else timer = setTimeout(poll, POLL_INTERVAL);
+      else {
+        if (Date.now() - started >= TIMEOUT) setTimedOut(true);
+        timer = setTimeout(poll, POLL_INTERVAL);
+      }
     };
     poll();
     return () => { cancelled = true; clearTimeout(timer); controller?.abort(); };
   }, [onReady, retryCount]);
 
-  // Advance messages once, then stop at the last one ("Almost ready...")
+  // Advance messages once, then keep the readiness check visible.
   useEffect(() => {
     if (timedOut) return;
     const id = setInterval(() => {
@@ -51,16 +53,16 @@ export default function LoadingScreen({ onReady }) {
     return (
       <div className="loading-screen">
         <div className="loading-wordmark">Risk<span>Frame</span></div>
-        <div className="loading-bar-track"><div className="loading-bar-fill error" /></div>
+        <div className="loading-bar-track"><div className="loading-bar-fill" /></div>
         <div style={{ marginTop: 32, textAlign: 'center' }}>
-          <div className="loading-error-msg">Server is currently unavailable</div>
+          <div className="loading-error-msg" role="status">Still waiting for services</div>
           <div className="loading-error-sub">
-            The backend may be experiencing high demand or undergoing maintenance.
+            Waiting for the backend and quant engine to be ready. Startup can take a few minutes after inactivity.
           </div>
           <button className="loading-retry-btn" onClick={() => setRetryCount(n => n + 1)}>
             Retry Connection
           </button>
-          <div className="loading-reload-hint">You can also refresh the page to try again.</div>
+          <div className="loading-reload-hint">Checks continue automatically. The app will open when services are ready.</div>
         </div>
       </div>
     );
@@ -69,7 +71,7 @@ export default function LoadingScreen({ onReady }) {
   return (
     <div className="loading-screen">
       <div className="loading-wordmark">Risk<span>Frame</span></div>
-      <div className="loading-status">{MESSAGES[msgIndex]}</div>
+      <div className="loading-status" role="status">{MESSAGES[msgIndex]}</div>
       <div className="loading-bar-track"><div className="loading-bar-fill" /></div>
       <button className="loading-retry-btn" onClick={() => setRetryCount(n => n + 1)}>Retry Connection</button>
     </div>

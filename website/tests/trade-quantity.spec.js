@@ -5,7 +5,7 @@ let account;
 test.beforeEach(async ({ page }) => {
   account = { _id: 'quantity-test', name: 'Test User', holdings: [{ ticker: 'AAPL', shares: 2, avgBuyPrice: 90 }], cashBalance: 250 };
   await page.addInitScript(() => localStorage.setItem('rf_auth_token', 'test-token'));
-  await page.route('**/api/live', r => r.fulfill({ json: { status: 'ok' } }));
+  await page.route('**/api/health', r => r.fulfill({ json: { status: 'ok', database: 'connected', quant: 'ready' } }));
   await page.route('**/api/auth/me', r => r.fulfill({ json: { user: account } }));
   await page.route('**/api/prices?*', r => r.fulfill({ json: { dates: ['2026-11-11', '2026-11-12'], prices: [99, 100] } }));
   await page.goto('http://localhost:3000');

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 test.use({ channel: 'msedge' });
 
 test('copilot treats raw HTML as text while preserving supported formatting', async ({ page }) => {
-  await page.route('**/api/live', r => r.fulfill({ json: { status: 'ok' } }));
+  await page.route('**/api/health', r => r.fulfill({ json: { status: 'ok', database: 'connected', quant: 'ready' } }));
   await page.route('**/api/agent/chat', r => r.fulfill({ json: { reply: '**Safe bold**\n<img src="data:," onerror="window.auditInjected=true">\n&lt;script&gt;alert(1)&lt;/script&gt;', toolCalls: [] } }));
   await page.goto('http://localhost:3000');
   await page.locator('.agent-toggle-btn').click();
@@ -17,7 +17,7 @@ test('copilot treats raw HTML as text while preserving supported formatting', as
 
 test('logout clears private conversation and discards a pending account reply', async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('rf_auth_token', 'account-token'));
-  await page.route('**/api/live', r => r.fulfill({ json: { status: 'ok' } }));
+  await page.route('**/api/health', r => r.fulfill({ json: { status: 'ok', database: 'connected', quant: 'ready' } }));
   await page.route('**/api/auth/me', r => r.fulfill({ json: { user: { _id: '000000000000000000000001', name: 'First account', holdings: [], cashBalance: 0 } } }));
   let release;
   const pending = new Promise(resolve => { release = resolve; });
@@ -47,7 +47,7 @@ test('logout clears private conversation and discards a pending account reply', 
 
 test('portfolio permission starts a fresh owned conversation and resets on logout', async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('rf_auth_token', 'test-token'));
-  await page.route('**/api/live', r => r.fulfill({ json: { status: 'ok' } }));
+  await page.route('**/api/health', r => r.fulfill({ json: { status: 'ok', database: 'connected', quant: 'ready' } }));
   await page.route('**/api/auth/me', r => r.fulfill({ json: { user: { _id: 'privacy-owner', name: 'Privacy account', holdings: [], cashBalance: 0 } } }));
   const requests = [];
   await page.route('**/api/agent/chat', r => {
@@ -76,7 +76,7 @@ test('portfolio permission starts a fresh owned conversation and resets on logou
 });
 
 test('Groq errors offer explicit retry and verified sources remain inspectable', async ({ page }) => {
-  await page.route('**/api/live', r => r.fulfill({ json: { status: 'ok' } }));
+  await page.route('**/api/health', r => r.fulfill({ json: { status: 'ok', database: 'connected', quant: 'ready' } }));
   const requests = [];
   await page.route('**/api/agent/chat', r => {
     requests.push(r.request().postDataJSON());
@@ -102,7 +102,7 @@ test('Groq errors offer explicit retry and verified sources remain inspectable',
 });
 
 test('guest follow-ups send bounded text history without client tool authority', async ({ page }) => {
-  await page.route('**/api/live', r => r.fulfill({ json: { status: 'ok' } }));
+  await page.route('**/api/health', r => r.fulfill({ json: { status: 'ok', database: 'connected', quant: 'ready' } }));
   const requests = [];
   await page.route('**/api/agent/chat', r => { requests.push(r.request().postDataJSON()); return r.fulfill({ json: { reply: 'A public explanation', toolCalls: [] } }); });
   await page.goto('http://localhost:3000'); await page.locator('.agent-toggle-btn').click();
