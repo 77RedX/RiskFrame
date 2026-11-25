@@ -390,7 +390,7 @@ Local configuration uses ignored `.env` files; commit only the `.env.example` te
 | :--- | :--- | :--- |
 | Node API | `MONGODB_URI`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `ALLOWED_ORIGINS`, `PYTHON_QUANT_URL`, optional `REDIS_URL`, `PORT` | `server/.env` |
 | Python engine | `DATABASE_URL`, `HF_MODEL_REPO`, optional `HF_TOKEN` | root `.env`, based on `.env.example` |
-| Vite frontend | `VITE_API_URL` (public API base URL) | `website/.env`, optional for localhost |
+| Vite frontend | `VITE_API_URL` (public API base URL), `VITE_QUANT_URL` (optional public quant base URL) | The Vercel build config supplies the quant URL. Each page load wakes quant once while the frontend polls the backend for combined readiness. |
 
 Compose reads `server/.env` using `--env-file`, including the Python values listed in that template, and forwards them to their owning containers. This differs from starting Node or Python directly. The development Compose file deliberately uses SQLite and Docker MongoDB. Its MongoDB host port is bound only to localhost; production MongoDB and Redis have no host-published ports. Node running directly on your laptop cannot reach Docker's internal Redis hostname. Without a separately configured Redis endpoint it uses the optional memory cache.
 

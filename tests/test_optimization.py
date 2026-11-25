@@ -6,7 +6,28 @@ from types import SimpleNamespace
 import numpy as np
 import pandas as pd
 import torch
-from optimizer import optimize_portfolio
+from optimizer import calculate_daily_returns, calculate_annualized_covariance, optimize_portfolio
+
+
+class CovarianceTests(unittest.TestCase):
+    def test_missing_ticker_preserves_observed_returns_for_other_assets(self):
+        prices = pd.DataFrame({
+            'B': [80, 83, 79, np.nan, 84, 86],
+            'EMPTY': [np.nan] * 6,
+            'A': [50, 49, 51, 52, 55, 54],
+        })
+        returns = calculate_daily_returns(prices)
+        expected = prices[['B', 'A']].pct_change(fill_method=None).dropna()
+        pd.testing.assert_frame_equal(returns, expected)
+        from sklearn.covariance import LedoitWolf
+        cov = calculate_annualized_covariance(returns)
+        self.assertEqual(list(cov.columns), ['B', 'A'])
+        np.testing.assert_allclose(cov, LedoitWolf().fit(expected).covariance_ * 252)
+
+    def test_empty_or_single_joint_observation_cannot_produce_covariance(self):
+        for n in [0, 1]:
+            with self.subTest(n=n), self.assertRaises(ValueError):
+                calculate_annualized_covariance(pd.DataFrame(np.ones((n, 2))))
 
 
 class OptimizationTests(unittest.TestCase):
@@ -43,6 +64,19 @@ class OptimizationTests(unittest.TestCase):
         self.assertEqual(r.status_code, 200)
         m = r.json['metrics']
         self.assertAlmostEqual(m['sharpe_ratio'], m['expected_return'] / m['volatility'])
+
+    def test_missing_price_history_keeps_model_indices_and_healthy_assets_usable(self):
+        app = self.backend
+        eligible = ['AAPL', 'NVDA', 'GOOGL']
+        client = app.app.test_client()
+        with patch.object(app, 'COV_MATRIX', app.COV_MATRIX.loc[eligible, eligible]):
+            self.assertEqual(client.get('/api/tickers').json['tickers'], eligible)
+            self.assertEqual(self.request().status_code, 400)
+            result = self.request(tickers=eligible)
+            self.assertEqual(result.status_code, 200)
+            self.assertAlmostEqual(result.json['ai_predictions']['NVDA'], 0.03 * 252 / 21)
+            signals = client.get('/api/signals').json
+            self.assertEqual({s['ticker'] for s in signals['buy_signals']}, set(eligible))
 
     def test_invalid_inputs_are_rejected(self):
         client = self.backend.app.test_client()
