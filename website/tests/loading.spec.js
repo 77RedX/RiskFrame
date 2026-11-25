@@ -1,6 +1,34 @@
 import { test, expect } from '@playwright/test';
+import { createServer } from 'vite';
 test.use({ channel: 'msedge' });
 const healthy = { status: 'ok', database: 'connected', quant: 'ready', redis: 'memory_fallback' };
+
+test('page load wakes quant once while only combined readiness unlocks the UI', async ({ page }) => {
+  const vite = await createServer({
+    define: { 'import.meta.env.VITE_QUANT_URL': JSON.stringify('https://quant.example') },
+    server: { host: '127.0.0.1', port: 0 },
+  });
+  try {
+    await vite.listen();
+    let wakes = 0, ready = false;
+    await page.route('**/api/health', route => {
+      if (new URL(route.request().url()).hostname === 'quant.example') {
+        wakes++;
+        return route.fulfill({ json: { status: 'ok' } });
+      }
+      return route.fulfill({ status: ready ? 200 : 503, json: ready ? healthy : { status: 'degraded' } });
+    });
+    await page.goto(`http://127.0.0.1:${vite.httpServer.address().port}`);
+    await expect.poll(() => wakes).toBe(1);
+    await expect(page.locator('#calculate-btn')).toHaveCount(0);
+    ready = true;
+    await page.getByRole('button', { name: 'Retry Connection' }).click();
+    await expect(page.locator('#calculate-btn')).toBeVisible();
+    expect(wakes).toBe(1);
+  } finally {
+    await vite.close();
+  }
+});
 
 test('ready backend and quant do not impose an artificial loading delay', async ({ page }) => {
   await page.route('**/api/health', r => r.fulfill({ json: healthy }));
