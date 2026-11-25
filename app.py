@@ -64,7 +64,7 @@ def initialize_backend():
         daily_returns = calculate_daily_returns(historical_data)
         COV_MATRIX = calculate_annualized_covariance(daily_returns)
         ANNUAL_MEANS = daily_returns.mean() * 252
-        print("Step 2/3 Complete: Covariance matrix computed.", flush=True)
+        print(f"Step 2/3 Complete: Covariance computed for {daily_returns.shape[1]} assets over {len(daily_returns)} shared returns.", flush=True)
         
         global LAST_CACHE_UPDATE
         LAST_CACHE_UPDATE = time.time()
@@ -129,15 +129,17 @@ def health():
 def supported_tickers():
     if not BACKEND_READY:
         return jsonify({"error": "Quant engine is initializing"}), 503
-    return jsonify({"tickers": TICKERS_LIST})
+    return jsonify({"tickers": COV_MATRIX.columns.tolist()})
 
 @app.route('/api/prices', methods=['GET'])
 def get_prices():
     if not BACKEND_READY:
         return jsonify({"error": "Backend is still initializing. Please wait a moment."}), 503
     refresh_cache_if_needed()
+    if not BACKEND_READY:
+        return jsonify({"error": "Market data refresh failed"}), 503
     ticker = request.args.get('ticker')
-    if not ticker or ticker not in TICKERS_LIST:
+    if not ticker or ticker not in COV_MATRIX.columns:
         return jsonify({"error": "Invalid or missing ticker"}), 400
         
     # Get last 15 days of data
@@ -154,13 +156,15 @@ def optimize():
     if not BACKEND_READY:
         return jsonify({"error": "Backend is still initializing. Please wait a moment."}), 503
     refresh_cache_if_needed()
+    if not BACKEND_READY:
+        return jsonify({"error": "Market data refresh failed"}), 503
     data = request.get_json(silent=True)
     if not isinstance(data, dict):
         return jsonify({"error": "A JSON object is required"}), 400
     valid_tickers = data.get('tickers')
     if not isinstance(valid_tickers, list) or not 2 <= len(valid_tickers) <= 35 or any(not isinstance(t, str) for t in valid_tickers):
         return jsonify({"error": "Select 2 to 35 supported ticker strings"}), 400
-    if len(set(valid_tickers)) != len(valid_tickers) or any(t not in TICKERS_LIST for t in valid_tickers):
+    if len(set(valid_tickers)) != len(valid_tickers) or any(t not in COV_MATRIX.columns for t in valid_tickers):
         return jsonify({"error": "Tickers must be unique and supported"}), 400
     max_weight = data.get('max_weight', 0.35)
     risk_free_rate = data.get('risk_free_rate', 0.04)
@@ -247,6 +251,8 @@ def get_signals():
     if not BACKEND_READY:
         return jsonify({"error": "Backend is still initializing. Please wait a moment."}), 503
     refresh_cache_if_needed()
+    if not BACKEND_READY:
+        return jsonify({"error": "Market data refresh failed"}), 503
 
     window_size = CONFIG["WINDOW_SIZE"]
     if len(ENGINEERED_FEATURES) < window_size:
@@ -266,8 +272,9 @@ def get_signals():
         predicted_array * (252 / CONFIG["PREDICTION_HORIZON"]), index=TICKERS_LIST
     )
 
-    top_buys = annualized_returns.sort_values(ascending=False).head(10)
-    top_sells = annualized_returns.sort_values(ascending=True).head(5)
+    eligible_returns = annualized_returns.loc[COV_MATRIX.columns]
+    top_buys = eligible_returns.nlargest(10)
+    top_sells = eligible_returns.nsmallest(5)
 
     buy_signals = []
     for ticker, alpha in top_buys.items():

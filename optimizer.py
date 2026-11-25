@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import scipy.optimize as sco
+from sklearn.covariance import LedoitWolf
 
 def calculate_daily_returns(prices_df):
     """
@@ -8,14 +9,13 @@ def calculate_daily_returns(prices_df):
     """
     print("Calculating daily percentage returns...", flush=True)
     
-    # pct_change() applies the return formula to every cell comparing it to the row above
-    returns = prices_df.pct_change()
-    
-    # The first row will be NaN (Not a Number) because there is no previous day to compare it to.
-    # We must drop this row to prevent mathematical errors later.
-    returns = returns.dropna()
-    
-    return returns
+    prices = prices_df.where(np.isfinite(prices_df) & (prices_df > 0))
+    returns = prices.pct_change(fill_method=None).replace([np.inf, -np.inf], np.nan)
+    eligible = returns.count() >= 2
+    if not eligible.all():
+        print("Insufficient return history for: " + ", ".join(returns.columns[~eligible]), flush=True)
+    observed = returns.loc[:, eligible]
+    return observed.dropna() if eligible.any() else observed.iloc[:0]
 
 def calculate_annualized_returns(daily_returns, trading_days=252):
     """
@@ -35,16 +35,13 @@ def calculate_annualized_covariance(daily_returns, trading_days=252):
     to reduce estimation noise and improve out-of-sample Sharpe Ratio stability.
     """
     print("Calculating annualized covariance matrix (with Ledoit-Wolf shrinkage)...", flush=True)
-    try:
-        from sklearn.covariance import LedoitWolf
-        lw = LedoitWolf()
-        cov_matrix_array = lw.fit(daily_returns).covariance_ * trading_days
-        cov_matrix = pd.DataFrame(cov_matrix_array, index=daily_returns.columns, columns=daily_returns.columns)
-    except Exception as e:
-        print(f"Fallback to sample covariance due to: {e}", flush=True)
-        cov_matrix = daily_returns.cov() * trading_days
-        
-    return cov_matrix
+    observations, assets = daily_returns.shape
+    if observations < 2 or assets < 2:
+        raise ValueError(f"Covariance requires two assets and two shared return observations; got {assets} assets and {observations} observations")
+    covariance = LedoitWolf().fit(daily_returns).covariance_ * trading_days
+    if not np.isfinite(covariance).all():
+        raise ValueError("Annualized covariance contains non-finite values")
+    return pd.DataFrame(covariance, index=daily_returns.columns, columns=daily_returns.columns)
 
 def calculate_portfolio_metrics(weights, annualized_returns, cov_matrix):
     """
