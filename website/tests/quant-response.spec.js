@@ -21,7 +21,7 @@ test('malformed quant results surface an error; retry renders a valid result', a
   const server = app.listen(0, '127.0.0.1');
   try {
     await new Promise(resolve => server.once('listening', resolve));
-    await page.route('**/api/live', r => r.fulfill({ json: { status: 'ok' } }));
+    await page.route('**/api/health', r => r.fulfill({ json: { status: 'ok', database: 'connected', quant: 'ready' } }));
     await page.route('**/api/auth/me', r => r.fulfill({ status: 401, json: {} }));
     await page.route('**/api/optimize', async route => {
       await route.fulfill({ response: await route.fetch({ url: `http://127.0.0.1:${server.address().port}/api/optimize` }) });

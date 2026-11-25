@@ -6,6 +6,7 @@ import { isRedisReady } from '../config/redis.js';
 const router = express.Router();
 router.get('/live', (req, res) => res.json({ status: 'ok' }));
 router.get('/health', async (req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
   const database = mongoose.connection.readyState === 1;
   let quant = false;
   try { quant = (await axios.get(`${process.env.PYTHON_QUANT_URL || 'http://127.0.0.1:5001'}/api/health`, { timeout: 2000 })).data.status === 'ok'; } catch {}

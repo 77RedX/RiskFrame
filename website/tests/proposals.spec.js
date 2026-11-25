@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 test.use({ channel: 'msedge' });
 
 test.beforeEach(async ({ page }) => {
-  await page.route('**/api/live', r => r.fulfill({ json: { status: 'ok' } }));
+  await page.route('**/api/health', r => r.fulfill({ json: { status: 'ok', database: 'connected', quant: 'ready' } }));
   await page.route('**/api/prices?*', r => r.fulfill({ json: { dates: ['2026-11-11', '2026-11-12'], prices: [99, 100] } }));
   await page.route('**/api/optimize', r => r.fulfill({ json: { allocation: { AAPL: 0.5, MSFT: 0.5 }, ai_predictions: { AAPL: 0, MSFT: 0.1 }, metrics: { expected_return: 0.1, volatility: 0.2, sharpe_ratio: 0.3 } } }));
 });
